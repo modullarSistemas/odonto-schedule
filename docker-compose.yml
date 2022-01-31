@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  planeja-odonto-api:
+    image: losvald/planeja-odonto:1.1
+    build:
+      context: planeja-odonto-api/
+      dockerfile: Dockerfile
+    ports:
+     - 5100:80
+    command: ["dotnet","build", "ef", "database update"]
