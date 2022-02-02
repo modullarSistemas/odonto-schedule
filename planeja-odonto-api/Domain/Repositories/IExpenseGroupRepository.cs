@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Domain.Repositories
 {
-    interface IExpenseGroupGroupRepository
+    public interface IExpenseGroupRepository
     {
         Task<IEnumerable<ExpenseGroup>> ListAsync();
         Task AddAsync(ExpenseGroup expenseGroup);

@@ -36,9 +36,9 @@ namespace PlanejaOdonto.Api.Persistence.Contexts
 
         public DbSet<Income> Income { get; set; }
 
-        public DbSet<Expense> Exepenses { get; set; }
+        public DbSet<Expense> Expense { get; set; }
 
-        public DbSet<ExpenseGroup> ExepenseGroups { get; set; }
+        public DbSet<ExpenseGroup> ExpenseGroups { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,8 +63,7 @@ namespace PlanejaOdonto.Api.Persistence.Contexts
                         .Property(f => f.Id)
                         .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Pacient>()
-                        .ToTable("Pacients")
+            modelBuilder.Entity<Pacient>().ToTable("Pacients")
                         .Property(f => f.Id)
                         .ValueGeneratedOnAdd();
 
@@ -97,11 +96,11 @@ namespace PlanejaOdonto.Api.Persistence.Contexts
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Treatment>().ToTable("Expenses")
+            modelBuilder.Entity<Expense>().ToTable("Expenses")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Treatment>().ToTable("ExpenseGroups")
+            modelBuilder.Entity<ExpenseGroup>().ToTable("ExpenseGroups")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
         }

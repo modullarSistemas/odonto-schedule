@@ -32,13 +32,14 @@ namespace PlanejaOdonto.Api
             services.AddSwaggerGen();
             TokenService.AddJwtAuthentication(services);
 
-            AddDependencyInjection(services);
+            AddRepository(services);
+            AddServices(services);
 
             services.AddAutoMapper(typeof(Startup));
 
         }
 
-        private static void AddDependencyInjection(IServiceCollection services)
+        private static void AddRepository(IServiceCollection services)
         {
 
             var cString = Configuration.GetConnectionString("PlanejaOdontoDbConnectionString");
@@ -49,30 +50,31 @@ namespace PlanejaOdonto.Api
             });
 
             services.AddScoped<IFranchiseeRepository, FranchiseeRepository>();
-            services.AddScoped<IFranchiseeService, FranchiseeService>();
-
             services.AddScoped<IFranchiseRepository, FranchiseRepository>();
-            services.AddScoped<IFranchiseService, FranchiseService>();
-
             services.AddScoped<IPacientRepository, PacientRepository>();
-            services.AddScoped<IPacientService, PacientService>();
-
             services.AddScoped<ISchedulingRepository, SchedulingRepository>();
-            services.AddScoped<ISchedulingService, SchedulingService>();
-
             services.AddScoped<IDentistRepository, DentistRepository>();
-            services.AddScoped<IDentistService, DentistService>();
-
             services.AddScoped<IProcedureTypeRepository, ProcedureTypeRepository>();
-            services.AddScoped<IProcedureTypeService, ProcedureTypeService>();
-
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
-            services.AddScoped<ITreatmentService, TreatmentService>();
-
-            services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddScoped<IExpenseRepository, ExpenseRepository>();
+            services.AddScoped<IExpenseGroupRepository, ExpenseGroupRepository>();
+            services.AddScoped<IIncomeRepository, IncomeRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+        }
+
+        private static void AddServices(IServiceCollection services)
+        {
+            services.AddScoped<IFranchiseService, FranchiseService>();
+            services.AddScoped<IPacientService, PacientService>();
+            services.AddScoped<ISchedulingService, SchedulingService>();
+            services.AddScoped<IDentistService, DentistService>();
+            services.AddScoped<IProcedureTypeService, ProcedureTypeService>();
+            services.AddScoped<IFranchiseeService, FranchiseeService>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<ITreatmentService, TreatmentService>();
+            services.AddScoped<IFinancialService, FinancialService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
