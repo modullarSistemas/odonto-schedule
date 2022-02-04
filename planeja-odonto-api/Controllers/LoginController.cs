@@ -40,8 +40,9 @@ namespace PlanejaOdonto.Api.Controllers
             var token = TokenService.GenerateToken(result.Resource);
             return new
             {
-                user = user.Username,
+                user = result.Resource.Username,
                 franchiseId = result.Resource.FranchiseId,
+                role = result.Resource.Role,
                 token = token
             };
         }
