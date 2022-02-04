@@ -13,6 +13,8 @@ namespace PlanejaOdonto.Api.Domain.Models.FinancialAggregate
 
         public double Value { get; set; }
 
+        public string Description { get; set; }
+
         public int FranchiseId { get; set; }
 
         public Franchise Franchise { get; set; }

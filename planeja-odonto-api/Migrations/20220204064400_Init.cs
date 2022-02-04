@@ -4,12 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace PlanejaOdonto.Api.Migrations
 {
-    public partial class initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ExepenseGroups",
+                name: "ExpenseGroups",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -18,7 +18,7 @@ namespace PlanejaOdonto.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExepenseGroups", x => x.Id);
+                    table.PrimaryKey("PK_ExpenseGroups", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,26 +95,27 @@ namespace PlanejaOdonto.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Exepenses",
+                name: "Expenses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FranchiseId = table.Column<int>(type: "integer", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
                     Value = table.Column<double>(type: "double precision", nullable: false),
                     ExpenseGroupId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exepenses", x => x.Id);
+                    table.PrimaryKey("PK_Expenses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exepenses_ExepenseGroups_ExpenseGroupId",
+                        name: "FK_Expenses_ExpenseGroups_ExpenseGroupId",
                         column: x => x.ExpenseGroupId,
-                        principalTable: "ExepenseGroups",
+                        principalTable: "ExpenseGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Exepenses_Franchises_FranchiseId",
+                        name: "FK_Expenses_Franchises_FranchiseId",
                         column: x => x.FranchiseId,
                         principalTable: "Franchises",
                         principalColumn: "Id",
@@ -128,6 +129,7 @@ namespace PlanejaOdonto.Api.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Value = table.Column<double>(type: "double precision", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
                     FranchiseId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -240,29 +242,6 @@ namespace PlanejaOdonto.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExpenseGroups",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PacientId = table.Column<int>(type: "integer", nullable: false),
-                    InstallmentQuantity = table.Column<int>(type: "integer", nullable: false),
-                    TotalCost = table.Column<double>(type: "double precision", nullable: false),
-                    InstallmentDueDay = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExpenseGroups", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ExpenseGroups_Pacients_PacientId",
-                        column: x => x.PacientId,
-                        principalTable: "Pacients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Schedulings",
                 columns: table => new
                 {
@@ -292,6 +271,29 @@ namespace PlanejaOdonto.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Treatments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PacientId = table.Column<int>(type: "integer", nullable: false),
+                    InstallmentQuantity = table.Column<int>(type: "integer", nullable: false),
+                    TotalCost = table.Column<double>(type: "double precision", nullable: false),
+                    InstallmentDueDay = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Treatments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Treatments_Pacients_PacientId",
+                        column: x => x.PacientId,
+                        principalTable: "Pacients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Anamnesis",
                 columns: table => new
                 {
@@ -303,9 +305,9 @@ namespace PlanejaOdonto.Api.Migrations
                 {
                     table.PrimaryKey("PK_Anamnesis", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Anamnesis_ExpenseGroups_TreatmentId",
+                        name: "FK_Anamnesis_Treatments_TreatmentId",
                         column: x => x.TreatmentId,
-                        principalTable: "ExpenseGroups",
+                        principalTable: "Treatments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -326,9 +328,9 @@ namespace PlanejaOdonto.Api.Migrations
                 {
                     table.PrimaryKey("PK_Installment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Installment_ExpenseGroups_TreatmentId",
+                        name: "FK_Installment_Treatments_TreatmentId",
                         column: x => x.TreatmentId,
-                        principalTable: "ExpenseGroups",
+                        principalTable: "Treatments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -348,15 +350,15 @@ namespace PlanejaOdonto.Api.Migrations
                 {
                     table.PrimaryKey("PK_Procedure", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Procedure_ExpenseGroups_TreatmentId",
-                        column: x => x.TreatmentId,
-                        principalTable: "ExpenseGroups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Procedure_ProcedureTypes_ProcedureTypeId",
                         column: x => x.ProcedureTypeId,
                         principalTable: "ProcedureTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Procedure_Treatments_TreatmentId",
+                        column: x => x.TreatmentId,
+                        principalTable: "Treatments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -384,19 +386,14 @@ namespace PlanejaOdonto.Api.Migrations
                 column: "PacientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exepenses_ExpenseGroupId",
-                table: "Exepenses",
+                name: "IX_Expenses_ExpenseGroupId",
+                table: "Expenses",
                 column: "ExpenseGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exepenses_FranchiseId",
-                table: "Exepenses",
+                name: "IX_Expenses_FranchiseId",
+                table: "Expenses",
                 column: "FranchiseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExpenseGroups_PacientId",
-                table: "ExpenseGroups",
-                column: "PacientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Franchises_FranchiseeId",
@@ -439,6 +436,11 @@ namespace PlanejaOdonto.Api.Migrations
                 column: "PacientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Treatments_PacientId",
+                table: "Treatments",
+                column: "PacientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_FranchiseId",
                 table: "Users",
                 column: "FranchiseId");
@@ -462,7 +464,7 @@ namespace PlanejaOdonto.Api.Migrations
                 name: "Dependants");
 
             migrationBuilder.DropTable(
-                name: "Exepenses");
+                name: "Expenses");
 
             migrationBuilder.DropTable(
                 name: "Income");
@@ -480,13 +482,13 @@ namespace PlanejaOdonto.Api.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "ExepenseGroups");
-
-            migrationBuilder.DropTable(
                 name: "ExpenseGroups");
 
             migrationBuilder.DropTable(
                 name: "ProcedureTypes");
+
+            migrationBuilder.DropTable(
+                name: "Treatments");
 
             migrationBuilder.DropTable(
                 name: "Dentists");

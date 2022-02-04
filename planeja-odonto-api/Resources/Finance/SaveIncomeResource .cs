@@ -7,5 +7,10 @@ namespace PlanejaOdonto.Api.Resources.Finance
 {
     public class SaveIncomeResource
     {
+        public double Value { get; set; }
+
+        public string Description { get; set; }
+
+        public int FranchiseId { get; set; }
     }
 }

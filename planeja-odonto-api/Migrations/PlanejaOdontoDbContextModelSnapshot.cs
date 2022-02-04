@@ -49,6 +49,9 @@ namespace PlanejaOdonto.Api.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<int>("ExpenseGroupId")
                         .HasColumnType("integer");
 
@@ -64,7 +67,7 @@ namespace PlanejaOdonto.Api.Migrations
 
                     b.HasIndex("FranchiseId");
 
-                    b.ToTable("Exepenses");
+                    b.ToTable("Expenses");
                 });
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.FinancialAggregate.ExpenseGroup", b =>
@@ -79,7 +82,7 @@ namespace PlanejaOdonto.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExepenseGroups");
+                    b.ToTable("ExpenseGroups");
                 });
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.FinancialAggregate.Income", b =>
@@ -88,6 +91,9 @@ namespace PlanejaOdonto.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
 
                     b.Property<int>("FranchiseId")
                         .HasColumnType("integer");
@@ -440,7 +446,7 @@ namespace PlanejaOdonto.Api.Migrations
 
                     b.HasIndex("PacientId");
 
-                    b.ToTable("ExpenseGroups");
+                    b.ToTable("Treatments");
                 });
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.DentistAggregate.Dentist", b =>
