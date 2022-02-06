@@ -27,40 +27,64 @@ namespace PlanejaOdonto.Api.Mapping
 
         public ResourceToModelProfile()
         {
-            CreateMap<SchedulingResource, Scheduling>()
-                .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => src.SchedulingType));
+            MapScheduling();
 
-            CreateMap<SaveSchedulingResource, Scheduling>()
-                .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => (SchedulingType)src.SchedulingType));
+            MapFranchisee();
 
+            MapPacient();
 
+            MapDentist();
+
+            MapTreatment();
+
+            MapLogin();
+
+            MapFinancial();
+
+        }
+
+        private void MapLogin()
+        {
+            CreateMap<UserResource, User>();
+            CreateMap<SaveUserResource, User>();
+            CreateMap<LoginResource, User>();
+        }
+
+        private void MapFinancial()
+        {
+            CreateMap<ExpenseResource, Expense>();
+            CreateMap<SaveExpenseResource, Expense>();
+
+            CreateMap<IncomeResource, Income>();
+            CreateMap<SaveIncomeResource, Income>();
+
+            CreateMap<ExpenseGroupResource, ExpenseGroup>();
+            CreateMap<SaveExpenseGroupResource, ExpenseGroup>();
+        }
+
+        private void MapFranchisee()
+        {
             CreateMap<FranchiseeResource, Franchisee>();
             CreateMap<SaveFranchiseeResource, Franchisee>();
 
 
             CreateMap<FranchiseResource, Franchise>();
             CreateMap<SaveFranchiseResource, Franchise>();
+        }
 
+        private void MapScheduling()
+        {
+            CreateMap<SchedulingResource, Scheduling>()
+                            .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => src.SchedulingType));
 
-            CreateMap<PacientResource, Pacient>();
-            CreateMap<SavePacientResource, Pacient>();
-            CreateMap<SaveAddressResource, Pacient>();
-            CreateMap<SaveDependentResource, Pacient>();
-            CreateMap<SaveAddressResource, Address>();
-            CreateMap<SaveDependentResource, Dependent>();
+            CreateMap<SaveSchedulingResource, Scheduling>()
+                .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => (SchedulingType)src.SchedulingType));
+        }
 
-            CreateMap<DentistResource, Dentist>()
-                .ForMember(src => src.Category, opt => opt.MapFrom(src => src.Category));
-
-            CreateMap<SaveDentistResource, Dentist>()
-                .ForMember(src => src.Category, opt => opt.MapFrom(src => (SchedulingType)src.Category));
-
-
-
+        private void MapTreatment()
+        {
             CreateMap<ProcedureTypeResource, ProcedureType>();
             CreateMap<SaveProcedureTypeResource, ProcedureType>();
-
-
 
             CreateMap<TreatmentResource, Treatment>();
             CreateMap<SaveTreatmentResource, Treatment>();
@@ -77,18 +101,25 @@ namespace PlanejaOdonto.Api.Mapping
 
             CreateMap<ProcedureResource, Procedure>();
             CreateMap<SaveProcedureResource, Procedure>();
-
-
-            CreateMap<UserResource, User>();
-            CreateMap<SaveUserResource, User>();
-
-            CreateMap<LoginResource, User>();
-
-            CreateMap<ExpenseResource, Expense>();
-            CreateMap<SaveExpenseResource, Expense>();
-
-
         }
 
+        private void MapDentist()
+        {
+            CreateMap<DentistResource, Dentist>()
+                .ForMember(src => src.Category, opt => opt.MapFrom(src => src.Category));
+
+            CreateMap<SaveDentistResource, Dentist>()
+                .ForMember(src => src.Category, opt => opt.MapFrom(src => (SchedulingType)src.Category));
+        }
+
+        private void MapPacient()
+        {
+            CreateMap<PacientResource, Pacient>();
+            CreateMap<SavePacientResource, Pacient>();
+            CreateMap<SaveAddressResource, Pacient>();
+            CreateMap<SaveDependentResource, Pacient>();
+            CreateMap<SaveAddressResource, Address>();
+            CreateMap<SaveDependentResource, Dependent>();
+        }
     }
 }

@@ -88,6 +88,14 @@ namespace PlanejaOdonto.Api.Mapping
             CreateMap<Expense, SaveExpenseResource>();
 
 
+            CreateMap<ExpenseGroup, ExpenseGroupResource>();
+            CreateMap<ExpenseGroup, SaveExpenseGroupResource>();
+
+            CreateMap<Income, IncomeResource>();
+            CreateMap<Income, SaveIncomeResource>();
+
+
+
         }
     }
 

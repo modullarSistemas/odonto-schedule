@@ -23,12 +23,121 @@ namespace PlanejaOdonto.Api.Controllers
             _mapper = mapper;
         }
 
+
+        #region Income
+
+        /// <summary>
+        /// Lists all incomes.
+        /// </summary>
+        /// <returns>List os expenses.</returns>
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<IncomeResource>), 200)]
+        public async Task<IEnumerable<IncomeResource>> ListIncomesAsync()
+        {
+            var incomes = await _financialService.ListIncomesAsync();
+            var resources = _mapper.Map<IEnumerable<Income>, IEnumerable<IncomeResource>>(incomes);
+
+            return resources;
+        }
+
+        /// <summary>
+        /// Saves a new expense.
+        /// </summary>
+        /// <param name="resource">Income data.</param>
+        /// <returns>Response for the request.</returns>
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(IncomeResource), 201)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> InsertIncomeAsync([FromBody] SaveIncomeResource resource)
+        {
+            var income = _mapper.Map<SaveIncomeResource, Income>(resource);
+            var result = await _financialService.SaveIncomeAsync(income);
+
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
+
+            var incomeResource = _mapper.Map<Income, IncomeResource>(result.Resource);
+            return Ok(incomeResource);
+        }
+
+        /// <summary>
+        /// Updates an existing expense according to an identifier.
+        /// </summary>
+        /// <param name="id">Income identifier.</param>
+        /// <param name="resource">Updated expense data.</param>
+        /// <returns>Response for the request.</returns>
+        [HttpPut("[action]/{id}")]
+        [ProducesResponseType(typeof(IncomeResource), 200)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> UpdateIncomeAsync(int id, [FromBody] SaveIncomeResource resource)
+        {
+            var income = _mapper.Map<SaveIncomeResource, Income>(resource);
+            var result = await _financialService.UpdateIncomeAsync(id, income);
+
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
+
+            var incomeResource = _mapper.Map<Income, IncomeResource>(result.Resource);
+            return Ok(incomeResource);
+        }
+
+        /// <summary>
+        /// Deletes a given expense according to an identifier.
+        /// </summary>
+        /// <param name="id">Income identifier.</param>
+        /// <returns>Response for the request.</returns>
+        [HttpDelete("[action]/{id}")]
+        [ProducesResponseType(typeof(IncomeResource), 200)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> DeleteIncomeAsync(int id)
+        {
+            var result = await _financialService.DeleteIncomeAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
+
+            var incomeResource = _mapper.Map<Income, IncomeResource>(result.Resource);
+            return Ok(incomeResource);
+        }
+
+
+        #endregion
+
+
+
+        #region Expenses
+
+
+
         /// <summary>
         /// Lists all expenses.
         /// </summary>
         /// <returns>List os expenses.</returns>
         [HttpGet("[action]")]
-        [ProducesResponseType(typeof(IEnumerable<ExpenseResource>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<IncomeResource>), 200)]
+        public async Task<IEnumerable<ExpenseGroupResource>> ListExpenseGroupsAsync()
+        {
+            var expenseGroups = await _financialService.ListExpenseGroupsAsync();
+            var resources = _mapper.Map<IEnumerable<ExpenseGroup>, IEnumerable<ExpenseGroupResource>>(expenseGroups);
+
+            return resources;
+        }
+
+
+
+
+        /// <summary>
+        /// Lists all expenses.
+        /// </summary>
+        /// <returns>List os expenses.</returns>
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<IncomeResource>), 200)]
         public async Task<IEnumerable<ExpenseResource>> ListExpensesAsync()
         {
             var expenses = await _financialService.ListExpensesAsync();
@@ -36,6 +145,7 @@ namespace PlanejaOdonto.Api.Controllers
 
             return resources;
         }
+
 
         /// <summary>
         /// Saves a new expense.
@@ -102,5 +212,9 @@ namespace PlanejaOdonto.Api.Controllers
             var expenseResource = _mapper.Map<Expense, ExpenseResource>(result.Resource);
             return Ok(expenseResource);
         }
+        #endregion
+
+
+
     }
 }

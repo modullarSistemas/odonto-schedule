@@ -35,9 +35,5 @@
     <None Include="Authentication\Roles.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 
 </Project>

@@ -29,6 +29,25 @@ namespace PlanejaOdonto.Api.Services
 
         #region Expenses
 
+        public async Task<ExpenseGroupResponse> SaveExpenseAsync(ExpenseGroup expenseGroup)
+        {
+            try
+            {
+                await _expenseGroupRepository.AddAsync(expenseGroup);
+                await _unitOfWork.CompleteAsync();
+
+                return new ExpenseGroupResponse(expenseGroup);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new ExpenseGroupResponse($"An error occurred when saving the expense: {ex.Message}");
+            }
+        }
+
+
+
+
         public async Task<IEnumerable<Expense>> ListExpensesAsync()
         {
             // Here I try to get the categories list from the memory cache. If there is no data in cache, the anonymous method will be
@@ -36,6 +55,7 @@ namespace PlanejaOdonto.Api.Services
             var expenses = await _expenseRepository.ListAsync();
             return expenses;
         }
+
 
         public Task<Expense> GetExpenseById(int id)
         {
@@ -215,16 +235,16 @@ namespace PlanejaOdonto.Api.Services
             }
         }
 
-        public async Task<IncomeResponse> UpdateIncomeAsync(int id, Income expense)
+        public async Task<IncomeResponse> UpdateIncomeAsync(int id, Income income)
         {
             var existingIncome = await _incomeRepository.FindByIdAsync(id);
 
             if (existingIncome == null)
                 return new IncomeResponse("Income not found.");
 
-            //existingIncome.Name = expense.Name;
-            //existingIncome.Email = expense.Email;
-            //existingIncome.Phone = expense.Phone;
+            existingIncome.Value = income.Value;
+            existingIncome.Description = income.Description;
+            existingIncome.Date = income.Date;
 
             try
             {

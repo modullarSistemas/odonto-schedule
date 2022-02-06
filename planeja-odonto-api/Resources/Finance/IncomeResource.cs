@@ -13,6 +13,9 @@ namespace PlanejaOdonto.Api.Resources.Finance
 
         public string Description { get; set; }
 
+        public DateTime Date { get; set; }
+
+
         public int FranchiseId { get; set; }
     }
 }
