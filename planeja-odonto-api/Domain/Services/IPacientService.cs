@@ -9,7 +9,7 @@ namespace PlanejaOdonto.Api.Domain.Services
 {
     public interface IPacientService
     {
-        Task<IEnumerable<Pacient>> ListAsync();
+        Task<IEnumerable<Pacient>> ListPacientByFranchiseIdAsync(int id);
 
         Task<Pacient> GetById(int id);
 

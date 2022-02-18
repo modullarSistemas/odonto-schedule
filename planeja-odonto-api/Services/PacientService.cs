@@ -25,9 +25,9 @@ namespace PlanejaOdonto.Api.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Pacient>> ListAsync()
+        public async Task<IEnumerable<Pacient>> ListPacientByFranchiseIdAsync(int id)
         {
-            var pacients = await _pacientRepository.ListAsync();
+            var pacients = await _pacientRepository.ListPacientByFranchiseIdAsync(id);
 
             return pacients;
         }

@@ -13,12 +13,13 @@ namespace PlanejaOdonto.Api.Persistence.Repositories
     {
         public PacientRepository(PlanejaOdontoDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Pacient>> ListAsync()
+        public async Task<IEnumerable<Pacient>> ListPacientByFranchiseIdAsync(int id)
         {
             return await _context.Pacients
                                  .Include(x=>x.Address)
                                  .Include(x=>x.Dependants)
                                  .AsNoTracking()
+                                 .Where(x=>x.FranchiseId == id)
                                  .ToListAsync();
         }
 
