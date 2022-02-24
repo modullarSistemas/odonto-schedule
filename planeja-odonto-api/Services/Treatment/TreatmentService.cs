@@ -13,22 +13,30 @@ namespace PlanejaOdonto.Api.Services
     {
         private readonly ITreatmentRepository _treatmentRespository;
         private readonly IPacientRepository _pacientRespository;
-        private readonly IProcedureTypeRepository _procedureTypeRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TreatmentService(ITreatmentRepository treatmentRespository, IPacientRepository pacientRespository, IProcedureTypeRepository procedureTypeRepository, IUnitOfWork unitOfWork)
+        public TreatmentService(ITreatmentRepository treatmentRespository, IPacientRepository pacientRespository, IUnitOfWork unitOfWork)
         {
             _treatmentRespository = treatmentRespository;
             _pacientRespository = pacientRespository;
-            _procedureTypeRepository = procedureTypeRepository;
             _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<Treatment>> ListAsync()
         {
-            // Here I try to get the categories list from the memory cache. If there is no data in cache, the anonymous method will be
-            // called, setting the cache to expire one minute ahead and returning the Task that lists the categories from the repository.
             var treatments = await _treatmentRespository.ListAsync();
+            return treatments;
+        }
+
+        public async Task<IEnumerable<Treatment>> ListByFranchiseIdAsync(int id)
+        {
+            var treatments = await _treatmentRespository.ListByFranchiseIdAsync(id);
+            return treatments;
+        }
+
+        public async Task<IEnumerable<Treatment>> ListByPacientIdAsync(int id)
+        {
+            var treatments = await _treatmentRespository.ListByPacientIdAsync(id);
             return treatments;
         }
 
@@ -40,9 +48,6 @@ namespace PlanejaOdonto.Api.Services
                 if (existingPacient == null)
                     return new TreatmentResponse("Paciente não está cadastrado no sistema.");
 
-
-                await SetTreatmentTotalCost(treatment);
-                SetTreatmentInstallmentValue(treatment);
 
                 await _treatmentRespository.AddAsync(treatment);
                 await _unitOfWork.CompleteAsync();
@@ -95,42 +100,42 @@ namespace PlanejaOdonto.Api.Services
             }
         }
 
-        private async Task SetTreatmentTotalCost(Treatment treatment)
-        {
-            foreach (var procedure in treatment.Procedures)
-            {
-                var existingProcedure = await _procedureTypeRepository.FindByIdAsync(procedure.ProcedureTypeId);
-                if (existingProcedure == null)
-                    throw new Exception("Procedimento não está cadastrado no sistema.");
+        //private async Task SetTreatmentTotalCost(Treatment treatment)
+        //{
+        //    foreach (var procedure in treatment.Procedures)
+        //    {
+        //        var existingProcedure = await _procedureTypeRepository.FindByIdAsync(procedure.ProcedureTypeId);
+        //        if (existingProcedure == null)
+        //            throw new Exception("Procedimento não está cadastrado no sistema.");
 
-                treatment.TotalCost += existingProcedure.Cost;
-            }
+        //        treatment.TotalCost += existingProcedure.Cost;
+        //    }
 
-        }
+        //}
 
-        private void SetTreatmentInstallmentValue(Treatment treatment)
-        {
-            double installmentCost = Math.Truncate(100 * (treatment.TotalCost / treatment.InstallmentQuantity)) / 100;
-            int year = DateTime.Now.Year;
-            int month = DateTime.Now.Month;
-            for (int i = 1; i <= treatment.InstallmentQuantity; i++)
-            {
-                month++;
-                treatment.Installments.Add(
-                    new Installment
-                    {
-                        Cost = installmentCost,
-                        Due = new DateTime(year, month, treatment.InstallmentDueDay),
+        //private void SetTreatmentInstallmentValue(Treatment treatment)
+        //{
+        //    double installmentCost = Math.Truncate(100 * (treatment.TotalCost / treatment.InstallmentQuantity)) / 100;
+        //    int year = DateTime.Now.Year;
+        //    int month = DateTime.Now.Month;
+        //    for (int i = 1; i <= treatment.InstallmentQuantity; i++)
+        //    {
+        //        month++;
+        //        treatment.Installments.Add(
+        //            new Installment
+        //            {
+        //                Cost = installmentCost,
+        //                Due = new DateTime(year, month, treatment.InstallmentDueDay),
 
-                    });
+        //            });
 
-                if (month == 12)
-                {
-                    year++;
-                    month = 0;
-                }
-            }
-        }
+        //        if (month == 12)
+        //        {
+        //            year++;
+        //            month = 0;
+        //        }
+        //    }
+        //}
     }
 }
 

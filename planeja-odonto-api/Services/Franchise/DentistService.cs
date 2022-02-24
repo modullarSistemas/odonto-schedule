@@ -32,6 +32,13 @@ namespace PlanejaOdonto.Api.Services
             return dentists;
         }
 
+        public async Task<IEnumerable<Dentist>> ListByFranchiseIdAsync(int id)
+        {
+            var dentists = await _dentistRepository.ListByFranchiseIdAsync(id);
+
+            return dentists;
+        }
+
         public async Task<Dentist> GetById(int id)
         {
             var dentist = await _dentistRepository.FindByIdAsync(id);

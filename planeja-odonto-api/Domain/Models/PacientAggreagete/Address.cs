@@ -2,10 +2,9 @@
 
 namespace PlanejaOdonto.Api.Domain.Models.PacientAggregate
 {
-    public class Address
+    public class Address : BaseModel
     {
-        public int Id { get; set; }
-
+       
         public int PacientId { get; set; }
 
         [JsonIgnore]

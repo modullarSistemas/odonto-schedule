@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 {
-    public class AnamnesisQuestionary
+    public class AnamnesisQuestionary : BaseModel
     {
         public string BothersTheMost { get; set; }
         public string WouldChangeAesthetically { get; set; }

@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Domain.Models.FinancialAggregate
 {
-    public class Income
+    public class Income : BaseModel
     {
-        public int Id { get; set; }
-
         public double Value { get; set; }
 
         public string Description { get; set; }

@@ -4,6 +4,7 @@ using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Persistence.Contexts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PlanejaOdonto.Api.Persistence.Repositories
 {
@@ -16,11 +17,14 @@ namespace PlanejaOdonto.Api.Persistence.Repositories
             return await _context.Dentists
                                  .AsNoTracking()
                                  .ToListAsync();
-
-            // AsNoTracking tells EF Core it doesn't need to track changes on listed entities. Disabling entity
-            // tracking makes the code a little faster
         }
-
+        public async Task<IEnumerable<Dentist>> ListByFranchiseIdAsync(int id)
+        {
+            return await _context.Dentists
+                                 .Where(x=>x.FranchiseId == id)
+                                 .AsNoTracking()
+                                 .ToListAsync();
+        }
         public async Task AddAsync(Dentist franchisee)
         {
             await _context.Dentists.AddAsync(franchisee);

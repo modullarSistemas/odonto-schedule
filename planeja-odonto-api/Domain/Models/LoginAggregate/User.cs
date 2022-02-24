@@ -2,9 +2,8 @@
 
 namespace PlanejaOdonto.Api.Domain.Models.LoginAggregate
 {
-    public class User
+    public class User : BaseModel
     {
-        public int Id { get; set; }
         public int FranchiseId { get; set; }
         public Franchise Franchise { get; set; }
         public string Username { get; set; }

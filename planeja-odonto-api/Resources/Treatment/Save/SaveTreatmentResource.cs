@@ -12,9 +12,7 @@ namespace PlanejaOdonto.Api.Resources.Treatment
         public int InstallmentQuantity { get; set; }
 
         public int InstallmentDueDay { get; set; }
-        //public List<SaveInstallmentResource> Installments { get; set; }
-        //public double TotalValue { get; set; }
 
-        public List<SaveProcedureResource> Procedures { get; set; }
+        public int Status { get; set; }
     }
 }

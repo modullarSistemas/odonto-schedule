@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 {
-    public class Procedure
+    public class Procedure : BaseModel
     {
-        public int Id{ get; set; }
-
         public int TreatmentId { get; set; }
 
         public int DentistId { get; set; }

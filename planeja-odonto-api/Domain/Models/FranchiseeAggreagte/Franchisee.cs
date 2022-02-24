@@ -2,10 +2,8 @@
 
 namespace PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate
 {
-    public class Franchisee 
+    public class Franchisee : BaseModel
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string Email { get; set; }

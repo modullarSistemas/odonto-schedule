@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace PlanejaOdonto.Api.Domain.Models.PacientAggregate
 {
-    public class Pacient  
+    public class Pacient : BaseModel
     {
-        public int Id { get; set; }
-
         public int FranchiseId { get; set; }
 
         public Franchise Franchise{ get; set; }

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate
 {
-    public class Franchise 
+    public class Franchise : BaseModel
     {
-        public int Id { get; set; }
 
         [JsonIgnore]
         public Franchisee Franchisee { get; set; }

@@ -3,10 +3,8 @@ using System;
 
 namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 {
-    public class Installment
+    public class Installment : BaseModel
     {
-
-        public int Id { get; set; }
 
         public int TreatmentId { get; set; }
 

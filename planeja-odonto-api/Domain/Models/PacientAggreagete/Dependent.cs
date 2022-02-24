@@ -3,10 +3,8 @@ using System.Text.Json.Serialization;
 
 namespace PlanejaOdonto.Api.Domain.Models.PacientAggregate
 {
-    public class Dependent 
+    public class Dependent : BaseModel
     {
-        public int Id { get; set; }
-
         public int PacientId { get; set; }
 
         [JsonIgnore]

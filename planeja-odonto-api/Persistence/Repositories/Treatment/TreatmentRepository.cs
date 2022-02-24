@@ -17,13 +17,25 @@ namespace PlanejaOdonto.Api.Persistence.Repositories
         public async Task<IEnumerable<Treatment>> ListAsync()
         {
             return await _context.Treatments
-                                 .Include(x=>x.Installments)
-                                 .Include(y=>y.Procedures)
                                  .AsNoTracking()
                                  .ToListAsync();
+        }
 
-            // AsNoTracking tells EF Core it doesn't need to track changes on listed entities. Disabling entity
-            // tracking makes the code a little faster
+        public async Task<IEnumerable<Treatment>> ListByPacientIdAsync(int id)
+        {
+            return await _context.Treatments
+                                 .AsNoTracking()
+                                 .Where(x => x.PacientId == id)
+                                 .ToListAsync();
+
+        }
+        public async Task<IEnumerable<Treatment>> ListByFranchiseIdAsync(int id)
+        {
+            return await _context.Treatments
+                                 .Include(x => x.Pacient)
+                                 .AsNoTracking()
+                                 .Where(x => x.Pacient.FranchiseId == id)
+                                 .ToListAsync();
         }
 
         public async Task AddAsync(Treatment franchisee)

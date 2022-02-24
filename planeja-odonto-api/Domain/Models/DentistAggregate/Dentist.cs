@@ -4,10 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace PlanejaOdonto.Api.Domain.Models.DentistAggregate
 {
-    public class Dentist
+    public class Dentist : BaseModel
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public int FranchiseId { get; set; }

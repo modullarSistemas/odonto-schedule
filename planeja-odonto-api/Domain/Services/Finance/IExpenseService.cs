@@ -10,6 +10,9 @@ namespace PlanejaOdonto.Api.Domain.Services
     public interface IExpenseService
     {
         Task<IEnumerable<Expense>> ListAsync();
+
+        Task<IEnumerable<Expense>> ListByFranchiseIdAsync(int franchiseId);
+
         Task<Expense> GetById(int id);
         Task<ExpenseResponse> SaveAsync(Expense expense);
         Task<ExpenseResponse> UpdateAsync(int id, Expense expense);

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Domain.Models.FinancialAggregate
 {
-    public class Expense
+    public class Expense : BaseModel
     {
-        public int Id { get; set; }
 
         public int FranchiseId { get; set; }
 
