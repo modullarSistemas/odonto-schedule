@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using PlanejaOdonto.Api.Persistence.Contexts;
+using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
+using PlanejaOdonto.Api.Infrastructure.Persistence.Repositories;
 
 namespace PlanejaOdonto.Api.Migrations
 {

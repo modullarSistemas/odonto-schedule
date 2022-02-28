@@ -5,13 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using PlanejaOdonto.Api.Persistence.Contexts;
+using PlanejaOdonto.Api.Infrastructure.Persistence.Repositories;
 using PlanejaOdonto.Api.Authentication;
-using PlanejaOdonto.Api.Extensions;
 using PlanejaOdonto.Api.Services;
-using PlanejaOdonto.Api.Domain.Services;
 using PlanejaOdonto.Api.Domain.Repositories;
-using PlanejaOdonto.Api.Persistence.Repositories;
+using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
+using PlanejaOdonto.Api.Application.Services;
 
 namespace PlanejaOdonto.Api
 {
@@ -111,11 +110,9 @@ namespace PlanejaOdonto.Api
 
             //app.UseCustomSwagger();
 
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetService<PlanejaOdontoDbContext>();
-                context.Database.Migrate();
-            }
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<PlanejaOdontoDbContext>();
+            context.Database.Migrate();
         }
     }
 }

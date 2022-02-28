@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Authentication\Roles.cs" />
+    <Compile Remove="2 - Application\Authentication\Roles.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Authentication\Roles.cs" />
+    <None Include="2 - Application\Authentication\Roles.cs" />
   </ItemGroup>
 
 
