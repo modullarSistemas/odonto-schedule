@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using PlanejaOdonto.Api.Domain.Models.DentistAggregate;
-using PlanejaOdonto.Api.Domain.Models.Enums;
 using PlanejaOdonto.Api.Domain.Models.FinancialAggregate;
 using PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate;
 using PlanejaOdonto.Api.Domain.Models.LoginAggregate;
@@ -15,10 +14,7 @@ using PlanejaOdonto.Api.Application.Resources.Login;
 using PlanejaOdonto.Api.Application.Resources.Pacient;
 using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 using PlanejaOdonto.Api.Application.Resources.Treatment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using PlanejaOdonto.Api.Domain.Enums;
 
 namespace PlanejaOdonto.Api.Application.Mapping
 {
@@ -75,7 +71,8 @@ namespace PlanejaOdonto.Api.Application.Mapping
         private void MapScheduling()
         {
             CreateMap<SchedulingResource, Scheduling>()
-                            .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => src.SchedulingType));
+                            .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => src.SchedulingType))
+                            .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status));
 
             CreateMap<SaveSchedulingResource, Scheduling>()
                 .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => (SchedulingType)src.SchedulingType));

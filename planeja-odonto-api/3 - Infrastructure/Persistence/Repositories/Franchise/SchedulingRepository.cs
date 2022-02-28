@@ -4,6 +4,7 @@ using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Repositories;
 using System;
+using System.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +14,26 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
     public class SchedulingRepository : BaseRepository, ISchedulingRepository
     {
         public SchedulingRepository(PlanejaOdontoDbContext context) : base(context) { }
+
+
+
+        public async Task<IEnumerable<Scheduling>> ListByDentistIdAsync(int id)
+        {
+            return await _context.Schedulings
+                     .AsNoTracking()
+                     .Include(x=>x.Dentist)
+                     .Where(x=>x.Dentist.UserId == id)
+                     .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Scheduling>> ListByFranchiseIdAsync(int id)
+        {
+            return await _context.Schedulings
+                     .AsNoTracking()
+                     .Include(x=>x.Pacient)
+                     .Where(x => x.Pacient.FranchiseId == id)
+                     .ToListAsync();
+        }
 
         public async Task<IEnumerable<Scheduling>> ListAsync()
         {
@@ -34,6 +55,16 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             return await _context.Schedulings.FindAsync(id);
         }
 
+
+        public  Task<Scheduling> CheckDateAvailability(Scheduling newScheduling)
+        {
+            return  _context.Schedulings
+                .Include(x=>x.Dentist)
+                .FirstOrDefaultAsync(x => newScheduling.StartDate >= x.StartDate
+                                     &&   newScheduling.StartDate <= x.EndDate
+                                     &&   x.DentistId ==  newScheduling.DentistId);
+        }
+
         public void Update(Scheduling scheduling)
         {
             _context.Schedulings.Update(scheduling);
@@ -43,5 +74,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         {
             _context.Schedulings.Remove(scheduling);
         }
+
+
     }
 }

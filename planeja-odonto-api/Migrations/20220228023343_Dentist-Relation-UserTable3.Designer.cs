@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -9,9 +10,10 @@ using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 namespace PlanejaOdonto.Api.Migrations
 {
     [DbContext(typeof(PlanejaOdontoDbContext))]
-    partial class PlanejaOdontoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220228023343_Dentist-Relation-UserTable3")]
+    partial class DentistRelationUserTable3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -381,7 +383,7 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Property<int>("PacientId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProcedureTypeId")
+                    b.Property<int?>("ProcedureTypeId")
                         .HasColumnType("integer");
 
                     b.Property<int>("ScheduledBy")
@@ -394,9 +396,7 @@ namespace PlanejaOdonto.Api.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<byte>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasDefaultValue((byte)1);
+                        .HasColumnType("smallint");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");

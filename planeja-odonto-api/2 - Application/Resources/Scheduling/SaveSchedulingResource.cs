@@ -1,8 +1,4 @@
-﻿using PlanejaOdonto.Api.Domain.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace PlanejaOdonto.Api.Application.Resources
 {
@@ -15,6 +11,8 @@ namespace PlanejaOdonto.Api.Application.Resources
         public int PacientId { get; set; }
 
         public int DentistId { get; set; }
+
+        public int ProcedureTypeId { get; set; }
 
         public int SchedulingType { get; set; }
 

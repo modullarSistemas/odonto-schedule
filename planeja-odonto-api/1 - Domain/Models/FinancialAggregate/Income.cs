@@ -1,9 +1,5 @@
-﻿using PlanejaOdonto.Api.Domain.Models.Enums;
-using PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate;
+﻿using PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Domain.Models.FinancialAggregate
 {

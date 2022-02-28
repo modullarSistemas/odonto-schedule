@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace PlanejaOdonto.Api.Domain.Models.Enums
+namespace PlanejaOdonto.Api.Domain.Enums
 {
     public enum PaymentMethod : byte
     {

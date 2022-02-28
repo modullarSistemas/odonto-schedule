@@ -1,4 +1,4 @@
-﻿using PlanejaOdonto.Api.Domain.Models.Enums;
+﻿using PlanejaOdonto.Api.Domain.Enums;
 using System;
 
 namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate

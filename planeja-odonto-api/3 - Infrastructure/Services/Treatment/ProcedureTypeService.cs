@@ -26,6 +26,13 @@ namespace PlanejaOdonto.Api.Services
             return procedureTypes;
         }
 
+        public async Task<ProcedureType> GetById(int id)
+        {
+            var procedureType = await _procedureTypeRepository.FindByIdAsync(id);
+
+            return procedureType;
+        }
+
         public async Task<ProcedureTypeResponse> SaveAsync(ProcedureType procedureType)
         {
             try

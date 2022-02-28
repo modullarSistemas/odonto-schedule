@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Domain.Models.DentistAggregate;
 using PlanejaOdonto.Api.Domain.Models.FinancialAggregate;
 using PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate;
@@ -78,6 +79,11 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
+                      .Property(f => f.Status)
+                      .HasDefaultValue(SchedulingStatus.New);
+
 
             modelBuilder.Entity<Dentist>().ToTable("Dentists")
                       .Property(f => f.Id)

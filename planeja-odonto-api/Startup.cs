@@ -11,6 +11,7 @@ using PlanejaOdonto.Api.Services;
 using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 using PlanejaOdonto.Api.Application.Services;
+using System;
 
 namespace PlanejaOdonto.Api
 {
@@ -46,6 +47,7 @@ namespace PlanejaOdonto.Api
             services.AddDbContext<PlanejaOdontoDbContext>(options =>
             {
                 options.UseNpgsql(cString);
+                options.LogTo(Console.WriteLine);
             });
 
             services.AddScoped<IFranchiseeRepository, FranchiseeRepository>();

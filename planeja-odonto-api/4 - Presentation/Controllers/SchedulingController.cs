@@ -20,10 +20,6 @@ namespace PlanejaOdonto.Api.Application.Controllers
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// Lists all schedulings.
-        /// </summary>
-        /// <returns>List os schedulings.</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<SchedulingResource>), 200)]
         public async Task<IEnumerable<SchedulingResource>> ListAsync()
@@ -34,11 +30,27 @@ namespace PlanejaOdonto.Api.Application.Controllers
             return resources;
         }
 
-        /// <summary>
-        /// Saves a new Scheduling.
-        /// </summary>
-        /// <param name="resource">Scheduling data.</param>
-        /// <returns>Response for the request.</returns>
+        [HttpGet("[action]/{id}")]
+        [ProducesResponseType(typeof(IEnumerable<SchedulingResource>), 200)]
+        public async Task<IEnumerable<SchedulingResource>> ListByFranchiseIdAsync(int id)
+        {
+            var schedulings = await _schedulingService.ListByFranchiseIdAsync(id);
+            var resources = _mapper.Map<IEnumerable<Scheduling>, IEnumerable<SchedulingResource>>(schedulings);
+
+            return resources;
+        }
+
+        [HttpGet("[action]/{id}")]
+        [ProducesResponseType(typeof(IEnumerable<SchedulingResource>), 200)]
+        public async Task<IEnumerable<SchedulingResource>> ListByDentistIdAsync(int id)
+        {
+            var schedulings = await _schedulingService.ListByDentistIdAsync(id);
+            var resources = _mapper.Map<IEnumerable<Scheduling>, IEnumerable<SchedulingResource>>(schedulings);
+
+            return resources;
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(SchedulingResource), 201)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
@@ -57,12 +69,7 @@ namespace PlanejaOdonto.Api.Application.Controllers
             return Ok(schedulingResource);
         }
 
-        /// <summary>
-        /// Updates an existing Scheduling according to an identifier.
-        /// </summary>
-        /// <param name="id">Scheduling identifier.</param>
-        /// <param name="resource">Updated Scheduling data.</param>
-        /// <returns>Response for the request.</returns>
+
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(SchedulingResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
@@ -80,11 +87,7 @@ namespace PlanejaOdonto.Api.Application.Controllers
             return Ok(schedulingResource);
         }
 
-        /// <summary>
-        /// Deletes a given Scheduling according to an identifier.
-        /// </summary>
-        /// <param name="id">Scheduling identifier.</param>
-        /// <returns>Response for the request.</returns>
+
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(SchedulingResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]

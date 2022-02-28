@@ -24,14 +24,12 @@ namespace PlanejaOdonto.Api.Application.Mapping
         public ModelToResourceProfile()
         {
             CreateMap<Scheduling, SchedulingResource>()
-                .ForMember(src => src.SchedulingType,
-                           opt => opt.MapFrom(src => src.SchedulingType.ToDescriptionString()));
+                .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => src.SchedulingType.ToDescriptionString()))
+                .ForMember(src => src.Status,opt => opt.MapFrom(src=>src.Status.ToDescriptionString()));
 
 
             CreateMap<Scheduling, SaveSchedulingResource>()
-                 .ForMember(src => src.SchedulingType,
-                           opt => opt.MapFrom(src => src.SchedulingType.ToDescriptionString()));
-
+                 .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => src.SchedulingType.ToDescriptionString()));
 
             CreateMap<Franchisee, FranchiseeResource>();
             CreateMap<Franchisee, SaveFranchiseeResource>();

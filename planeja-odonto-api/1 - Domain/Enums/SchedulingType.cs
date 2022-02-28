@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PlanejaOdonto.Api.Domain.Models.Enums
+namespace PlanejaOdonto.Api.Domain.Enums
 {
     public enum SchedulingType : byte
     {

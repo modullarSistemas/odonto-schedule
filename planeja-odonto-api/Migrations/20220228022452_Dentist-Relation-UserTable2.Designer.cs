@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -9,9 +10,10 @@ using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 namespace PlanejaOdonto.Api.Migrations
 {
     [DbContext(typeof(PlanejaOdontoDbContext))]
-    partial class PlanejaOdontoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220228022452_Dentist-Relation-UserTable2")]
+    partial class DentistRelationUserTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -381,7 +383,7 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Property<int>("PacientId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProcedureTypeId")
+                    b.Property<int?>("ProcedureTypeId")
                         .HasColumnType("integer");
 
                     b.Property<int>("ScheduledBy")
@@ -394,9 +396,7 @@ namespace PlanejaOdonto.Api.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<byte>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasDefaultValue((byte)1);
+                        .HasColumnType("smallint");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -406,6 +406,8 @@ namespace PlanejaOdonto.Api.Migrations
                     b.HasIndex("DentistId");
 
                     b.HasIndex("PacientId");
+
+                    b.HasIndex("ProcedureTypeId");
 
                     b.ToTable("Schedulings");
                 });
@@ -582,9 +584,15 @@ namespace PlanejaOdonto.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.ProcedureType", "ProcedureType")
+                        .WithMany()
+                        .HasForeignKey("ProcedureTypeId");
+
                     b.Navigation("Dentist");
 
                     b.Navigation("Pacient");
+
+                    b.Navigation("ProcedureType");
                 });
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", b =>

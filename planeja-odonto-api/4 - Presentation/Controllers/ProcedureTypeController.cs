@@ -35,6 +35,16 @@ namespace PlanejaOdonto.Api.Application.Controllers
             return resources;
         }
 
+        [HttpGet("[action]/{id}")]
+        [ProducesResponseType(typeof(ProcedureTypeResource), 200)]
+        public async Task<ProcedureTypeResource> GetById(int id)
+        {
+            var procedureType = await _procedureTypeService.GetById(id);
+            var resource = _mapper.Map<ProcedureType, ProcedureTypeResource>(procedureType);
+
+            return resource;
+        }
+
         /// <summary>
         /// Saves a new procedureType.
         /// </summary>
