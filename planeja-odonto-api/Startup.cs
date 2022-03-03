@@ -47,7 +47,7 @@ namespace PlanejaOdonto.Api
             services.AddDbContext<PlanejaOdontoDbContext>(options =>
             {
                 options.UseNpgsql(cString);
-                options.LogTo(Console.WriteLine);
+                //options.LogTo(Console.WriteLine);
             });
 
             services.AddScoped<IFranchiseeRepository, FranchiseeRepository>();
