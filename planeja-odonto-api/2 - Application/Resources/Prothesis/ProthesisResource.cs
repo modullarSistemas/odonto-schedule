@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PlanejaOdonto.Api.Application.Resources.ProcedureType
+namespace PlanejaOdonto.Api.Application.Resources.Prothesis
 {
-    public class ProcedureTypeResource
+    public class ProthesisResource
     {
         public int Id { get; set; }
 

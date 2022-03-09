@@ -58,7 +58,6 @@ namespace PlanejaOdonto.Api.Services
 
             existingProcedureType.Name = updatedProcedureType.Name;
             existingProcedureType.Cost = updatedProcedureType.Cost;
-            existingProcedureType.NeedProthesis = updatedProcedureType.NeedProthesis;
 
             try
             {

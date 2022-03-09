@@ -9,6 +9,8 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 
         public Pacient Pacient { get; set; }
 
+        public string Description { get; set; }
+
         public int InstallmentQuantity { get; set; }
 
         public double TotalCost { get; set; }

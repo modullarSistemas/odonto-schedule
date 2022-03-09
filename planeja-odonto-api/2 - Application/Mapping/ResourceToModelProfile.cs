@@ -15,6 +15,7 @@ using PlanejaOdonto.Api.Application.Resources.Pacient;
 using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 using PlanejaOdonto.Api.Application.Resources.Treatment;
 using PlanejaOdonto.Api.Domain.Enums;
+using PlanejaOdonto.Api.Application.Resources.Prothesis;
 
 namespace PlanejaOdonto.Api.Application.Mapping
 {
@@ -86,7 +87,11 @@ namespace PlanejaOdonto.Api.Application.Mapping
             CreateMap<SaveProcedureResource, Treatment>();
             CreateMap<SaveInstallmentResource, Treatment>();
 
+            CreateMap<SaveProcedureResource, Treatment>();
+            CreateMap<SaveInstallmentResource, Treatment>();
 
+            CreateMap<ProcedureResource, Procedure>();
+            CreateMap<SaveProcedureResource, Procedure>();
 
             CreateMap<TreatmentResource, Treatment>()
                 .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status));
@@ -101,8 +106,10 @@ namespace PlanejaOdonto.Api.Application.Mapping
                 .ForMember(src => src.PaymentMethod, opt => opt.MapFrom(src => (PaymentMethod)src.PaymentMethod));
 
 
-            CreateMap<ProcedureResource, Procedure>();
-            CreateMap<SaveProcedureResource, Procedure>();
+
+            CreateMap<ProthesisResource, Prothesis>();
+            CreateMap<SaveProthesisResource, Prothesis>();
+
         }
 
         private void MapDentist()

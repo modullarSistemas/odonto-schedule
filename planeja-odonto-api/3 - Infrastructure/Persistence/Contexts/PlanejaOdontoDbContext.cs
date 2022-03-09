@@ -41,6 +41,9 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         public DbSet<ExpenseGroup> ExpenseGroups { get; set; }
 
+        public DbSet<Prothesis> Prothesis { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -107,6 +110,11 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
                       .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<ExpenseGroup>().ToTable("ExpenseGroups")
+                      .Property(f => f.Id)
+                      .ValueGeneratedOnAdd();
+
+
+            modelBuilder.Entity<Prothesis>().ToTable("Prothesis")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
         }

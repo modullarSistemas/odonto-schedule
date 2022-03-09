@@ -61,6 +61,7 @@ namespace PlanejaOdonto.Api
             services.AddScoped<IExpenseRepository, ExpenseRepository>();
             services.AddScoped<IExpenseGroupRepository, ExpenseGroupRepository>();
             services.AddScoped<IIncomeRepository, IncomeRepository>();
+            services.AddScoped<IProthesisRepository, ProthesisRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
@@ -74,7 +75,9 @@ namespace PlanejaOdonto.Api
             services.AddScoped<IFranchiseeService, FranchiseeService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ITreatmentService, TreatmentService>();
-            services.AddScoped<IFinancialService, FinancialService>();
+            services.AddScoped<IFinancialService, FinancialService>(); 
+            services.AddScoped<IProthesisService, ProthesisService>();
+
 
         }
 

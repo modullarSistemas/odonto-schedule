@@ -11,7 +11,6 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 
         public double Cost { get; set; }
 
-        public bool NeedProthesis { get; set; }
 
     }
 }

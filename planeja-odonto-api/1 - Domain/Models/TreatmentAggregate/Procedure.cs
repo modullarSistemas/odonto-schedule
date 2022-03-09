@@ -20,6 +20,10 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 
         public int ProcedureTypeId { get; set; }
 
+        public bool NeedProthesis { get; set; }
+
+        public Prothesis Prothesis { get; set; }
+
         public ProcedureType ProcedureType { get; set; }
 
         public bool Completed { get; set; }

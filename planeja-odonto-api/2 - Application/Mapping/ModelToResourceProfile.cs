@@ -15,6 +15,7 @@ using PlanejaOdonto.Api.Application.Resources.Login;
 using PlanejaOdonto.Api.Application.Resources.Pacient;
 using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 using PlanejaOdonto.Api.Application.Resources.Treatment;
+using PlanejaOdonto.Api.Application.Resources.Prothesis;
 
 namespace PlanejaOdonto.Api.Application.Mapping
 {
@@ -58,6 +59,10 @@ namespace PlanejaOdonto.Api.Application.Mapping
 
             CreateMap<ProcedureType, ProcedureTypeResource>();
             CreateMap<ProcedureType, SaveProcedureTypeResource>();
+
+
+            CreateMap<Prothesis, ProthesisResource>();
+            CreateMap<Prothesis, SaveProthesisResource>();
 
 
             CreateMap<Treatment, TreatmentResource>();
