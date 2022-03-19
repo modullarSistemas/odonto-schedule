@@ -33,6 +33,8 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         public DbSet<ProcedureType> ProcedureTypes { get; set; }
 
+        public DbSet<Procedure> Procedures { get; set; }
+
         public DbSet<Treatment> Treatments { get; set; }
 
         public DbSet<Income> Income { get; set; }
@@ -101,6 +103,10 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<Treatment>().ToTable("Treatments")
+                      .Property(f => f.Status)
+                      .HasDefaultValue(TreatmentStatusEnum.Pending);
+
             modelBuilder.Entity<Income>().ToTable("Income")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
@@ -115,6 +121,10 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
 
             modelBuilder.Entity<Prothesis>().ToTable("Prothesis")
+                      .Property(f => f.Id)
+                      .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Procedure>().ToTable("Procedures")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
         }

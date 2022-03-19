@@ -6,6 +6,7 @@ using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Application.Services;
 using PlanejaOdonto.Api.Application.Resources.Prothesis;
 using PlanejaOdonto.Api.Application.Resources;
+using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 
 namespace PlanejaOdonto.Api.Application.Controllers
 {
@@ -26,21 +27,21 @@ namespace PlanejaOdonto.Api.Application.Controllers
         /// </summary>
         /// <returns>List os procedureTypes.</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ProthesisResource>), 200)]
-        public async Task<IEnumerable<ProthesisResource>> ListAsync()
+        [ProducesResponseType(typeof(IEnumerable<ProcedureTypeResource>), 200)]
+        public async Task<IEnumerable<ProcedureTypeResource>> ListAsync()
         {
-             var procedureTypes = await _procedureTypeService.ListAsync();
-            var resources = _mapper.Map<IEnumerable<ProcedureType>, IEnumerable<ProthesisResource>>(procedureTypes);
+            var procedureTypes = await _procedureTypeService.ListAsync();
+            var resources = _mapper.Map<IEnumerable<ProcedureType>, IEnumerable<ProcedureTypeResource>>(procedureTypes);
 
             return resources;
         }
 
         [HttpGet("[action]/{id}")]
-        [ProducesResponseType(typeof(ProthesisResource), 200)]
-        public async Task<ProthesisResource> GetById(int id)
+        [ProducesResponseType(typeof(ProcedureTypeResource), 200)]
+        public async Task<ProcedureTypeResource> GetById(int id)
         {
             var procedureType = await _procedureTypeService.GetById(id);
-            var resource = _mapper.Map<ProcedureType, ProthesisResource>(procedureType);
+            var resource = _mapper.Map<ProcedureType, ProcedureTypeResource>(procedureType);
 
             return resource;
         }
@@ -51,11 +52,11 @@ namespace PlanejaOdonto.Api.Application.Controllers
         /// <param name="resource">ProcedureType data.</param>
         /// <returns>Response for the request.</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(ProthesisResource), 201)]
+        [ProducesResponseType(typeof(ProcedureTypeResource), 201)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> PostAsync([FromBody] SaveProthesisResource resource)
+        public async Task<IActionResult> PostAsync([FromBody] SaveProcedureTypeResource resource)
         {
-            var procedureType = _mapper.Map<SaveProthesisResource, ProcedureType>(resource);
+            var procedureType = _mapper.Map<SaveProcedureTypeResource, ProcedureType>(resource);
             var result = await _procedureTypeService.SaveAsync(procedureType);
 
             if (!result.Success)
@@ -63,7 +64,7 @@ namespace PlanejaOdonto.Api.Application.Controllers
                 return BadRequest(new ErrorResource(result.Message));
             }
 
-            var procedureTypeResource = _mapper.Map<ProcedureType, ProthesisResource>(result.Resource);
+            var procedureTypeResource = _mapper.Map<ProcedureType, ProcedureTypeResource>(result.Resource);
             return Ok(procedureTypeResource);
         }
 
@@ -74,11 +75,11 @@ namespace PlanejaOdonto.Api.Application.Controllers
         /// <param name="resource">Updated procedureType data.</param>
         /// <returns>Response for the request.</returns>
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(ProthesisResource), 200)]
+        [ProducesResponseType(typeof(ProcedureTypeResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveProthesisResource resource)
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveProcedureTypeResource resource)
         {
-            var procedureType = _mapper.Map<SaveProthesisResource, ProcedureType>(resource);
+            var procedureType = _mapper.Map<SaveProcedureTypeResource, ProcedureType>(resource);
             var result = await _procedureTypeService.UpdateAsync(id, procedureType);
 
             if (!result.Success)
@@ -86,7 +87,7 @@ namespace PlanejaOdonto.Api.Application.Controllers
                 return BadRequest(new ErrorResource(result.Message));
             }
 
-            var procedureTypeResource = _mapper.Map<ProcedureType, ProthesisResource>(result.Resource);
+            var procedureTypeResource = _mapper.Map<ProcedureType, ProcedureTypeResource>(result.Resource);
             return Ok(procedureTypeResource);
         }
 
@@ -96,7 +97,7 @@ namespace PlanejaOdonto.Api.Application.Controllers
         /// <param name="id">ProcedureType identifier.</param>
         /// <returns>Response for the request.</returns>
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(ProthesisResource), 200)]
+        [ProducesResponseType(typeof(ProcedureTypeResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
@@ -107,7 +108,7 @@ namespace PlanejaOdonto.Api.Application.Controllers
                 return BadRequest(new ErrorResource(result.Message));
             }
 
-            var procedureTypeResource = _mapper.Map<ProcedureType, ProthesisResource>(result.Resource);
+            var procedureTypeResource = _mapper.Map<ProcedureType, ProcedureTypeResource>(result.Resource);
             return Ok(procedureTypeResource);
         }
 

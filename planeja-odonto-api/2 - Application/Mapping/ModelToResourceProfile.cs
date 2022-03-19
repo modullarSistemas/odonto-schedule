@@ -67,8 +67,6 @@ namespace PlanejaOdonto.Api.Application.Mapping
 
             CreateMap<Treatment, TreatmentResource>();
             CreateMap<Treatment, SaveTreatmentResource>();
-            CreateMap<Treatment, SaveProcedureResource>();
-            CreateMap<Treatment, SaveInstallmentResource>();
 
 
             CreateMap<Installment, InstallmentResource>()
@@ -80,7 +78,7 @@ namespace PlanejaOdonto.Api.Application.Mapping
                            opt => opt.MapFrom(src => src.PaymentMethod.ToDescriptionString()));
 
             CreateMap<Procedure, ProcedureResource>();
-            CreateMap<Installment, SaveProcedureResource>();
+            CreateMap<Procedure, SaveProcedureResource>();
 
 
             CreateMap<User, UserResource>();

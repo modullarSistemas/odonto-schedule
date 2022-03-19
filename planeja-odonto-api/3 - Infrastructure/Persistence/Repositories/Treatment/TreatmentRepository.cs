@@ -23,7 +23,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         public async Task<IEnumerable<Treatment>> ListByPacientIdAsync(int id)
         {
             return await _context.Treatments
-                                 .AsNoTracking()
+                                 .Include(x => x.Pacient)
                                  .Where(x => x.PacientId == id)
                                  .ToListAsync();
 
@@ -32,7 +32,6 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         {
             return await _context.Treatments
                                  .Include(x => x.Pacient)
-                                 .AsNoTracking()
                                  .Where(x => x.Pacient.FranchiseId == id)
                                  .ToListAsync();
         }

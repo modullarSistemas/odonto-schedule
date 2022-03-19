@@ -11,12 +11,17 @@ namespace PlanejaOdonto.Api.Services
     public class TreatmentService : ITreatmentService
     {
         private readonly ITreatmentRepository _treatmentRespository;
+        private readonly IProcedureTypeRepository _procedureTypeRepository;
+        private readonly IProcedureRepository _procedureRepository;
         private readonly IPacientRepository _pacientRespository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TreatmentService(ITreatmentRepository treatmentRespository, IPacientRepository pacientRespository, IUnitOfWork unitOfWork)
+
+        public TreatmentService(ITreatmentRepository treatmentRespository, IProcedureTypeRepository procedureTypeRepository, IProcedureRepository procedureRepository, IPacientRepository pacientRespository, IUnitOfWork unitOfWork)
         {
             _treatmentRespository = treatmentRespository;
+            _procedureTypeRepository = procedureTypeRepository;
+            _procedureRepository = procedureRepository;
             _pacientRespository = pacientRespository;
             _unitOfWork = unitOfWork;
         }
@@ -25,6 +30,12 @@ namespace PlanejaOdonto.Api.Services
         {
             var treatments = await _treatmentRespository.ListAsync();
             return treatments;
+        }
+
+        public async Task<IEnumerable<Procedure>> ListProceduresAsync()
+        {
+            var procedures = await _procedureRepository.ListAsync();
+            return procedures;
         }
 
         public async Task<IEnumerable<Treatment>> ListByFranchiseIdAsync(int id)
@@ -37,6 +48,12 @@ namespace PlanejaOdonto.Api.Services
         {
             var treatments = await _treatmentRespository.ListByPacientIdAsync(id);
             return treatments;
+        }
+
+        public async Task<IEnumerable<Procedure>> ListProcedureByTreatmentIdAsync(int id)
+        {
+            var procedures = await _procedureRepository.ListByTreatmentIdAsync(id);
+            return procedures;
         }
 
         public async Task<TreatmentResponse> SaveAsync(Treatment treatment)
@@ -66,6 +83,13 @@ namespace PlanejaOdonto.Api.Services
 
             try
             {
+                existingTreatment.Status = treatment.Status;
+                existingTreatment.UpdatedAt = DateTime.Now;
+                existingTreatment.Description = treatment.Description;
+                existingTreatment.InstallmentDueDay = treatment.InstallmentDueDay;
+                existingTreatment.InstallmentQuantity = treatment.InstallmentQuantity;
+                existingTreatment.TotalCost =  treatment.TotalCost;
+                
                 await _unitOfWork.CompleteAsync();
 
                 return new TreatmentResponse(existingTreatment);
@@ -99,42 +123,61 @@ namespace PlanejaOdonto.Api.Services
             }
         }
 
-        //private async Task SetTreatmentTotalCost(Treatment treatment)
-        //{
-        //    foreach (var procedure in treatment.Procedures)
-        //    {
-        //        var existingProcedure = await _procedureTypeRepository.FindByIdAsync(procedure.ProcedureTypeId);
-        //        if (existingProcedure == null)
-        //            throw new Exception("Procedimento não está cadastrado no sistema.");
+        private async Task SetTreatmentTotalCost(int treatmentId,IEnumerable<Procedure> procedures)
+        {
+            var treatment = await _treatmentRespository.FindByIdAsync(treatmentId);
 
-        //        treatment.TotalCost += existingProcedure.Cost;
-        //    }
+            foreach (var procedure in procedures)
+            {
+                var existingProcedure = await _procedureTypeRepository.FindByIdAsync(procedure.ProcedureTypeId);
+                if (existingProcedure == null)
+                    throw new Exception("Procedimento não está cadastrado no sistema.");
+ 
+            }
 
-        //}
+            await UpdateAsync(treatmentId,treatment);
 
-        //private void SetTreatmentInstallmentValue(Treatment treatment)
+        }
+
+        //private void GenerateInstallments(Treatment treatment)
         //{
         //    double installmentCost = Math.Truncate(100 * (treatment.TotalCost / treatment.InstallmentQuantity)) / 100;
-        //    int year = DateTime.Now.Year;
-        //    int month = DateTime.Now.Month;
-        //    for (int i = 1; i <= treatment.InstallmentQuantity; i++)
+        //    var date = DateTime.Now;
+        //    for (int i = 0; i <= treatment.InstallmentQuantity; i++)
         //    {
-        //        month++;
+        //        date.AddMonths(i + 1);
         //        treatment.Installments.Add(
         //            new Installment
         //            {
         //                Cost = installmentCost,
-        //                Due = new DateTime(year, month, treatment.InstallmentDueDay),
+        //                Due = new DateTime(date.Year,date.Month , treatment.InstallmentDueDay),
 
         //            });
 
-        //        if (month == 12)
-        //        {
-        //            year++;
-        //            month = 0;
-        //        }
         //    }
         //}
+
+        public async Task<List<Procedure>> GenerateProcedures(int treatmentId, List<Procedure> procedures)
+        {
+            var treatment = await _treatmentRespository.FindByIdAsync(treatmentId);
+
+            foreach (var procedure in procedures)
+            {
+                var existingProcedure = await _procedureTypeRepository.FindByIdAsync(procedure.ProcedureTypeId);
+                if (existingProcedure == null)
+                    throw new Exception("Procedimento não está cadastrado no sistema.");
+
+                treatment.TotalCost += existingProcedure.Cost;
+                procedure.TreatmentId = treatmentId;
+                procedure.CreatedAt = DateTime.Now;
+                await _procedureRepository.AddAsync(procedure);
+                await _unitOfWork.CompleteAsync();
+            }
+
+            await UpdateAsync(treatmentId, treatment);
+
+            return procedures;
+        }
     }
 }
 

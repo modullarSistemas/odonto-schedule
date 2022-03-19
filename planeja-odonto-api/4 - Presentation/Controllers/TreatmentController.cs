@@ -35,6 +35,16 @@ namespace PlanejaOdonto.Api.Application.Controllers
             return resources;
         }
 
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<ProcedureResource>), 200)]
+        public async Task<IEnumerable<ProcedureResource>> ListProceduresAsync()
+        {
+            var procedures = await _treatmentService.ListProceduresAsync();
+            var resources = _mapper.Map<IEnumerable<Procedure>, IEnumerable<ProcedureResource>>(procedures);
+
+            return resources;
+        }
+
         /// <summary>
         /// Lists all treatments.
         /// </summary>
@@ -124,6 +134,31 @@ namespace PlanejaOdonto.Api.Application.Controllers
 
             var categoryResource = _mapper.Map<Treatment, TreatmentResource>(result.Resource);
             return Ok(categoryResource);
+        }
+
+
+        [HttpPost("[action]/{treatmentId}")]
+        [ProducesResponseType(typeof(IEnumerable<ProcedureResource>), 201)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> GenerateProcedures(int treatmentId,[FromBody] List<SaveProcedureResource> resources)
+        {
+            var procedures = _mapper.Map<List<SaveProcedureResource>, List<Procedure>>(resources);
+
+            var result = await _treatmentService.GenerateProcedures(treatmentId,procedures);
+
+            var proceduresResource = _mapper.Map<List<Procedure>, List<ProcedureResource>>(result);
+
+            return Ok(proceduresResource);
+        }
+
+
+        [HttpGet("[action]/{treatmentId}")]
+        [ProducesResponseType(typeof(IEnumerable<ProcedureResource>), 200)]
+        public async Task<IEnumerable<ProcedureResource>> ListProcedureByTreatmentIdAsync(int treatmentId)
+        {
+            var procedures = await _treatmentService.ListProcedureByTreatmentIdAsync(treatmentId);
+            var resources = _mapper.Map<IEnumerable<Procedure>, IEnumerable<ProcedureResource>>(procedures);
+            return resources;
         }
 
     }

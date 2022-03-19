@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -9,9 +10,10 @@ using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 namespace PlanejaOdonto.Api.Migrations
 {
     [DbContext(typeof(PlanejaOdontoDbContext))]
-    partial class PlanejaOdontoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220318054556_Treatment-Status")]
+    partial class TreatmentStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -410,53 +412,6 @@ namespace PlanejaOdonto.Api.Migrations
                     b.ToTable("Schedulings");
                 });
 
-            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Procedure", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<bool>("Completed")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("DentistId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("NeedProthesis")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("ProcedureTypeId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("ProthesisId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Tooth")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TreatmentId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DentistId");
-
-                    b.HasIndex("ProcedureTypeId");
-
-                    b.HasIndex("ProthesisId");
-
-                    b.HasIndex("TreatmentId");
-
-                    b.ToTable("Procedures");
-                });
-
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.ProcedureType", b =>
                 {
                     b.Property<int>("Id")
@@ -658,39 +613,6 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Navigation("Dentist");
 
                     b.Navigation("Pacient");
-                });
-
-            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Procedure", b =>
-                {
-                    b.HasOne("PlanejaOdonto.Api.Domain.Models.DentistAggregate.Dentist", "Dentist")
-                        .WithMany()
-                        .HasForeignKey("DentistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.ProcedureType", "ProcedureType")
-                        .WithMany()
-                        .HasForeignKey("ProcedureTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Prothesis", "Prothesis")
-                        .WithMany()
-                        .HasForeignKey("ProthesisId");
-
-                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", "Treatment")
-                        .WithMany()
-                        .HasForeignKey("TreatmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dentist");
-
-                    b.Navigation("ProcedureType");
-
-                    b.Navigation("Prothesis");
-
-                    b.Navigation("Treatment");
                 });
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", b =>
