@@ -105,7 +105,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
             modelBuilder.Entity<Treatment>().ToTable("Treatments")
                       .Property(f => f.Status)
-                      .HasDefaultValue(TreatmentStatusEnum.Pending);
+                      .HasDefaultValue(TreatmentStatusEnum.Pendente);
 
             modelBuilder.Entity<Income>().ToTable("Income")
                       .Property(f => f.Id)
@@ -127,6 +127,8 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<Procedure>().ToTable("Procedures")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
+
+
         }
 
     }

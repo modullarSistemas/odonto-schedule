@@ -7,9 +7,9 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 {
     public enum TreatmentStatusEnum
     {
-        Pending = 1,
-        EvaluationComplete = 2,
-        InProgress = 3,
-        Finished = 4
+        Pendente = 1,
+        AvaliacaoCompleta = 2,
+        EmProgresso = 3,
+        Finalizado = 4
     }
 }

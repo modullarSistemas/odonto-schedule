@@ -10,7 +10,6 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
     public class Procedure : BaseModel
     {
         [JsonIgnore]
-
         public Treatment Treatment { get; set; }
 
         public int TreatmentId { get; set; }
@@ -24,16 +23,12 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 
         public bool NeedProthesis { get; set; }
 
-        public int ProthesisId { get; set; }
+        public int? ProthesisId { get; set; }
 
         [JsonIgnore]
-        public Prothesis Prothesis { get; set; }
+        public ProcedureType ProcedureType { get; set; }
 
         public int ProcedureTypeId { get; set; }
-
-        [JsonIgnore]
-
-        public ProcedureType ProcedureType { get; set; }
 
         public bool Completed { get; set; }
     }

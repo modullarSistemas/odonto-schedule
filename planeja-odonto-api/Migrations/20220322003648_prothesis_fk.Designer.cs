@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -9,9 +10,10 @@ using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 namespace PlanejaOdonto.Api.Migrations
 {
     [DbContext(typeof(PlanejaOdontoDbContext))]
-    partial class PlanejaOdontoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220322003648_prothesis_fk")]
+    partial class prothesis_fk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -412,11 +414,6 @@ namespace PlanejaOdonto.Api.Migrations
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Procedure", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
                     b.Property<bool>("Completed")
                         .HasColumnType("boolean");
 
@@ -426,13 +423,18 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Property<int>("DentistId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
                     b.Property<bool>("NeedProthesis")
                         .HasColumnType("boolean");
 
                     b.Property<int>("ProcedureTypeId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ProthesisId")
+                    b.Property<int>("ProthesisId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Tooth")
@@ -444,11 +446,11 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.HasKey("Id");
-
                     b.HasIndex("DentistId");
 
                     b.HasIndex("ProcedureTypeId");
+
+                    b.HasIndex("ProthesisId");
 
                     b.HasIndex("TreatmentId");
 
@@ -678,6 +680,12 @@ namespace PlanejaOdonto.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Prothesis", "Prothesis")
+                        .WithMany()
+                        .HasForeignKey("ProthesisId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", "Treatment")
                         .WithMany()
                         .HasForeignKey("TreatmentId")
@@ -687,6 +695,8 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Navigation("Dentist");
 
                     b.Navigation("ProcedureType");
+
+                    b.Navigation("Prothesis");
 
                     b.Navigation("Treatment");
                 });

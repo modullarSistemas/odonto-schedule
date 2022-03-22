@@ -145,6 +145,9 @@ namespace PlanejaOdonto.Api.Services
         {
             var treatment = await _treatmentRespository.FindByIdAsync(treatmentId);
 
+            if (treatment == null)
+                throw new Exception("Tratamento não cadastrado");
+
             foreach (var procedure in procedures)
             {
                 var existingProcedure = await _procedureTypeRepository.FindByIdAsync(procedure.ProcedureTypeId);
@@ -153,7 +156,7 @@ namespace PlanejaOdonto.Api.Services
 
                 if (procedure.NeedProthesis)
                 {
-                    var prothesis = await _prothesisRepository.FindByIdAsync(procedure.ProthesisId);
+                    var prothesis = await _prothesisRepository.FindByIdAsync((int)procedure.ProthesisId);
                     treatment.ProthesisCost += prothesis.Cost;
                 }
 

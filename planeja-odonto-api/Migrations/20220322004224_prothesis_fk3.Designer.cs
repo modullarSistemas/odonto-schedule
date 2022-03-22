@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -9,9 +10,10 @@ using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 namespace PlanejaOdonto.Api.Migrations
 {
     [DbContext(typeof(PlanejaOdontoDbContext))]
-    partial class PlanejaOdontoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220322004224_prothesis_fk3")]
+    partial class prothesis_fk3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -450,6 +452,8 @@ namespace PlanejaOdonto.Api.Migrations
 
                     b.HasIndex("ProcedureTypeId");
 
+                    b.HasIndex("ProthesisId");
+
                     b.HasIndex("TreatmentId");
 
                     b.ToTable("Procedures");
@@ -678,6 +682,10 @@ namespace PlanejaOdonto.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Prothesis", "Prothesis")
+                        .WithMany()
+                        .HasForeignKey("ProthesisId");
+
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", "Treatment")
                         .WithMany()
                         .HasForeignKey("TreatmentId")
@@ -687,6 +695,8 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Navigation("Dentist");
 
                     b.Navigation("ProcedureType");
+
+                    b.Navigation("Prothesis");
 
                     b.Navigation("Treatment");
                 });

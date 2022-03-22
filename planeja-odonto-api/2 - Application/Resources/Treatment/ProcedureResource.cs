@@ -12,6 +12,8 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public int Tooth { get; set; }
 
+        public int ProthesisId { get; set; }
+
         public int ProcedureTypeId { get; set; }
 
         public bool NeedProthesis { get; set; }
