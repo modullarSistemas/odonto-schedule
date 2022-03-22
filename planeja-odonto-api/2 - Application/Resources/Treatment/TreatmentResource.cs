@@ -15,7 +15,11 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public double TotalCost { get; set; }
 
+        public double ProthesisCost { get; set; }
+
         public int InstallmentDueDay { get; set; }
+
+        public string Anamnesis { get; set; }
 
         public string Status { get; set; }
     }

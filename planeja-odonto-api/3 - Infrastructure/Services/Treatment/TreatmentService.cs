@@ -14,28 +14,28 @@ namespace PlanejaOdonto.Api.Services
         private readonly IProcedureTypeRepository _procedureTypeRepository;
         private readonly IProcedureRepository _procedureRepository;
         private readonly IPacientRepository _pacientRespository;
+        private readonly IProthesisRepository _prothesisRepository;
+
         private readonly IUnitOfWork _unitOfWork;
 
 
-        public TreatmentService(ITreatmentRepository treatmentRespository, IProcedureTypeRepository procedureTypeRepository, IProcedureRepository procedureRepository, IPacientRepository pacientRespository, IUnitOfWork unitOfWork)
+
+        
+
+        public TreatmentService(
+              ITreatmentRepository treatmentRespository
+            , IProcedureTypeRepository procedureTypeRepository
+            , IProcedureRepository procedureRepository
+            , IPacientRepository pacientRespository
+            , IProthesisRepository prothesisRepository
+            , IUnitOfWork unitOfWork)
         {
             _treatmentRespository = treatmentRespository;
             _procedureTypeRepository = procedureTypeRepository;
             _procedureRepository = procedureRepository;
             _pacientRespository = pacientRespository;
+            _prothesisRepository = prothesisRepository;
             _unitOfWork = unitOfWork;
-        }
-
-        public async Task<IEnumerable<Treatment>> ListAsync()
-        {
-            var treatments = await _treatmentRespository.ListAsync();
-            return treatments;
-        }
-
-        public async Task<IEnumerable<Procedure>> ListProceduresAsync()
-        {
-            var procedures = await _procedureRepository.ListAsync();
-            return procedures;
         }
 
         public async Task<IEnumerable<Treatment>> ListByFranchiseIdAsync(int id)
@@ -123,22 +123,6 @@ namespace PlanejaOdonto.Api.Services
             }
         }
 
-        private async Task SetTreatmentTotalCost(int treatmentId,IEnumerable<Procedure> procedures)
-        {
-            var treatment = await _treatmentRespository.FindByIdAsync(treatmentId);
-
-            foreach (var procedure in procedures)
-            {
-                var existingProcedure = await _procedureTypeRepository.FindByIdAsync(procedure.ProcedureTypeId);
-                if (existingProcedure == null)
-                    throw new Exception("Procedimento não está cadastrado no sistema.");
- 
-            }
-
-            await UpdateAsync(treatmentId,treatment);
-
-        }
-
         //private void GenerateInstallments(Treatment treatment)
         //{
         //    double installmentCost = Math.Truncate(100 * (treatment.TotalCost / treatment.InstallmentQuantity)) / 100;
@@ -167,6 +151,12 @@ namespace PlanejaOdonto.Api.Services
                 if (existingProcedure == null)
                     throw new Exception("Procedimento não está cadastrado no sistema.");
 
+                if (procedure.NeedProthesis)
+                {
+                    var prothesis = await _prothesisRepository.FindByIdAsync(procedure.ProthesisId);
+                    treatment.ProthesisCost += prothesis.Cost;
+                }
+
                 treatment.TotalCost += existingProcedure.Cost;
                 procedure.TreatmentId = treatmentId;
                 procedure.CreatedAt = DateTime.Now;
@@ -178,6 +168,23 @@ namespace PlanejaOdonto.Api.Services
 
             return procedures;
         }
+
+        public async Task<ProcedureResponse> FinalizeProcedure(int procedureId)
+        {
+            var procedure = await _procedureRepository.FindByIdAsync(procedureId);
+            if (procedure == null)
+                throw new Exception("Procedimento não está cadastrado no sistema.");
+
+            procedure.Completed = true;
+             _procedureRepository.Update(procedure);
+            await _unitOfWork.CompleteAsync();
+
+            return new ProcedureResponse(procedure);
+
+        }
+
+
+
     }
 }
 

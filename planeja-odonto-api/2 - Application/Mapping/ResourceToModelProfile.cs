@@ -97,7 +97,7 @@ namespace PlanejaOdonto.Api.Application.Mapping
                 .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status));
 
             CreateMap<SaveTreatmentResource, Treatment>()
-                .ForMember(src => src.Status, opt => opt.MapFrom(src => (SchedulingType)src.Status));
+                .ForMember(src => src.Status, opt => opt.MapFrom(src => (TreatmentStatusEnum)src.Status));
 
             CreateMap<InstallmentResource, Installment>()
                 .ForMember(src => src.PaymentMethod, opt => opt.MapFrom(src => src.PaymentMethod));

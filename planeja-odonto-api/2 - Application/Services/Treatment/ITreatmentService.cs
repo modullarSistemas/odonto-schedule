@@ -7,7 +7,6 @@ namespace PlanejaOdonto.Api.Application.Services
 {
     public interface ITreatmentService
     {
-        Task<IEnumerable<Treatment>> ListAsync();
         Task<IEnumerable<Treatment>> ListByFranchiseIdAsync(int id);
         Task<IEnumerable<Treatment>> ListByPacientIdAsync(int id);
         Task<IEnumerable<Procedure>> ListProcedureByTreatmentIdAsync(int id);
@@ -15,8 +14,8 @@ namespace PlanejaOdonto.Api.Application.Services
         Task<TreatmentResponse> UpdateAsync(int id, Treatment treatment);
         Task<TreatmentResponse> DeleteAsync(int id);
         Task<List<Procedure>> GenerateProcedures(int treatmentId, List<Procedure> procedures);
+        Task<ProcedureResponse> FinalizeProcedure(int procedureId);
 
-        Task<IEnumerable<Procedure>> ListProceduresAsync();
 
     }
 }

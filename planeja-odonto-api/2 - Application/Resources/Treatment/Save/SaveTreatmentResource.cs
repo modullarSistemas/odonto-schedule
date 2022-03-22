@@ -15,6 +15,8 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public int InstallmentDueDay { get; set; }
 
-        public string Status { get; set; }
+        public int Status { get; set; }
+
+        public string Anamnesis { get; set; }
     }
 }
