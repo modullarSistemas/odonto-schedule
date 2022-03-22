@@ -15,12 +15,7 @@ namespace PlanejaOdonto.Api.Services
         private readonly IProcedureRepository _procedureRepository;
         private readonly IPacientRepository _pacientRespository;
         private readonly IProthesisRepository _prothesisRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
-
-
-        
 
         public TreatmentService(
               ITreatmentRepository treatmentRespository
@@ -36,6 +31,12 @@ namespace PlanejaOdonto.Api.Services
             _pacientRespository = pacientRespository;
             _prothesisRepository = prothesisRepository;
             _unitOfWork = unitOfWork;
+        }
+
+        public async Task<Treatment> GetByIdAsync(int id)
+        {
+            var treatment = await _treatmentRespository.FindByIdAsync(id);
+            return treatment;
         }
 
         public async Task<IEnumerable<Treatment>> ListByFranchiseIdAsync(int id)
@@ -185,7 +186,6 @@ namespace PlanejaOdonto.Api.Services
             return new ProcedureResponse(procedure);
 
         }
-
 
 
     }

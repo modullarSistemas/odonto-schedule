@@ -44,7 +44,8 @@ namespace PlanejaOdonto.Api.Application.Controllers
                 user = result.Resource.Username,
                 franchiseId = result.Resource.FranchiseId,
                 role = result.Resource.Role,
-                token
+                token,
+                userId = result.Resource.Id
             };
         }
 
