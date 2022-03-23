@@ -31,6 +31,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             return await _context.Schedulings
                      .AsNoTracking()
                      .Include(x=>x.Pacient)
+                     .Include(y=>y.Dentist)
                      .Where(x => x.Pacient.FranchiseId == id)
                      .ToListAsync();
         }
@@ -39,6 +40,8 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         {
             return await _context.Schedulings
                                  .AsNoTracking()
+                                 .Include(x => x.Pacient)
+                                 .Include(y => y.Dentist)
                                  .ToListAsync();
 
             // AsNoTracking tells EF Core it doesn't need to track changes on listed entities. Disabling entity
@@ -52,7 +55,10 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 
         public async Task<Scheduling> FindByIdAsync(int id)
         {
-            return await _context.Schedulings.FindAsync(id);
+            return await _context.Schedulings
+                .Include(x=>x.Dentist)
+                .Include(x=>x.Pacient)
+                .FirstOrDefaultAsync(x=>x.Id == id);
         }
 
 
