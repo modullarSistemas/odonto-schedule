@@ -1,5 +1,6 @@
 ﻿using PlanejaOdonto.Api.Application.Services;
 using PlanejaOdonto.Api.Application.Services.Communication;
+using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using System;
@@ -88,9 +89,7 @@ namespace PlanejaOdonto.Api.Services
                 existingTreatment.UpdatedAt = DateTime.Now;
                 existingTreatment.Description = treatment.Description;
                 existingTreatment.InstallmentDueDay = treatment.InstallmentDueDay;
-                existingTreatment.InstallmentQuantity = treatment.InstallmentQuantity;
-                existingTreatment.TotalCost =  treatment.TotalCost;
-                
+                existingTreatment.InstallmentQuantity = treatment.InstallmentQuantity;                
                 await _unitOfWork.CompleteAsync();
 
                 return new TreatmentResponse(existingTreatment);
@@ -101,6 +100,27 @@ namespace PlanejaOdonto.Api.Services
                 return new TreatmentResponse($"Ocorreu um erro ao atualizar o agendamento: {ex.Message}");
             }
         }
+
+
+        public async Task<TreatmentResponse> UpdateStatusAsync(int id, TreatmentStatusEnum status)
+        {
+            var existingTreatment = await _treatmentRespository.FindByIdAsync(id);
+
+            try
+            {
+                existingTreatment.Status = status;
+                existingTreatment.UpdatedAt = DateTime.Now;
+                await _unitOfWork.CompleteAsync();
+
+                return new TreatmentResponse(existingTreatment);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new TreatmentResponse($"Ocorreu um erro ao atualizar o agendamento: {ex.Message}");
+            }
+        }
+
 
 
         public async Task<TreatmentResponse> DeleteAsync(int id)
@@ -124,23 +144,23 @@ namespace PlanejaOdonto.Api.Services
             }
         }
 
-        //private void GenerateInstallments(Treatment treatment)
-        //{
-        //    double installmentCost = Math.Truncate(100 * (treatment.TotalCost / treatment.InstallmentQuantity)) / 100;
-        //    var date = DateTime.Now;
-        //    for (int i = 0; i <= treatment.InstallmentQuantity; i++)
-        //    {
-        //        date.AddMonths(i + 1);
-        //        treatment.Installments.Add(
-        //            new Installment
-        //            {
-        //                Cost = installmentCost,
-        //                Due = new DateTime(date.Year,date.Month , treatment.InstallmentDueDay),
+        private void GenerateInstallments(Treatment treatment)
+        {
+            double installmentCost = Math.Truncate(100 * (treatment.TotalCost / treatment.InstallmentQuantity)) / 100;
+            var date = DateTime.Now;
+            for (int i = 0; i <= treatment.InstallmentQuantity; i++)
+            {
+                date.AddMonths(i + 1);
+                treatment.Installments.Add(
+                    new Installment
+                    {
+                        Cost = installmentCost,
+                        Due = new DateTime(date.Year, date.Month, treatment.InstallmentDueDay),
 
-        //            });
+                    });
 
-        //    }
-        //}
+            }
+        }
 
         public async Task<List<Procedure>> GenerateProcedures(int treatmentId, List<Procedure> procedures)
         {
@@ -186,7 +206,6 @@ namespace PlanejaOdonto.Api.Services
             return new ProcedureResponse(procedure);
 
         }
-
 
     }
 }

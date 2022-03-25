@@ -26,7 +26,6 @@ namespace PlanejaOdonto.Api.Application.Resources
 
         public string Status { get; set; }
 
-
         public int ScheduledBy { get; set; }
 
     }

@@ -76,7 +76,7 @@ namespace PlanejaOdonto.Api.Services
                 {
                     var existingProcedure = await _procedureTypeRepository.FindByIdAsync(scheduling.ProcedureTypeId);
                     if (existingProcedure == null)
-                        return new SchedulingResponse("Usuario não cadastrado no sistema");
+                        return new SchedulingResponse("Procedimento não cadastrado no sistema");
                 }
 
                 var availableDate = await _schedulingRepository.CheckDateAvailability(scheduling);

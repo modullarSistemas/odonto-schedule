@@ -65,7 +65,10 @@ namespace PlanejaOdonto.Api.Application.Mapping
             CreateMap<Prothesis, SaveProthesisResource>();
 
 
-            CreateMap<Treatment, TreatmentResource>();
+            CreateMap<Treatment, TreatmentResource>()
+                .ForMember(src => src.Status,
+                           opt => opt.MapFrom(src => src.Status.ToDescriptionString()));
+
             CreateMap<Treatment, SaveTreatmentResource>();
 
 

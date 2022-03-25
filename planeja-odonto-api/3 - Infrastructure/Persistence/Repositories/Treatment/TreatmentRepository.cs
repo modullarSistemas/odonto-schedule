@@ -16,6 +16,9 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         public async Task<IEnumerable<Treatment>> ListAsync()
         {
             return await _context.Treatments
+                                 .Include(x => x.Pacient)
+                                 .Include(x => x.Procedures)
+                                 .Include(x => x.Installments)
                                  .AsNoTracking()
                                  .ToListAsync();
         }
@@ -24,6 +27,8 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         {
             return await _context.Treatments
                                  .Include(x => x.Pacient)
+                                 .Include(x => x.Procedures)
+                                 .Include(x => x.Installments)
                                  .Where(x => x.PacientId == id)
                                  .ToListAsync();
 
@@ -32,6 +37,8 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         {
             return await _context.Treatments
                                  .Include(x => x.Pacient)
+                                 .Include(x => x.Procedures)
+                                 .Include(x => x.Installments)
                                  .Where(x => x.Pacient.FranchiseId == id)
                                  .ToListAsync();
         }

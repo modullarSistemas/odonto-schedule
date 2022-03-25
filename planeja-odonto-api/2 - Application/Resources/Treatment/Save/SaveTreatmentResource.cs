@@ -9,14 +9,5 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
     {
         public int PacientId { get; set; }
 
-        public int InstallmentQuantity { get; set; }
-
-        public double TotalCost { get; set; }
-
-        public int InstallmentDueDay { get; set; }
-
-        public int Status { get; set; }
-
-        public string Anamnesis { get; set; }
     }
 }

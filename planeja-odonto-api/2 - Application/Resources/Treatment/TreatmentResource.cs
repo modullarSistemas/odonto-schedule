@@ -13,6 +13,10 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public int InstallmentQuantity { get; set; }
 
+        public List<ProcedureResource> Procedures { get; set; }
+
+        public List<InstallmentResource> Installments { get; set; }
+
         public double TotalCost { get; set; }
 
         public double ProthesisCost { get; set; }

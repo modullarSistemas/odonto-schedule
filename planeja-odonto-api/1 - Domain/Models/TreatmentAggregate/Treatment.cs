@@ -1,4 +1,5 @@
-﻿using PlanejaOdonto.Api.Domain.Models.PacientAggregate;
+﻿using PlanejaOdonto.Api.Domain.Enums;
+using PlanejaOdonto.Api.Domain.Models.PacientAggregate;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -10,6 +11,12 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 
         [JsonIgnore]
         public Pacient Pacient { get; set; }
+
+        [JsonIgnore]
+        public List<Procedure> Procedures { get; set; }
+
+        [JsonIgnore]
+        public List<Installment> Installments { get; set; }
 
         public string Description { get; set; }
 
