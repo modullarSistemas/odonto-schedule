@@ -8,6 +8,8 @@ namespace PlanejaOdonto.Api.Domain.Models.DentistAggregate
     {
         public string Name { get; set; }
 
+        public double Comission { get; set; }
+
         public int UserId { get; set; }
 
         public int FranchiseId { get; set; }

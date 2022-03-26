@@ -85,11 +85,11 @@ namespace PlanejaOdonto.Api.Services
 
             try
             {
-                existingTreatment.Status = treatment.Status;
                 existingTreatment.UpdatedAt = DateTime.Now;
                 existingTreatment.Description = treatment.Description;
                 existingTreatment.InstallmentDueDay = treatment.InstallmentDueDay;
-                existingTreatment.InstallmentQuantity = treatment.InstallmentQuantity;                
+                existingTreatment.InstallmentQuantity = treatment.InstallmentQuantity;
+                existingTreatment.Anamnesis = treatment.Anamnesis;
                 await _unitOfWork.CompleteAsync();
 
                 return new TreatmentResponse(existingTreatment);

@@ -8,7 +8,7 @@ namespace PlanejaOdonto.Api.Domain.Enums
 {
     public enum DentistCategory : byte
     {
-        [Description("ClínicoGeral")]
+        [Description("Clínico Geral")]
         GeneralPractitioner = 1
 
     }

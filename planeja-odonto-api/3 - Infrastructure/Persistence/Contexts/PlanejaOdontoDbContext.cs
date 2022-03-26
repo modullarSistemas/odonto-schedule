@@ -35,6 +35,8 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         public DbSet<Procedure> Procedures { get; set; }
 
+        public DbSet<Installment> Installments { get; set; }
+
         public DbSet<Treatment> Treatments { get; set; }
 
         public DbSet<Income> Income { get; set; }
@@ -125,6 +127,11 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
                       .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Procedure>().ToTable("Procedures")
+                      .Property(f => f.Id)
+                      .ValueGeneratedOnAdd();
+
+
+            modelBuilder.Entity<Installment>().ToTable("Installments")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
 

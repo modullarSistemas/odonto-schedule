@@ -9,5 +9,6 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
     {
         public int PacientId { get; set; }
 
+        public string Description { get; set; }
     }
 }

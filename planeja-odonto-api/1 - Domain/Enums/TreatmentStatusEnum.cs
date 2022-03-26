@@ -14,6 +14,9 @@ namespace PlanejaOdonto.Api.Domain.Enums
         EmProgresso = 3,
 
         [Description("Finalizado")]
-        Finalizado = 4
+        Finalizado = 4,
+
+        [Description("Cancelado")]
+        Cancelado = 5,
     }
 }
