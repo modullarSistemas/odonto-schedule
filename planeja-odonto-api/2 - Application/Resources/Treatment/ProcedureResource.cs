@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PlanejaOdonto.Api.Application.Resources.ProcedureType;
+using PlanejaOdonto.Api.Application.Resources.Prothesis;
+using System;
 
 namespace PlanejaOdonto.Api.Application.Resources.Treatment
 {
@@ -14,7 +16,11 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public int ProthesisId { get; set; }
 
+        public ProthesisResource Prothesis { get; set; }
+
         public int ProcedureTypeId { get; set; }
+
+        public ProcedureTypeResource ProcedureType { get; set; }
 
         public bool NeedProthesis { get; set; }
 

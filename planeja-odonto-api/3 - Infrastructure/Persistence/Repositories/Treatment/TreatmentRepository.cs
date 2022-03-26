@@ -18,6 +18,9 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             return await _context.Treatments
                                  .Include(x => x.Pacient)
                                  .Include(x => x.Procedures)
+                                    .ThenInclude(y=>y.ProcedureType)
+                                  .Include(y=>y.Procedures)
+                                    .ThenInclude(x=>x.Prothesis)
                                  .Include(x => x.Installments)
                                  .AsNoTracking()
                                  .ToListAsync();
@@ -28,8 +31,11 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             return await _context.Treatments
                                  .Include(x => x.Pacient)
                                  .Include(x => x.Procedures)
+                                    .ThenInclude(y => y.ProcedureType)
+                                  .Include(y => y.Procedures)
+                                    .ThenInclude(x => x.Prothesis)
                                  .Include(x => x.Installments)
-                                 .Where(x => x.PacientId == id)
+                                 .AsNoTracking()
                                  .ToListAsync();
 
         }
@@ -38,7 +44,11 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             return await _context.Treatments
                                  .Include(x => x.Pacient)
                                  .Include(x => x.Procedures)
+                                    .ThenInclude(y => y.ProcedureType)
+                                  .Include(y => y.Procedures)
+                                    .ThenInclude(x => x.Prothesis)
                                  .Include(x => x.Installments)
+                                 .AsNoTracking()
                                  .Where(x => x.Pacient.FranchiseId == id)
                                  .ToListAsync();
         }
@@ -51,10 +61,14 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         public async Task<Treatment> FindByIdAsync(int id)
         {
             return await _context.Treatments
-                            .Include(x => x.Pacient)
-                            .Include(x => x.Procedures)
-                            .Include(x => x.Installments)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                                 .Include(x => x.Pacient)
+                                 .Include(x => x.Procedures)
+                                    .ThenInclude(y => y.ProcedureType)
+                                 .Include(y => y.Procedures)
+                                    .ThenInclude(x => x.Prothesis)
+                                 .Include(x => x.Installments)
+                                 .AsNoTracking()
+                                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public void Update(Treatment franchisee)
