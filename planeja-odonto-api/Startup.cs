@@ -12,6 +12,7 @@ using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 using PlanejaOdonto.Api.Application.Services;
 using System;
+using System.Globalization;
 
 namespace PlanejaOdonto.Api
 {
@@ -115,6 +116,8 @@ namespace PlanejaOdonto.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Planeja Odonto API");
             });
 
+            
+            CultureInfo.CurrentCulture = new CultureInfo("pt-BR");
 
             //app.UseCustomSwagger();
 

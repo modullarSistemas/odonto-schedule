@@ -15,7 +15,7 @@ namespace PlanejaOdonto.Api.Application.Resources.Pacient
 
         public DateTime BirthDate { get; set; }
 
-        public string CPF { get; set; } // tinytipe\
+        public string CPF { get; set; }
 
         public string Rg { get; set; }
 

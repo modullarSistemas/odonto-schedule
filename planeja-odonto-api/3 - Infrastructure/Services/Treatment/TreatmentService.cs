@@ -67,7 +67,7 @@ namespace PlanejaOdonto.Api.Services
                 if (existingPacient == null)
                     return new TreatmentResponse("Paciente não está cadastrado no sistema.");
 
-
+                
                 await _treatmentRespository.AddAsync(treatment);
                 await _unitOfWork.CompleteAsync();
 
@@ -116,7 +116,7 @@ namespace PlanejaOdonto.Api.Services
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new TreatmentResponse($"Ocorreu um erro ao atualizar o agendamento: {ex.Message}");
+                return new TreatmentResponse($"Ocorreu um erro ao atualizar o Tratamento: {ex.Message}");
             }
         }
 
@@ -139,7 +139,7 @@ namespace PlanejaOdonto.Api.Services
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new TreatmentResponse($"Ocorreu um erro ao deletar o agendamento: {ex.Message}");
+                return new TreatmentResponse($"Ocorreu um erro ao deletar o Tratamento: {ex.Message}");
             }
         }
 

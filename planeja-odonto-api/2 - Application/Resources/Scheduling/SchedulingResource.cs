@@ -1,5 +1,6 @@
 ﻿using PlanejaOdonto.Api.Application.Resources.Dentist;
 using PlanejaOdonto.Api.Application.Resources.Pacient;
+using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 using System;
 
 namespace PlanejaOdonto.Api.Application.Resources
@@ -12,15 +13,11 @@ namespace PlanejaOdonto.Api.Application.Resources
 
         public DateTime EndDate { get; set; }
 
-        public int PacientId { get; set; }
-
         public PacientResource Pacient{ get; set; }
-
-        public int DentistId { get; set; }
 
         public DentistResource Dentist { get; set; }
 
-        public int ProcedureTypeId { get; set; }
+        public ProcedureTypeResource ProcedureType { get; set; }
 
         public string SchedulingType { get; set; }
 

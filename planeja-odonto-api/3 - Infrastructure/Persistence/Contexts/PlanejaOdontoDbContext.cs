@@ -7,6 +7,7 @@ using PlanejaOdonto.Api.Domain.Models.LoginAggregate;
 using PlanejaOdonto.Api.Domain.Models.PacientAggregate;
 using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
+using System;
 using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
@@ -51,64 +52,37 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ConfigureUser(modelBuilder);
 
-            modelBuilder.Entity<User>().ToTable("Users")
-                        .Property(f => f.Id)
-                        .ValueGeneratedOnAdd();
+            ConfigureFranchisee(modelBuilder);
 
-            modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Username).IsUnique(); });
+            ConfigureFranchise(modelBuilder);
 
+            ConfigurePacient(modelBuilder);
 
-            modelBuilder.Entity<User>().ToTable("Users")
-                        .HasIndex(f => f.Username)
-                        .IsUnique();
+            ConfigureScheduling(modelBuilder);
 
-            modelBuilder.Entity<Franchisee>().ToTable("Franchisees")
-                        .Property(f => f.Id)
-                        .ValueGeneratedOnAdd();
+            ConfigureDentist(modelBuilder);
 
-            modelBuilder.Entity<Franchise>().ToTable("Franchises")
-                        .Property(f => f.Id)
-                        .ValueGeneratedOnAdd();
+            ConfigureTreatment(modelBuilder);
 
-            modelBuilder.Entity<Pacient>().ToTable("Pacients")
-                        .Property(f => f.Id)
-                        .ValueGeneratedOnAdd();
+            ConfigureFinancial(modelBuilder);
 
-            modelBuilder.Entity<Address>().ToTable("Adresses")
-                        .Property(f => f.Id)
-                        .ValueGeneratedOnAdd();
+            ConfigureProthesis(modelBuilder);
 
-            modelBuilder.Entity<Dependent>().ToTable("Dependants")
-                        .Property(f => f.Id)
-                        .ValueGeneratedOnAdd();
+            ConfigureProcedure(modelBuilder);
 
-            modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
+        }
+
+        private static void ConfigureProthesis(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Prothesis>().ToTable("Prothesis")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
+        }
 
-            modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
-                      .Property(f => f.Status)
-                      .HasDefaultValue(SchedulingStatus.New);
-
-
-            modelBuilder.Entity<Dentist>().ToTable("Dentists")
-                      .Property(f => f.Id)
-                      .ValueGeneratedOnAdd();
-
-
-            modelBuilder.Entity<ProcedureType>().ToTable("ProcedureTypes")
-                      .Property(f => f.Id)
-                      .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<Treatment>().ToTable("Treatments")
-                      .Property(f => f.Id)
-                      .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<Treatment>().ToTable("Treatments")
-                      .Property(f => f.Status)
-                      .HasDefaultValue(TreatmentStatusEnum.Pendente);
-
+        private static void ConfigureFinancial(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Income>().ToTable("Income")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
@@ -120,23 +94,145 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<ExpenseGroup>().ToTable("ExpenseGroups")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
+        }
 
-
-            modelBuilder.Entity<Prothesis>().ToTable("Prothesis")
+        private static void ConfigureProcedure(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Procedure>().ToTable("Procedures")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Procedure>().ToTable("Procedures")
+                      .Property(f => f.CreatedAt)
+                      .HasDefaultValueSql("NOW()");
+
+
+
+            modelBuilder.Entity<ProcedureType>().ToTable("ProcedureTypes")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<ProcedureType>().ToTable("ProcedureTypes")
+                      .Property(f => f.CreatedAt)
+                      .HasDefaultValueSql("NOW()");
+        }
+
+        private static void ConfigureTreatment(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Treatment>().ToTable("Treatments")
+                      .Property(f => f.Id)
+                      .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Treatment>().ToTable("Treatments")
+                      .Property(f => f.Status)
+                      .HasDefaultValue(TreatmentStatusEnum.Pendente);
+
+            modelBuilder.Entity<Treatment>().ToTable("Treatments")
+                      .Property(f => f.CreatedAt)
+                      .HasDefaultValueSql("NOW()");
 
 
             modelBuilder.Entity<Installment>().ToTable("Installments")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
 
-
+            modelBuilder.Entity<Installment>().ToTable("Installments")
+                     .Property(f => f.CreatedAt)
+                     .HasDefaultValueSql("NOW()");
         }
 
+        private static void ConfigureDentist(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Dentist>().ToTable("Dentists")
+                      .Property(f => f.Id)
+                      .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Dentist>().ToTable("Dentists")
+                      .Property(f => f.CreatedAt)
+                      .HasDefaultValueSql("NOW()");
+        }
+
+        private static void ConfigureScheduling(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
+                      .Property(f => f.Id)
+                      .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
+                      .Property(f => f.Status)
+                      .HasDefaultValue(SchedulingStatus.New);
+
+            modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
+                      .Property(f => f.CreatedAt)
+                      .HasDefaultValueSql("NOW()");
+        }
+
+        private static void ConfigurePacient(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pacient>().ToTable("Pacients")
+                        .Property(f => f.Id)
+                        .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Pacient>().ToTable("Pacients")
+                        .Property(f => f.CreatedAt)
+                        .HasDefaultValueSql("NOW()");
+
+            modelBuilder.Entity<Address>().ToTable("Adresses")
+                        .Property(f => f.Id)
+                        .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Address>().ToTable("Adresses")
+                        .Property(f => f.CreatedAt)
+                        .HasDefaultValueSql("NOW()");
+
+
+            modelBuilder.Entity<Dependent>().ToTable("Dependants")
+                        .Property(f => f.Id)
+                        .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Dependent>().ToTable("Dependants")
+                        .Property(f => f.CreatedAt)
+                        .HasDefaultValueSql("NOW()");
+        }
+
+        private static void ConfigureFranchise(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Franchise>().ToTable("Franchises")
+                        .Property(f => f.Id)
+                        .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Franchise>().ToTable("Franchises")
+                        .Property(f => f.CreatedAt)
+                        .HasDefaultValueSql("NOW()");
+        }
+
+        private static void ConfigureFranchisee(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Franchisee>().ToTable("Franchisees")
+                        .Property(f => f.Id)
+                        .ValueGeneratedOnAdd();
+
+
+            modelBuilder.Entity<Franchisee>().ToTable("Franchisees")
+                        .Property(f => f.CreatedAt)
+                        .HasDefaultValueSql("NOW()");
+        }
+
+        private static void ConfigureUser(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().ToTable("Users")
+                        .Property(f => f.Id)
+                        .ValueGeneratedOnAdd();
+
+
+            modelBuilder.Entity<User>().ToTable("Users")
+                        .HasIndex(f => f.Username)
+                        .IsUnique();
+
+
+            modelBuilder.Entity<User>().ToTable("Users")
+                        .Property(f => f.CreatedAt)
+                        .HasDefaultValueSql("NOW()");
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace PlanejaOdonto.Api.Domain.Models.SchedulingAggregate
 
         public int ProcedureTypeId { get; set; }
 
-        public Procedure MyProperty { get; set; }
+        public ProcedureType ProcedureType { get; set; }
 
         public int PacientId { get; set; }
 
