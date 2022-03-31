@@ -25,7 +25,7 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 
         public int? ProthesisId { get; set; }
 
-        public Prothesis Prothesis { get; set; }
+        public Prothesis? Prothesis { get; set; }
 
         [JsonIgnore]
         public int ProcedureTypeId { get; set; }
