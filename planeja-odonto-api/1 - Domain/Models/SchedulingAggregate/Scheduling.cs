@@ -9,11 +9,13 @@ namespace PlanejaOdonto.Api.Domain.Models.SchedulingAggregate
 {
     public class Scheduling : BaseModel
     {
-        public DateTime StartDate{ get; set; }
+        public DateTime StartDate { get; set; }
 
-        public DateTime EndDate{ get; set; }
+        public DateTime EndDate { get; set; }
 
         public int ProcedureTypeId { get; set; }
+
+        public Procedure MyProperty { get; set; }
 
         public int PacientId { get; set; }
 

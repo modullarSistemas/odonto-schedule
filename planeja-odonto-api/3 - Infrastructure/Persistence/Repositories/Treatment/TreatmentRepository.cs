@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -11,7 +12,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 {
     public class TreatmentRepository : BaseRepository, ITreatmentRepository
     {
-        public TreatmentRepository(PlanejaOdontoDbContext context) : base(context) { }
+        public TreatmentRepository(PlanejaOdontoDbContext context,IConfiguration configuration) : base(context, configuration) { }
 
         public async Task<IEnumerable<Treatment>> ListAsync()
         {
@@ -63,11 +64,17 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             return await _context.Treatments
                                  .Include(x => x.Pacient)
                                  .Include(x => x.Procedures)
-                                    .ThenInclude(y => y.ProcedureType)
-                                 .Include(y => y.Procedures)
-                                    .ThenInclude(x => x.Prothesis)
                                  .Include(x => x.Installments)
                                  .AsNoTracking()
+                                 .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Treatment> FindByIdTrackingAsync(int id)
+        {
+            return await _context.Treatments
+                                 .Include(x => x.Procedures)
+                                 .Include(x => x.Pacient)
+                                 .Include(x => x.Installments)
                                  .FirstOrDefaultAsync(x => x.Id == id);
         }
 

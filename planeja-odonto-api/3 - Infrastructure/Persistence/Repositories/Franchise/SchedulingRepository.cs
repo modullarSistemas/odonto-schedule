@@ -8,12 +8,13 @@ using System.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 {
     public class SchedulingRepository : BaseRepository, ISchedulingRepository
     {
-        public SchedulingRepository(PlanejaOdontoDbContext context) : base(context) { }
+        public SchedulingRepository(PlanejaOdontoDbContext context,IConfiguration configuration) : base(context, configuration) { }
 
 
 
@@ -21,6 +22,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         {
             return await _context.Schedulings
                      .AsNoTracking()
+                     .Include(x=>x.Pacient)
                      .Include(x=>x.Dentist)
                      .Where(x=>x.Dentist.UserId == id)
                      .ToListAsync();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -10,7 +11,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 {
     public class ProcedureRepository : BaseRepository, IProcedureRepository
     {
-        public ProcedureRepository(PlanejaOdontoDbContext context) : base(context) { }
+        public ProcedureRepository(PlanejaOdontoDbContext context,IConfiguration configuration) : base(context, configuration) { }
 
         public async Task<IEnumerable<Procedure>> ListAsync()
         {

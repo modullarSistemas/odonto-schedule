@@ -85,10 +85,10 @@ namespace PlanejaOdonto.Api.Application.Mapping
             CreateMap<SaveProcedureTypeResource, ProcedureType>();
 
             CreateMap<SaveProcedureResource, Treatment>();
-            CreateMap<SaveInstallmentResource, Treatment>();
+            CreateMap<GenerateInstallmentsResource, Treatment>();
 
             CreateMap<SaveProcedureResource, Treatment>();
-            CreateMap<SaveInstallmentResource, Treatment>();
+            CreateMap<GenerateInstallmentsResource, Treatment>();
 
             CreateMap<ProcedureResource, Procedure>();
             CreateMap<SaveProcedureResource, Procedure>();
@@ -102,8 +102,8 @@ namespace PlanejaOdonto.Api.Application.Mapping
             CreateMap<InstallmentResource, Installment>()
                 .ForMember(src => src.PaymentMethod, opt => opt.MapFrom(src => src.PaymentMethod));
 
-            CreateMap<SaveInstallmentResource, Installment>()
-                .ForMember(src => src.PaymentMethod, opt => opt.MapFrom(src => (PaymentMethod)src.PaymentMethod));
+            //CreateMap<GenerateInstallmentsResource, Installment>()
+            //    .ForMember(src => src.PaymentMethod, opt => opt.MapFrom(src => (PaymentMethod)src.PaymentMethod));
 
 
 

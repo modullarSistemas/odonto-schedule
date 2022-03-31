@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PlanejaOdonto.Api.Domain.Models.FinancialAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -11,7 +12,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 {
     public class ExpenseRepository : BaseRepository, IExpenseRepository
     {
-        public ExpenseRepository(PlanejaOdontoDbContext context) : base(context) { }
+        public ExpenseRepository(PlanejaOdontoDbContext context,IConfiguration configuration) : base(context, configuration) { }
 
         public async Task<IEnumerable<Expense>> ListAsync()
         {

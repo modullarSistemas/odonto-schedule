@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace PlanejaOdonto.Api.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitialRestartMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,9 @@ namespace PlanejaOdonto.Api.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +31,9 @@ namespace PlanejaOdonto.Api.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    Phone = table.Column<string>(type: "text", nullable: true)
+                    Phone = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,11 +48,28 @@ namespace PlanejaOdonto.Api.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Cost = table.Column<double>(type: "double precision", nullable: false),
-                    NeedProthesis = table.Column<bool>(type: "boolean", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProcedureTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Prothesis",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Cost = table.Column<double>(type: "double precision", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prothesis", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,7 +81,9 @@ namespace PlanejaOdonto.Api.Migrations
                     FranchiseeId = table.Column<int>(type: "integer", nullable: false),
                     City = table.Column<string>(type: "text", nullable: true),
                     State = table.Column<string>(type: "text", nullable: true),
-                    District = table.Column<string>(type: "text", nullable: true)
+                    District = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,8 +103,12 @@ namespace PlanejaOdonto.Api.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
+                    Comission = table.Column<double>(type: "double precision", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     FranchiseId = table.Column<int>(type: "integer", nullable: false),
-                    Category = table.Column<byte>(type: "smallint", nullable: false)
+                    Category = table.Column<byte>(type: "smallint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,9 +128,12 @@ namespace PlanejaOdonto.Api.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FranchiseId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     Value = table.Column<double>(type: "double precision", nullable: false),
-                    ExpenseGroupId = table.Column<int>(type: "integer", nullable: false)
+                    ExpenseGroupId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,7 +160,10 @@ namespace PlanejaOdonto.Api.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Value = table.Column<double>(type: "double precision", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    FranchiseId = table.Column<int>(type: "integer", nullable: false)
+                    Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    FranchiseId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -158,7 +191,9 @@ namespace PlanejaOdonto.Api.Migrations
                     Email = table.Column<string>(type: "text", nullable: true),
                     Phone = table.Column<string>(type: "text", nullable: true),
                     Profession = table.Column<string>(type: "text", nullable: true),
-                    CivilState = table.Column<string>(type: "text", nullable: true)
+                    CivilState = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -180,7 +215,10 @@ namespace PlanejaOdonto.Api.Migrations
                     FranchiseId = table.Column<int>(type: "integer", nullable: false),
                     Username = table.Column<string>(type: "text", nullable: true),
                     Password = table.Column<string>(type: "text", nullable: true),
-                    Role = table.Column<string>(type: "text", nullable: true)
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    Role = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -206,7 +244,9 @@ namespace PlanejaOdonto.Api.Migrations
                     District = table.Column<string>(type: "text", nullable: true),
                     Street = table.Column<string>(type: "text", nullable: true),
                     Number = table.Column<int>(type: "integer", nullable: false),
-                    Complement = table.Column<string>(type: "text", nullable: true)
+                    Complement = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -228,7 +268,9 @@ namespace PlanejaOdonto.Api.Migrations
                     PacientId = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Gender = table.Column<string>(type: "text", nullable: true),
-                    BirthDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    BirthDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -242,6 +284,104 @@ namespace PlanejaOdonto.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Treatments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PacientId = table.Column<int>(type: "integer", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    InstallmentQuantity = table.Column<int>(type: "integer", nullable: false),
+                    TotalCost = table.Column<double>(type: "double precision", nullable: false),
+                    ProthesisCost = table.Column<double>(type: "double precision", nullable: false),
+                    InstallmentDueDay = table.Column<int>(type: "integer", nullable: false),
+                    Anamnesis = table.Column<string>(type: "text", nullable: true),
+                    Status = table.Column<byte>(type: "smallint", nullable: false, defaultValue: (byte)1),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Treatments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Treatments_Pacients_PacientId",
+                        column: x => x.PacientId,
+                        principalTable: "Pacients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Installments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TreatmentId = table.Column<int>(type: "integer", nullable: false),
+                    Cost = table.Column<double>(type: "double precision", nullable: false),
+                    Due = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Payday = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PaymentMethod = table.Column<byte>(type: "smallint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Installments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Installments_Treatments_TreatmentId",
+                        column: x => x.TreatmentId,
+                        principalTable: "Treatments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Procedures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TreatmentId = table.Column<int>(type: "integer", nullable: false),
+                    DentistId = table.Column<int>(type: "integer", nullable: false),
+                    Tooth = table.Column<int>(type: "integer", nullable: false),
+                    NeedProthesis = table.Column<bool>(type: "boolean", nullable: false),
+                    ProthesisId = table.Column<int>(type: "integer", nullable: true),
+                    ProcedureTypeId = table.Column<int>(type: "integer", nullable: false),
+                    Completed = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Procedures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Procedures_Dentists_DentistId",
+                        column: x => x.DentistId,
+                        principalTable: "Dentists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Procedures_ProcedureTypes_ProcedureTypeId",
+                        column: x => x.ProcedureTypeId,
+                        principalTable: "ProcedureTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Procedures_Prothesis_ProthesisId",
+                        column: x => x.ProthesisId,
+                        principalTable: "Prothesis",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Procedures_Treatments_TreatmentId",
+                        column: x => x.TreatmentId,
+                        principalTable: "Treatments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Schedulings",
                 columns: table => new
                 {
@@ -249,9 +389,15 @@ namespace PlanejaOdonto.Api.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ProcedureTypeId = table.Column<int>(type: "integer", nullable: false),
+                    MyPropertyId = table.Column<int>(type: "integer", nullable: true),
                     PacientId = table.Column<int>(type: "integer", nullable: false),
                     DentistId = table.Column<int>(type: "integer", nullable: false),
-                    SchedulingType = table.Column<byte>(type: "smallint", nullable: false)
+                    ScheduledBy = table.Column<int>(type: "integer", nullable: false),
+                    SchedulingType = table.Column<byte>(type: "smallint", nullable: false),
+                    Status = table.Column<byte>(type: "smallint", nullable: false, defaultValue: (byte)1),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -268,111 +414,18 @@ namespace PlanejaOdonto.Api.Migrations
                         principalTable: "Pacients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Treatments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PacientId = table.Column<int>(type: "integer", nullable: false),
-                    InstallmentQuantity = table.Column<int>(type: "integer", nullable: false),
-                    TotalCost = table.Column<double>(type: "double precision", nullable: false),
-                    InstallmentDueDay = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Treatments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Treatments_Pacients_PacientId",
-                        column: x => x.PacientId,
-                        principalTable: "Pacients",
+                        name: "FK_Schedulings_Procedures_MyPropertyId",
+                        column: x => x.MyPropertyId,
+                        principalTable: "Procedures",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Anamnesis",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TreatmentId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Anamnesis", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Anamnesis_Treatments_TreatmentId",
-                        column: x => x.TreatmentId,
-                        principalTable: "Treatments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Installment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TreatmentId = table.Column<int>(type: "integer", nullable: false),
-                    Cost = table.Column<double>(type: "double precision", nullable: false),
-                    Due = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Payday = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    PaymentMethod = table.Column<byte>(type: "smallint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Installment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Installment_Treatments_TreatmentId",
-                        column: x => x.TreatmentId,
-                        principalTable: "Treatments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Procedure",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TreatmentId = table.Column<int>(type: "integer", nullable: false),
-                    DentistId = table.Column<int>(type: "integer", nullable: false),
-                    Tooth = table.Column<int>(type: "integer", nullable: false),
-                    ProcedureTypeId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Procedure", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Procedure_ProcedureTypes_ProcedureTypeId",
-                        column: x => x.ProcedureTypeId,
-                        principalTable: "ProcedureTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Procedure_Treatments_TreatmentId",
-                        column: x => x.TreatmentId,
-                        principalTable: "Treatments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Adresses_PacientId",
                 table: "Adresses",
                 column: "PacientId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Anamnesis_TreatmentId",
-                table: "Anamnesis",
-                column: "TreatmentId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -406,8 +459,8 @@ namespace PlanejaOdonto.Api.Migrations
                 column: "FranchiseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Installment_TreatmentId",
-                table: "Installment",
+                name: "IX_Installments_TreatmentId",
+                table: "Installments",
                 column: "TreatmentId");
 
             migrationBuilder.CreateIndex(
@@ -416,19 +469,34 @@ namespace PlanejaOdonto.Api.Migrations
                 column: "FranchiseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Procedure_ProcedureTypeId",
-                table: "Procedure",
+                name: "IX_Procedures_DentistId",
+                table: "Procedures",
+                column: "DentistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Procedures_ProcedureTypeId",
+                table: "Procedures",
                 column: "ProcedureTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Procedure_TreatmentId",
-                table: "Procedure",
+                name: "IX_Procedures_ProthesisId",
+                table: "Procedures",
+                column: "ProthesisId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Procedures_TreatmentId",
+                table: "Procedures",
                 column: "TreatmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedulings_DentistId",
                 table: "Schedulings",
                 column: "DentistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedulings_MyPropertyId",
+                table: "Schedulings",
+                column: "MyPropertyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedulings_PacientId",
@@ -458,9 +526,6 @@ namespace PlanejaOdonto.Api.Migrations
                 name: "Adresses");
 
             migrationBuilder.DropTable(
-                name: "Anamnesis");
-
-            migrationBuilder.DropTable(
                 name: "Dependants");
 
             migrationBuilder.DropTable(
@@ -470,10 +535,7 @@ namespace PlanejaOdonto.Api.Migrations
                 name: "Income");
 
             migrationBuilder.DropTable(
-                name: "Installment");
-
-            migrationBuilder.DropTable(
-                name: "Procedure");
+                name: "Installments");
 
             migrationBuilder.DropTable(
                 name: "Schedulings");
@@ -485,13 +547,19 @@ namespace PlanejaOdonto.Api.Migrations
                 name: "ExpenseGroups");
 
             migrationBuilder.DropTable(
-                name: "ProcedureTypes");
-
-            migrationBuilder.DropTable(
-                name: "Treatments");
+                name: "Procedures");
 
             migrationBuilder.DropTable(
                 name: "Dentists");
+
+            migrationBuilder.DropTable(
+                name: "ProcedureTypes");
+
+            migrationBuilder.DropTable(
+                name: "Prothesis");
+
+            migrationBuilder.DropTable(
+                name: "Treatments");
 
             migrationBuilder.DropTable(
                 name: "Pacients");

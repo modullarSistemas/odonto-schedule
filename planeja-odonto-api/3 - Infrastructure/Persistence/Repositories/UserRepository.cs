@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PlanejaOdonto.Api.Domain.Models.LoginAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -8,7 +9,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
-        public UserRepository(PlanejaOdontoDbContext context) : base(context) { }
+        public UserRepository(PlanejaOdontoDbContext context,IConfiguration configuration) : base(context, configuration) { }
 
         public async Task<User> FindByUserAndPassword(User user)
         {

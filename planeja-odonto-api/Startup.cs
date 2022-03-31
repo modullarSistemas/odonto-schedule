@@ -63,6 +63,8 @@ namespace PlanejaOdonto.Api
             services.AddScoped<IIncomeRepository, IncomeRepository>();
             services.AddScoped<IProthesisRepository, ProthesisRepository>();
             services.AddScoped<IProcedureRepository, ProcedureRepository>();
+            services.AddScoped<IInstallmentRepository, InstallmentRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
@@ -121,4 +123,6 @@ namespace PlanejaOdonto.Api
             context.Database.Migrate();
         }
     }
+
+
 }

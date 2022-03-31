@@ -10,8 +10,8 @@ using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 namespace PlanejaOdonto.Api.Migrations
 {
     [DbContext(typeof(PlanejaOdontoDbContext))]
-    [Migration("20220322003648_prothesis_fk")]
-    partial class prothesis_fk
+    [Migration("20220331111447_Initial-Restart-Migration")]
+    partial class InitialRestartMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,9 @@ namespace PlanejaOdonto.Api.Migrations
 
                     b.Property<byte>("Category")
                         .HasColumnType("smallint");
+
+                    b.Property<double>("Comission")
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -212,6 +215,9 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
                     b.Property<int>("FranchiseId")
                         .HasColumnType("integer");
 
@@ -380,6 +386,9 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int?>("MyPropertyId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("PacientId")
                         .HasColumnType("integer");
 
@@ -407,13 +416,55 @@ namespace PlanejaOdonto.Api.Migrations
 
                     b.HasIndex("DentistId");
 
+                    b.HasIndex("MyPropertyId");
+
                     b.HasIndex("PacientId");
 
                     b.ToTable("Schedulings");
                 });
 
+            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Installment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("Due")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("Payday")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<byte>("PaymentMethod")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("TreatmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TreatmentId");
+
+                    b.ToTable("Installments");
+                });
+
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Procedure", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
                     b.Property<bool>("Completed")
                         .HasColumnType("boolean");
 
@@ -423,18 +474,13 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Property<int>("DentistId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
                     b.Property<bool>("NeedProthesis")
                         .HasColumnType("boolean");
 
                     b.Property<int>("ProcedureTypeId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProthesisId")
+                    b.Property<int?>("ProthesisId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Tooth")
@@ -445,6 +491,8 @@ namespace PlanejaOdonto.Api.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("DentistId");
 
@@ -533,10 +581,10 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Property<double>("ProthesisCost")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("Status")
+                    b.Property<byte>("Status")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(1);
+                        .HasColumnType("smallint")
+                        .HasDefaultValue((byte)1);
 
                     b.Property<double>("TotalCost")
                         .HasColumnType("double precision");
@@ -655,6 +703,10 @@ namespace PlanejaOdonto.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Procedure", "MyProperty")
+                        .WithMany()
+                        .HasForeignKey("MyPropertyId");
+
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.PacientAggregate.Pacient", "Pacient")
                         .WithMany()
                         .HasForeignKey("PacientId")
@@ -663,7 +715,20 @@ namespace PlanejaOdonto.Api.Migrations
 
                     b.Navigation("Dentist");
 
+                    b.Navigation("MyProperty");
+
                     b.Navigation("Pacient");
+                });
+
+            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Installment", b =>
+                {
+                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", "Treatment")
+                        .WithMany("Installments")
+                        .HasForeignKey("TreatmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Treatment");
                 });
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Procedure", b =>
@@ -682,12 +747,10 @@ namespace PlanejaOdonto.Api.Migrations
 
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Prothesis", "Prothesis")
                         .WithMany()
-                        .HasForeignKey("ProthesisId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProthesisId");
 
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", "Treatment")
-                        .WithMany()
+                        .WithMany("Procedures")
                         .HasForeignKey("TreatmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -722,6 +785,13 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("Dependants");
+                });
+
+            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", b =>
+                {
+                    b.Navigation("Installments");
+
+                    b.Navigation("Procedures");
                 });
 #pragma warning restore 612, 618
         }

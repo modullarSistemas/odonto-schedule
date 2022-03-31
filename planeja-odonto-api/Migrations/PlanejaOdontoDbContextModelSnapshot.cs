@@ -384,6 +384,9 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int?>("MyPropertyId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("PacientId")
                         .HasColumnType("integer");
 
@@ -410,6 +413,8 @@ namespace PlanejaOdonto.Api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DentistId");
+
+                    b.HasIndex("MyPropertyId");
 
                     b.HasIndex("PacientId");
 
@@ -490,6 +495,8 @@ namespace PlanejaOdonto.Api.Migrations
                     b.HasIndex("DentistId");
 
                     b.HasIndex("ProcedureTypeId");
+
+                    b.HasIndex("ProthesisId");
 
                     b.HasIndex("TreatmentId");
 
@@ -694,6 +701,10 @@ namespace PlanejaOdonto.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Procedure", "MyProperty")
+                        .WithMany()
+                        .HasForeignKey("MyPropertyId");
+
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.PacientAggregate.Pacient", "Pacient")
                         .WithMany()
                         .HasForeignKey("PacientId")
@@ -701,6 +712,8 @@ namespace PlanejaOdonto.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Dentist");
+
+                    b.Navigation("MyProperty");
 
                     b.Navigation("Pacient");
                 });
@@ -730,6 +743,10 @@ namespace PlanejaOdonto.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Prothesis", "Prothesis")
+                        .WithMany()
+                        .HasForeignKey("ProthesisId");
+
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", "Treatment")
                         .WithMany("Procedures")
                         .HasForeignKey("TreatmentId")
@@ -739,6 +756,8 @@ namespace PlanejaOdonto.Api.Migrations
                     b.Navigation("Dentist");
 
                     b.Navigation("ProcedureType");
+
+                    b.Navigation("Prothesis");
 
                     b.Navigation("Treatment");
                 });

@@ -35,7 +35,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         public DbSet<Procedure> Procedures { get; set; }
 
-        public DbSet<Installment> Installments { get; set; }
+        public DbSet<Installment> Installment { get; set; }
 
         public DbSet<Treatment> Treatments { get; set; }
 

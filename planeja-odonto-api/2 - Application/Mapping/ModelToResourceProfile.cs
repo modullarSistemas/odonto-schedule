@@ -76,9 +76,9 @@ namespace PlanejaOdonto.Api.Application.Mapping
                 .ForMember(src => src.PaymentMethod,
                            opt => opt.MapFrom(src => src.PaymentMethod.ToDescriptionString()));
 
-            CreateMap<Installment, SaveInstallmentResource>()
-                .ForMember(src => src.PaymentMethod,
-                           opt => opt.MapFrom(src => src.PaymentMethod.ToDescriptionString()));
+            //CreateMap<Installment, GenerateInstallmentsResource>()
+            //    .ForMember(src => src.PaymentMethod,
+            //               opt => opt.MapFrom(src => src.PaymentMethod.ToDescriptionString()));
 
             CreateMap<Procedure, ProcedureResource>();
             CreateMap<Procedure, SaveProcedureResource>();

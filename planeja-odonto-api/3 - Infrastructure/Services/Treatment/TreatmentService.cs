@@ -1,4 +1,5 @@
-﻿using PlanejaOdonto.Api.Application.Services;
+﻿using PlanejaOdonto.Api.Application.Resources.Treatment;
+using PlanejaOdonto.Api.Application.Services;
 using PlanejaOdonto.Api.Application.Services.Communication;
 using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
@@ -87,8 +88,6 @@ namespace PlanejaOdonto.Api.Services
             {
                 existingTreatment.UpdatedAt = DateTime.Now;
                 existingTreatment.Description = treatment.Description;
-                existingTreatment.InstallmentDueDay = treatment.InstallmentDueDay;
-                existingTreatment.InstallmentQuantity = treatment.InstallmentQuantity;
                 existingTreatment.Anamnesis = treatment.Anamnesis;
                 await _unitOfWork.CompleteAsync();
 
@@ -144,22 +143,46 @@ namespace PlanejaOdonto.Api.Services
             }
         }
 
-        private void GenerateInstallments(Treatment treatment)
+        public async Task<TreatmentResponse> GenerateInstallments(int treatmentId, GenerateInstallmentsResource resource)
         {
-            double installmentCost = Math.Truncate(100 * (treatment.TotalCost / treatment.InstallmentQuantity)) / 100;
-            var date = DateTime.Now;
-            for (int i = 0; i <= treatment.InstallmentQuantity; i++)
+            var existingTreatment = await _treatmentRespository.FindByIdTrackingAsync(treatmentId);
+
+            if (existingTreatment == null)
+                return new TreatmentResponse("Tratamento não encontrado.");
+            
+            var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, resource.InstallmentDueDay);
+            try
             {
-                date.AddMonths(i + 1);
-                treatment.Installments.Add(
-                    new Installment
-                    {
-                        Cost = installmentCost,
-                        Due = new DateTime(date.Year, date.Month, treatment.InstallmentDueDay),
+              
+                double installmentCost = Math.Truncate(100 * ((existingTreatment.TotalCost + existingTreatment.ProthesisCost) / resource.InstallmentQuantity)) / 100;
+                for (int i = 1; i <= resource.InstallmentQuantity; i++)
+                {
 
-                    });
 
+                    existingTreatment.Installments.Add(
+                        new Installment
+                        {
+                            Cost = installmentCost,
+                            Due = date.AddMonths(i),
+
+                        });
+
+                }
+                _treatmentRespository.Update(existingTreatment);
+
+                await _unitOfWork.CompleteAsync();
+
+                return new TreatmentResponse(existingTreatment);
             }
+            catch (Exception ex)
+            {
+                return new TreatmentResponse($"Ocorreu um erro ao gerar o parcelas: {ex.Message}");
+            }
+
+
+
+
+
         }
 
         public async Task<List<Procedure>> GenerateProcedures(int treatmentId, List<Procedure> procedures)
@@ -200,7 +223,7 @@ namespace PlanejaOdonto.Api.Services
                 throw new Exception("Procedimento não está cadastrado no sistema.");
 
             procedure.Completed = true;
-             _procedureRepository.Update(procedure);
+            _procedureRepository.Update(procedure);
             await _unitOfWork.CompleteAsync();
 
             return new ProcedureResponse(procedure);

@@ -13,6 +13,7 @@ namespace PlanejaOdonto.Api.Domain.Repositories
         Task<IEnumerable<Treatment>> ListByPacientIdAsync(int id);
 
         Task AddAsync(Treatment treatment);
+        Task<Treatment> FindByIdTrackingAsync(int id);
         Task<Treatment> FindByIdAsync(int id);
         void Update(Treatment treatment);
         void Remove(Treatment treatment);

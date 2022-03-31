@@ -77,6 +77,16 @@ namespace PlanejaOdonto.Api.Application.Controllers
         }
 
 
+        [HttpPost("[action]/{treatmentId}")]
+        [ProducesResponseType(typeof(IEnumerable<ProcedureResource>), 201)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> GenerateInstalments(int treatmentId, [FromBody] GenerateInstallmentsResource resource)
+        {
+            var result = await _treatmentService.GenerateInstallments(treatmentId, resource);
+
+            return Ok(result);
+        }
+
 
         [HttpPost("[action]")]
         [ProducesResponseType(typeof(TreatmentResource), 201)]

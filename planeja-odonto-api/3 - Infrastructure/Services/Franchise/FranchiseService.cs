@@ -101,20 +101,7 @@ namespace PlanejaOdonto.Api.Services
             }
         }
 
-        Task<FranchiseResponse> IFranchiseService.SaveAsync(Franchise Franchise)
-        {
-            throw new NotImplementedException();
-        }
 
-        Task<FranchiseResponse> IFranchiseService.UpdateAsync(int id, Franchise Franchise)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<FranchiseResponse> IFranchiseService.DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
  

@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
+using Microsoft.Extensions.Configuration;
 
 namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 {
     public class DentistRepository : BaseRepository, IDentistRepository
     {
-        public DentistRepository(PlanejaOdontoDbContext context) : base(context) { }
+        public DentistRepository(PlanejaOdontoDbContext context,IConfiguration configuration) : base(context, configuration) { }
 
         public async Task<IEnumerable<Dentist>> ListAsync()
         {
