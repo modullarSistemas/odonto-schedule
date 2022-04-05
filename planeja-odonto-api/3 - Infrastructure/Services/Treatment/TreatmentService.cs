@@ -82,7 +82,7 @@ namespace PlanejaOdonto.Api.Services
 
         public async Task<TreatmentResponse> UpdateAsync(int id, Treatment treatment)
         {
-            var existingTreatment = await _treatmentRespository.FindByIdAsync(id);
+            var existingTreatment = await _treatmentRespository.FindByIdTrackingAsync(id);
 
             try
             {
@@ -103,7 +103,7 @@ namespace PlanejaOdonto.Api.Services
 
         public async Task<TreatmentResponse> UpdateStatusAsync(int id, TreatmentStatusEnum status)
         {
-            var existingTreatment = await _treatmentRespository.FindByIdAsync(id);
+            var existingTreatment = await _treatmentRespository.FindByIdTrackingAsync(id);
 
             try
             {
@@ -158,7 +158,6 @@ namespace PlanejaOdonto.Api.Services
                 for (int i = 1; i <= resource.InstallmentQuantity; i++)
                 {
 
-
                     existingTreatment.Installments.Add(
                         new Installment
                         {
@@ -187,7 +186,7 @@ namespace PlanejaOdonto.Api.Services
 
         public async Task<List<Procedure>> GenerateProcedures(int treatmentId, List<Procedure> procedures)
         {
-            var treatment = await _treatmentRespository.FindByIdAsync(treatmentId);
+            var treatment = await _treatmentRespository.FindByIdTrackingAsync(treatmentId);
 
             if (treatment == null)
                 throw new Exception("Tratamento não cadastrado");
@@ -206,7 +205,6 @@ namespace PlanejaOdonto.Api.Services
 
                 treatment.TotalCost += existingProcedure.Cost;
                 procedure.TreatmentId = treatmentId;
-                procedure.CreatedAt = DateTime.Now;
                 await _procedureRepository.AddAsync(procedure);
                 await _unitOfWork.CompleteAsync();
             }

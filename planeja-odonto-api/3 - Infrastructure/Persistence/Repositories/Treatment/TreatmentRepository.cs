@@ -12,16 +12,16 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 {
     public class TreatmentRepository : BaseRepository, ITreatmentRepository
     {
-        public TreatmentRepository(PlanejaOdontoDbContext context,IConfiguration configuration) : base(context, configuration) { }
+        public TreatmentRepository(PlanejaOdontoDbContext context, IConfiguration configuration) : base(context, configuration) { }
 
         public async Task<IEnumerable<Treatment>> ListAsync()
         {
             return await _context.Treatments
                                  .Include(x => x.Pacient)
                                  .Include(x => x.Procedures)
-                                    .ThenInclude(y=>y.ProcedureType)
-                                  .Include(y=>y.Procedures)
-                                    .ThenInclude(x=>x.Prothesis)
+                                    .ThenInclude(y => y.ProcedureType)
+                                  .Include(y => y.Procedures)
+                                    .ThenInclude(x => x.Prothesis)
                                  .Include(x => x.Installments)
                                  .AsNoTracking()
                                  .ToListAsync();
@@ -68,6 +68,8 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
                                     .ThenInclude(y => y.ProcedureType)
                                   .Include(y => y.Procedures)
                                     .ThenInclude(x => x.Prothesis)
+                                 .Include(y => y.Procedures)
+                                   .ThenInclude(x => x.Dentist)
                                  .Include(x => x.Installments)
                                  .AsNoTracking()
                                  .FirstOrDefaultAsync(x => x.Id == id);

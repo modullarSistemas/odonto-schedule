@@ -12,7 +12,7 @@ namespace PlanejaOdonto.Api.Application.Resources
 
         public int DentistId { get; set; }
 
-        public int ProcedureTypeId { get; set; }
+        public int? ProcedureTypeId { get; set; }
 
         public int SchedulingType { get; set; }
 
