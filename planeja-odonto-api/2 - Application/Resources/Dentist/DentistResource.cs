@@ -10,6 +10,8 @@
 
         public int FranchiseId { get; set; }
 
+        public double Comission { get; set; }
+
         public string Category { get; set; }
     }
 }

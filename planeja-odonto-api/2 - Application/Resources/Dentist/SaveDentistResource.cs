@@ -8,6 +8,8 @@
 
         public int Category { get; set; }
 
+        public double Comission { get; set; }
+
         public int UserId { get; set; }
     }
 }

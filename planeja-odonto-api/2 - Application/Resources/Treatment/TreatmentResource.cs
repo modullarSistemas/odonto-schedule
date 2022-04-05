@@ -1,4 +1,5 @@
 ﻿using PlanejaOdonto.Api.Application.Resources.Pacient;
+using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
