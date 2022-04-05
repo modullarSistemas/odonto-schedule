@@ -22,8 +22,9 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         {
             return await _context.Schedulings
                      .AsNoTracking()
-                     .Include(x=>x.Pacient)
-                     .Include(x=>x.Dentist)
+                     .Include(x => x.Pacient)
+                     .Include(y => y.Dentist)
+                     .Include(x => x.ProcedureType)
                      .Where(x=>x.Dentist.UserId == id)
                      .ToListAsync();
         }
@@ -34,6 +35,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
                      .AsNoTracking()
                      .Include(x=>x.Pacient)
                      .Include(y=>y.Dentist)
+                     .Include(x=>x.ProcedureType)
                      .Where(x => x.Pacient.FranchiseId == id)
                      .ToListAsync();
         }
