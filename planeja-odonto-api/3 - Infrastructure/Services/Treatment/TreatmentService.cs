@@ -143,46 +143,7 @@ namespace PlanejaOdonto.Api.Services
             }
         }
 
-        public async Task<TreatmentResponse> GenerateInstallments(int treatmentId, GenerateInstallmentsResource resource)
-        {
-            var existingTreatment = await _treatmentRespository.FindByIdTrackingAsync(treatmentId);
 
-            if (existingTreatment == null)
-                return new TreatmentResponse("Tratamento não encontrado.");
-            
-            var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, resource.InstallmentDueDay);
-            try
-            {
-              
-                double installmentCost = Math.Truncate(100 * ((existingTreatment.TotalCost + existingTreatment.ProthesisCost) / resource.InstallmentQuantity)) / 100;
-                for (int i = 1; i <= resource.InstallmentQuantity; i++)
-                {
-
-                    existingTreatment.Installments.Add(
-                        new Installment
-                        {
-                            Cost = installmentCost,
-                            Due = date.AddMonths(i),
-
-                        });
-
-                }
-                _treatmentRespository.Update(existingTreatment);
-
-                await _unitOfWork.CompleteAsync();
-
-                return new TreatmentResponse(existingTreatment);
-            }
-            catch (Exception ex)
-            {
-                return new TreatmentResponse($"Ocorreu um erro ao gerar o parcelas: {ex.Message}");
-            }
-
-
-
-
-
-        }
 
         public async Task<List<Procedure>> GenerateProcedures(int treatmentId, List<Procedure> procedures)
         {
@@ -227,6 +188,7 @@ namespace PlanejaOdonto.Api.Services
             return new ProcedureResponse(procedure);
 
         }
+
 
     }
 }

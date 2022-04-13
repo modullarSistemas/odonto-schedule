@@ -19,7 +19,7 @@ namespace PlanejaOdonto.Api.Application.Services
         Task<TreatmentResponse> DeleteAsync(int id);
         Task<List<Procedure>> GenerateProcedures(int treatmentId, List<Procedure> procedures);
         Task<ProcedureResponse> FinalizeProcedure(int procedureId);
-        Task<TreatmentResponse> GenerateInstallments(int treatmentId, GenerateInstallmentsResource resource);
+
 
 
     }
