@@ -43,6 +43,13 @@ namespace PlanejaOdonto.Api.Services
             return dentist;
         }
 
+        public async Task<Dentist> GetByUserId(int id)
+        {
+            var dentist = await _dentistRepository.FindByUserIdAsync(id);
+
+            return dentist;
+        }
+
         public async Task<DentistResponse> SaveAsync(Dentist dentist)
         {
             try

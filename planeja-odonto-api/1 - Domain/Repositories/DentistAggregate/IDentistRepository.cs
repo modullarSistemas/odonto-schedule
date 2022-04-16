@@ -12,6 +12,9 @@ namespace PlanejaOdonto.Api.Domain.Repositories
         Task<IEnumerable<Dentist>> ListByFranchiseIdAsync(int id);
         Task AddAsync(Dentist dentist);
         Task<Dentist> FindByIdAsync(int id);
+
+        Task<Dentist> FindByUserIdAsync(int id);
+
         void Update(Dentist dentist);
         void Remove(Dentist dentist);
     }

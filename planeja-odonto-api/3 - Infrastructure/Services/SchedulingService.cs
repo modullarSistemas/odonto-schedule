@@ -134,6 +134,27 @@ namespace PlanejaOdonto.Api.Services
             }
         }
 
+         public async Task<SchedulingResponse> UpdateStatus(int id , SchedulingStatus status)
+        {
+            var existingScheduling = await _schedulingRepository.FindByIdAsync(id);
+            existingScheduling.Status = status; 
+            try
+            {
+                 _schedulingRepository.Update(existingScheduling);
+                await _unitOfWork.CompleteAsync();
+
+                return new SchedulingResponse(existingScheduling);
+            }
+            catch (Exception ex)
+            {
+                // Do some logging stuff
+                return new SchedulingResponse($"Ocorreu um erro ao atualizar o agendamento: {ex.Message}");
+            }
+
+
+
+        }
+
 
     }
 }

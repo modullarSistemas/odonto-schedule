@@ -36,6 +36,11 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             return await _context.Dentists.FindAsync(id);
         }
 
+        public async Task<Dentist> FindByUserIdAsync(int id)
+        {
+            return await _context.Dentists.FirstOrDefaultAsync(x=>x.UserId == id);
+        }
+
         public void Update(Dentist franchisee)
         {
             _context.Dentists.Update(franchisee);

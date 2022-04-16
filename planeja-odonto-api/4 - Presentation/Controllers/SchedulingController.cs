@@ -5,6 +5,7 @@ using AutoMapper;
 using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate;
 using PlanejaOdonto.Api.Application.Services;
 using PlanejaOdonto.Api.Application.Resources;
+using PlanejaOdonto.Api.Domain.Enums;
 
 namespace PlanejaOdonto.Api.Application.Controllers
 {
@@ -94,6 +95,24 @@ namespace PlanejaOdonto.Api.Application.Controllers
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _schedulingService.DeleteAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
+
+            var schedulingResource = _mapper.Map<Scheduling, SchedulingResource>(result.Resource);
+            return Ok(schedulingResource);
+        }
+
+
+
+        [HttpPost("{id}")]
+        [ProducesResponseType(typeof(SchedulingResource), 200)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> UpdateStatus(int id,SchedulingStatus schedulingStatus)
+        {
+            var result = await _schedulingService.UpdateStatus(id,schedulingStatus);
 
             if (!result.Success)
             {

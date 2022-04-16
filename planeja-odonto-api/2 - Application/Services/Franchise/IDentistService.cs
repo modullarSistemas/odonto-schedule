@@ -13,5 +13,7 @@ namespace PlanejaOdonto.Api.Application.Services
         Task<DentistResponse> SaveAsync(Dentist category);
         Task<DentistResponse> UpdateAsync(int id, Dentist category);
         Task<DentistResponse> DeleteAsync(int id);
+
+        Task<Dentist> GetByUserId(int id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate;
+﻿using PlanejaOdonto.Api.Domain.Enums;
+using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace PlanejaOdonto.Api.Domain.Repositories
         Task AddAsync(Scheduling product);
         Task<Scheduling> FindByIdAsync(int id);
         void Update(Scheduling product);
+
+
         void Remove(Scheduling product);
 
     }

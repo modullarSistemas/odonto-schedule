@@ -46,7 +46,22 @@ namespace PlanejaOdonto.Api.Presentation.Controllers
             var result = await _dentistService.GetById(id);
 
             if (result == null)
-                return BadRequest(new ErrorResource("Paciente nao encontrado"));
+                return BadRequest(new ErrorResource("Dentista nao encontrado"));
+
+            var dentist = _mapper.Map<Dentist, DentistResource>(result);
+
+            return Ok(dentist);
+        }
+
+        [HttpGet("[action]/{id}")]
+        [ProducesResponseType(typeof(DentistResource), 200)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> GetByUserId(int id)
+        {
+            var result = await _dentistService.GetByUserId(id);
+
+            if (result == null)
+                return BadRequest(new ErrorResource("Dentista nao encontrado"));
 
             var dentist = _mapper.Map<Dentist, DentistResource>(result);
 
