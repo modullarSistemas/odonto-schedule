@@ -25,7 +25,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
                      .Include(x => x.Pacient)
                      .Include(y => y.Dentist)
                      .Include(x => x.ProcedureType)
-                     .Where(x=>x.Dentist.UserId == id)
+                     .Where(x=>x.Dentist.Id == id)
                      .ToListAsync();
         }
 

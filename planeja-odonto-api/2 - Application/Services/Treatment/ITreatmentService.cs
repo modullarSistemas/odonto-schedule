@@ -3,7 +3,6 @@ using PlanejaOdonto.Api.Application.Services.Communication;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlanejaOdonto.Api.Domain.Enums;
-using PlanejaOdonto.Api.Application.Resources.Treatment;
 
 namespace PlanejaOdonto.Api.Application.Services
 {
@@ -18,7 +17,7 @@ namespace PlanejaOdonto.Api.Application.Services
         Task<TreatmentResponse> UpdateAsync(int id, Treatment treatment);
         Task<TreatmentResponse> DeleteAsync(int id);
         Task<List<Procedure>> GenerateProcedures(int treatmentId, List<Procedure> procedures);
-        Task<ProcedureResponse> FinalizeProcedure(int procedureId);
+        Task<ProcedureResponse> UpdateProcedureStatus(int procedureId,ProcedureStatusEnum status);
 
 
 

@@ -175,13 +175,13 @@ namespace PlanejaOdonto.Api.Services
             return procedures;
         }
 
-        public async Task<ProcedureResponse> FinalizeProcedure(int procedureId)
+        public async Task<ProcedureResponse> UpdateProcedureStatus(int procedureId,ProcedureStatusEnum status)
         {
             var procedure = await _procedureRepository.FindByIdAsync(procedureId);
             if (procedure == null)
                 throw new Exception("Procedimento não está cadastrado no sistema.");
 
-            procedure.Completed = true;
+            procedure.Status = status;
             _procedureRepository.Update(procedure);
             await _unitOfWork.CompleteAsync();
 

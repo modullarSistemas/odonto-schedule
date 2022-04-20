@@ -1,4 +1,5 @@
-﻿using PlanejaOdonto.Api.Domain.Models.DentistAggregate;
+﻿using PlanejaOdonto.Api.Domain.Enums;
+using PlanejaOdonto.Api.Domain.Models.DentistAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,6 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 
         public ProcedureType ProcedureType { get; set; }
 
-        public bool Completed { get; set; }
+        public ProcedureStatusEnum Status { get; set; }
     }
 }

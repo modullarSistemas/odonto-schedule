@@ -135,10 +135,10 @@ namespace PlanejaOdonto.Api.Application.Controllers
         [HttpPut("[action]/{procedureId}")]
         [ProducesResponseType(typeof(IEnumerable<ProcedureResource>), 201)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> FinalizeProcedure(int procedureId)
+        public async Task<IActionResult> UpdateProcedureStatus(int procedureId,ProcedureStatusEnum status)
         {
 
-            var result = await _treatmentService.FinalizeProcedure(procedureId);
+            var result = await _treatmentService.UpdateProcedureStatus(procedureId,status);
 
             return Ok(result);
         }
