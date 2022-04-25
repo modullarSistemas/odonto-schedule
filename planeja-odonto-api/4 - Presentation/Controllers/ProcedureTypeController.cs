@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Application.Services;
-using PlanejaOdonto.Api.Application.Resources.Prothesis;
 using PlanejaOdonto.Api.Application.Resources;
 using PlanejaOdonto.Api.Application.Resources.ProcedureType;
+using System.Linq;
 
 namespace PlanejaOdonto.Api.Application.Controllers
 {
@@ -31,6 +31,7 @@ namespace PlanejaOdonto.Api.Application.Controllers
         public async Task<IEnumerable<ProcedureTypeResource>> ListAsync()
         {
             var procedureTypes = await _procedureTypeService.ListAsync();
+            procedureTypes = procedureTypes.OrderBy(procedure => procedure.Name);
             var resources = _mapper.Map<IEnumerable<ProcedureType>, IEnumerable<ProcedureTypeResource>>(procedureTypes);
 
             return resources;
