@@ -48,7 +48,7 @@ namespace PlanejaOdonto.Api.Services
 
 
         public async Task<PacientResponse> SaveAsync(Pacient pacient)
-        {
+        {   
             try
             {
                 var existingFranchise = await _franchiseRepository.FindByIdAsync(pacient.FranchiseId);

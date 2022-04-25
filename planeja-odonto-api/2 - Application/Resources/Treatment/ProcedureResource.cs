@@ -1,6 +1,7 @@
 ﻿using PlanejaOdonto.Api.Application.Resources.Dentist;
 using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 using PlanejaOdonto.Api.Application.Resources.Prothesis;
+using PlanejaOdonto.Api.Domain.Enums;
 using System;
 
 namespace PlanejaOdonto.Api.Application.Resources.Treatment
@@ -15,7 +16,7 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public bool NeedProthesis { get; set; }
 
-        public bool Completed { get; set; }
+        public ProcedureStatusEnum Status { get; set; }
 
         public ProthesisResource Prothesis { get; set; }
 

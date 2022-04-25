@@ -63,6 +63,10 @@ namespace PlanejaOdonto.Api.Services
             if (existingTreatment == null)
                 return new TreatmentResponse("Tratamento não encontrado.");
 
+            if(existingTreatment.Status != TreatmentStatusEnum.AvaliacaoCompleta)
+                return new TreatmentResponse("Parcelas ja foram geradas.");
+
+
             var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, resource.InstallmentDueDay);
             try
             {
