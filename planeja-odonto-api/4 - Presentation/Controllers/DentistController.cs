@@ -27,18 +27,18 @@ namespace PlanejaOdonto.Api.Presentation.Controllers
         /// Lists all dentists.
         /// </summary>
         /// <returns>List os dentists.</returns>
-        [HttpGet]
+        [HttpGet("[action]/{id}")]
         [ProducesResponseType(typeof(IEnumerable<DentistResource>), 200)]
-        public async Task<IEnumerable<DentistResource>> ListAsync()
+        public async Task<IEnumerable<DentistResource>> ListByFranchiseIdAsync(int id)
         {
-            var dentists = await _dentistService.ListAsync();
+            var dentists = await _dentistService.ListByFranchiseIdAsync(id);
             var resources = _mapper.Map<IEnumerable<Dentist>, IEnumerable<DentistResource>>(dentists);
 
             return resources;
         }
 
 
-        [HttpGet("{id}")]
+        [HttpGet("[action]/{id}")]
         [ProducesResponseType(typeof(DentistResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
         public async Task<IActionResult> GetById(int id)
