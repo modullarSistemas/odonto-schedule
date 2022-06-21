@@ -50,22 +50,22 @@ namespace PlanejaOdonto.Api.Application.Mapping
         private void MapFinancial()
         {
             CreateMap<ExpenseResource, Expense>();
+            CreateMap<ExpenseGroupResource, ExpenseGroup>();
+            CreateMap<IncomeResource, Income>();
+
+            CreateMap<SaveIncomeResource, Income>();
+            CreateMap<SaveExpenseGroupResource, ExpenseGroup>();
             CreateMap<SaveExpenseResource, Expense>();
 
-            CreateMap<IncomeResource, Income>();
-            CreateMap<SaveIncomeResource, Income>();
-
-            CreateMap<ExpenseGroupResource, ExpenseGroup>();
-            CreateMap<SaveExpenseGroupResource, ExpenseGroup>();
         }
 
         private void MapFranchisee()
         {
             CreateMap<FranchiseeResource, Franchisee>();
-            CreateMap<SaveFranchiseeResource, Franchisee>();
-
-
             CreateMap<FranchiseResource, Franchise>();
+
+
+            CreateMap<SaveFranchiseeResource, Franchisee>();
             CreateMap<SaveFranchiseResource, Franchise>();
         }
 
@@ -82,33 +82,23 @@ namespace PlanejaOdonto.Api.Application.Mapping
         private void MapTreatment()
         {
             CreateMap<ProcedureTypeResource, ProcedureType>();
-            CreateMap<SaveProcedureTypeResource, ProcedureType>();
-
-            CreateMap<SaveProcedureResource, Treatment>();
-            CreateMap<GenerateInstallmentsResource, Treatment>();
-
-            CreateMap<SaveProcedureResource, Treatment>();
-            CreateMap<GenerateInstallmentsResource, Treatment>();
-
             CreateMap<ProcedureResource, Procedure>();
-            CreateMap<SaveProcedureResource, Procedure>();
-
-            CreateMap<TreatmentResource, Treatment>()
-                .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status));
-
-            CreateMap<SaveTreatmentResource, Treatment>();
-                //.ForMember(src => src.Status, opt => opt.MapFrom(src => (TreatmentStatusEnum)src.Status));
-
+            CreateMap<GenerateInstallmentsResource, Treatment>();
+            CreateMap<ProthesisResource, Prothesis>();
             CreateMap<InstallmentResource, Installment>()
                 .ForMember(src => src.PaymentMethod, opt => opt.MapFrom(src => src.PaymentMethod));
+            CreateMap<TreatmentResource, Treatment>()
+                .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(src => src.TreatmentType, opt => opt.MapFrom(src => src.TreatmentType));
 
-            //CreateMap<GenerateInstallmentsResource, Installment>()
-            //    .ForMember(src => src.PaymentMethod, opt => opt.MapFrom(src => (PaymentMethod)src.PaymentMethod));
 
-
-
-            CreateMap<ProthesisResource, Prothesis>();
             CreateMap<SaveProthesisResource, Prothesis>();
+            CreateMap<SaveProcedureResource, Treatment>();
+            CreateMap<SaveProcedureResource, Procedure>();
+            CreateMap<SaveProcedureTypeResource, ProcedureType>()
+                .ForMember(src => src.TreatmentType, opt => opt.MapFrom(src => (TreatmentTypeEnum)src.TreatmentType));
+            CreateMap<SaveTreatmentResource, Treatment>()
+                .ForMember(src => src.TreatmentType, opt => opt.MapFrom(src => (TreatmentTypeEnum)src.TreatmentType));
 
         }
 

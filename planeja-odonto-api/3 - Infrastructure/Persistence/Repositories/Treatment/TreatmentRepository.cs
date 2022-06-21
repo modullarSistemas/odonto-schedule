@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -97,24 +98,64 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             _context.Treatments.Remove(franchisee);
         }
 
-        public Task<IEnumerable<Treatment>> ListOrthodonticsByPacientIdAsync(int id)
+        public async Task<IEnumerable<Treatment>> ListOrthodonticsByPacientIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Treatments
+                                .Where(x => x.TreatmentType == TreatmentTypeEnum.Ortondia && x.PacientId == id)
+                                .AsNoTracking()
+                                .ToListAsync();
         }
 
-        public Task<IEnumerable<Treatment>> ListGeneralClinicByPacientIdAsync(int id)
+        public async Task<IEnumerable<Treatment>> ListGeneralClinicByPacientIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Treatments
+                                .Where(x => x.TreatmentType == TreatmentTypeEnum.ClinicoGeral && x.PacientId == id)
+                                .AsNoTracking()
+                                .ToListAsync();
         }
 
-        public Task<IEnumerable<Treatment>> ListImplantologyByPacientIdAsync(int id)
+        public async Task<IEnumerable<Treatment>> ListImplantologyByPacientIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Treatments
+                                .Where(x => x.TreatmentType == TreatmentTypeEnum.Implantodontia && x.PacientId == id)
+                                .AsNoTracking()
+                                .ToListAsync();
         }
 
-        public Task<IEnumerable<Treatment>> ListFacialHarmonizationByPacientIdAsync(int id)
+        public async Task<IEnumerable<Treatment>> ListFacialHarmonizationByPacientIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Treatments
+                                .Where(x => x.TreatmentType == TreatmentTypeEnum.HarmonizacaoFacial && x.PacientId == id)
+                                .AsNoTracking()
+                                .ToListAsync();
+        }
+
+
+
+        public async Task<IEnumerable<ProcedureType>> ListGeneralClinictAsync()
+        {
+            return await _context.ProcedureTypes
+                     .Where(x => x.TreatmentType == TreatmentTypeEnum.ClinicoGeral)
+                     .AsNoTracking()
+                     .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProcedureType>> ListImplantologyAsync()
+        {
+
+            return await _context.ProcedureTypes
+                     .Where(x => x.TreatmentType == TreatmentTypeEnum.Implantodontia)
+                     .AsNoTracking()
+                     .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProcedureType>> ListFacialHarmonizationAsync()
+        {
+
+            return await _context.ProcedureTypes
+                     .Where(x => x.TreatmentType == TreatmentTypeEnum.HarmonizacaoFacial)
+                     .AsNoTracking()
+                     .ToListAsync();
         }
     }
 }

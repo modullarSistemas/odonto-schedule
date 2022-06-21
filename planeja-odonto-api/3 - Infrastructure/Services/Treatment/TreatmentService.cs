@@ -49,11 +49,6 @@ namespace PlanejaOdonto.Api.Services
             return treatments;
         }
 
-        public async Task<IEnumerable<Treatment>> ListByPacientIdAsync(int id)
-        {
-            var treatments = await _treatmentRespository.ListByPacientIdAsync(id);
-            return treatments;
-        }
 
         public async Task<IEnumerable<Procedure>> ListProcedureByTreatmentIdAsync(int id)
         {
@@ -191,24 +186,28 @@ namespace PlanejaOdonto.Api.Services
 
         }
 
-        public Task<IEnumerable<Treatment>> ListOrthodonticsByPacientIdAsync(int id)
+        public async Task<IEnumerable<Treatment>> ListOrthodonticsByPacientIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var treatments = await _treatmentRespository.ListOrthodonticsByPacientIdAsync(id);
+            return treatments;
         }
 
-        public Task<IEnumerable<Treatment>> ListGeneralClinicByPacientIdAsync(int id)
+        public async Task<IEnumerable<Treatment>> ListGeneralClinicByPacientIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var treatments = await _treatmentRespository.ListGeneralClinicByPacientIdAsync(id);
+            return treatments;
         }
 
-        public Task<IEnumerable<Treatment>> ListImplantologyByPacientIdAsync(int id)
+        public async Task<IEnumerable<Treatment>> ListImplantologyByPacientIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var treatments = await _treatmentRespository.ListImplantologyByPacientIdAsync(id);
+            return treatments;
         }
 
-        public Task<IEnumerable<Treatment>> ListFacialHarmonizationByPacientIdAsync(int id)
+        public async Task<IEnumerable<Treatment>> ListFacialHarmonizationByPacientIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var treatments = await _treatmentRespository.ListFacialHarmonizationByPacientIdAsync(id);
+            return treatments;
         }
     }
 }

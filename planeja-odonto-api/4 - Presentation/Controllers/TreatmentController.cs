@@ -23,15 +23,54 @@ namespace PlanejaOdonto.Api.Application.Controllers
         }
 
         #region Gets
+ 
+        [HttpGet("[action]/{pacientId}")]
+        [ProducesResponseType(typeof(IEnumerable<TreatmentResource>), 200)]
+        public async Task<IEnumerable<TreatmentResource>> ListOrthodonticsByPacientIdAsync(int pacientId)
+        {
+            var treatments = await _treatmentService.ListOrthodonticsByPacientIdAsync(pacientId);
+            var resources = _mapper.Map<IEnumerable<Treatment>, IEnumerable<TreatmentResource>>(treatments);
+
+            return resources;
+        }
+
         /// <summary>
         /// Lists all treatments.
         /// </summary>
         /// <returns>List os treatments.</returns>
         [HttpGet("[action]/{pacientId}")]
         [ProducesResponseType(typeof(IEnumerable<TreatmentResource>), 200)]
-        public async Task<IEnumerable<TreatmentResource>> ListByPacientIdAsync(int pacientId)
+        public async Task<IEnumerable<TreatmentResource>> ListGeneralClinicByPacientIdAsync(int pacientId)
         {
-            var treatments = await _treatmentService.ListByPacientIdAsync(pacientId);
+            var treatments = await _treatmentService.ListGeneralClinicByPacientIdAsync(pacientId);
+            var resources = _mapper.Map<IEnumerable<Treatment>, IEnumerable<TreatmentResource>>(treatments);
+
+            return resources;
+        }
+
+        /// <summary>
+        /// Lists all treatments.
+        /// </summary>
+        /// <returns>List os treatments.</returns>
+        [HttpGet("[action]/{pacientId}")]
+        [ProducesResponseType(typeof(IEnumerable<TreatmentResource>), 200)]
+        public async Task<IEnumerable<TreatmentResource>> ListFacialHarmonizationByPacientIdAsync(int pacientId)
+        {
+            var treatments = await _treatmentService.ListFacialHarmonizationByPacientIdAsync(pacientId);
+            var resources = _mapper.Map<IEnumerable<Treatment>, IEnumerable<TreatmentResource>>(treatments);
+
+            return resources;
+        }
+
+        /// <summary>
+        /// Lists all treatments.
+        /// </summary>
+        /// <returns>List os treatments.</returns>
+        [HttpGet("[action]/{pacientId}")]
+        [ProducesResponseType(typeof(IEnumerable<TreatmentResource>), 200)]
+        public async Task<IEnumerable<TreatmentResource>> ListImplantologyByPacientIdAsync(int pacientId)
+        {
+            var treatments = await _treatmentService.ListImplantologyByPacientIdAsync(pacientId);
             var resources = _mapper.Map<IEnumerable<Treatment>, IEnumerable<TreatmentResource>>(treatments);
 
             return resources;
