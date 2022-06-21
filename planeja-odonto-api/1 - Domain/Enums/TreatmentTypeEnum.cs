@@ -2,7 +2,7 @@
 
 namespace PlanejaOdonto.Api.Domain.Enums
 {
-    public enum ProcedureTypeCategory
+    public enum TreatmentTypeEnum : byte
     {
         [Description("Clínico Geral")]
         ClinicoGeral = 1,

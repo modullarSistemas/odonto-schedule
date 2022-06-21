@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using PlanejaOdonto.Api.Domain.Enums;
 
 namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 {
@@ -11,6 +8,7 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 
         public double Cost { get; set; }
 
+        public TreatmentTypeEnum TreatmentType { get; set; }
 
     }
 }

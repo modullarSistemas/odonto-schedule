@@ -26,7 +26,7 @@ namespace PlanejaOdonto.Api.Application.Mapping
         {
             CreateMap<Scheduling, SchedulingResource>()
                 .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => src.SchedulingType.ToDescriptionString()))
-                .ForMember(src => src.Status,opt => opt.MapFrom(src=>src.Status.ToDescriptionString()));
+                .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status.ToDescriptionString()));
 
 
             CreateMap<Scheduling, SaveSchedulingResource>()
@@ -57,28 +57,32 @@ namespace PlanejaOdonto.Api.Application.Mapping
                            opt => opt.MapFrom(src => src.Category.ToDescriptionString()));
 
 
-            CreateMap<ProcedureType, ProcedureTypeResource>();
-            CreateMap<ProcedureType, SaveProcedureTypeResource>();
+            CreateMap<ProcedureType, ProcedureTypeResource>()
+                .ForMember(src => src.TreatmentType, opt => opt.MapFrom(src => src.TreatmentType.ToDescriptionString()));
 
+
+            CreateMap<ProcedureType, SaveProcedureTypeResource>()
+                .ForMember(src => src.TreatmentType, opt => opt.MapFrom(src => src.TreatmentType.ToDescriptionString()));
 
             CreateMap<Prothesis, ProthesisResource>();
             CreateMap<Prothesis, SaveProthesisResource>();
 
 
             CreateMap<Treatment, TreatmentResource>()
-                .ForMember(src => src.Status,
-                           opt => opt.MapFrom(src => src.Status.ToDescriptionString()));
+                .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status.ToDescriptionString()))
+                .ForMember(src => src.TreatmentType, opt => opt.MapFrom(src => src.TreatmentType.ToDescriptionString()));
 
-            CreateMap<Treatment, SaveTreatmentResource>();
+
+            CreateMap<Treatment, SaveTreatmentResource>()
+                .ForMember(src => src.TreatmentType, opt => opt.MapFrom(src => src.TreatmentType.ToDescriptionString()));
+
+
+
 
 
             CreateMap<Installment, InstallmentResource>()
                 .ForMember(src => src.PaymentMethod,
                            opt => opt.MapFrom(src => src.PaymentMethod.ToDescriptionString()));
-
-            //CreateMap<Installment, GenerateInstallmentsResource>()
-            //    .ForMember(src => src.PaymentMethod,
-            //               opt => opt.MapFrom(src => src.PaymentMethod.ToDescriptionString()));
 
             CreateMap<Procedure, ProcedureResource>();
             CreateMap<Procedure, SaveProcedureResource>();

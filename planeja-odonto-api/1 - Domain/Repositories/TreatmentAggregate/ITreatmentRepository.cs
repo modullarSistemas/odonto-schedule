@@ -8,13 +8,18 @@ namespace PlanejaOdonto.Api.Domain.Repositories
 {
     public interface ITreatmentRepository
     {
-        Task<IEnumerable<Treatment>> ListAsync();
+
+        Task<Treatment> FindByIdTrackingAsync(int id);
+
+        Task<Treatment> FindByIdAsync(int id);
         Task<IEnumerable<Treatment>> ListByFranchiseIdAsync(int id);
         Task<IEnumerable<Treatment>> ListByPacientIdAsync(int id);
+        Task<IEnumerable<Treatment>> ListOrthodonticsByPacientIdAsync(int id);
+        Task<IEnumerable<Treatment>> ListGeneralClinicByPacientIdAsync(int id);
+        Task<IEnumerable<Treatment>> ListImplantologyByPacientIdAsync(int id);
+        Task<IEnumerable<Treatment>> ListFacilHarmonizationByPacientIdAsync(int id);
 
         Task AddAsync(Treatment treatment);
-        Task<Treatment> FindByIdTrackingAsync(int id);
-        Task<Treatment> FindByIdAsync(int id);
         void Update(Treatment treatment);
         void Remove(Treatment treatment);
     }

@@ -22,6 +22,8 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
 
         public double TotalCost { get; set; }
 
+        public TreatmentTypeEnum TreatmentType { get; set; }
+
         public double ProthesisCost { get; set; }
 
         public string Anamnesis { get; set; }

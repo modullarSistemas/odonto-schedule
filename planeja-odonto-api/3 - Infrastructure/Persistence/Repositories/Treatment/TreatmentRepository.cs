@@ -96,5 +96,25 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         {
             _context.Treatments.Remove(franchisee);
         }
+
+        public Task<IEnumerable<Treatment>> ListOrthodonticsByPacientIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Treatment>> ListGeneralClinicByPacientIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Treatment>> ListImplantologyByPacientIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Treatment>> ListFacilHarmonizationByPacientIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

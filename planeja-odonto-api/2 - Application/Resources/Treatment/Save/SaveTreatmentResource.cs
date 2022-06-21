@@ -8,6 +8,7 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
     public class SaveTreatmentResource
     {
         public int PacientId { get; set; }
+        public string TreatmentType { get; set; }
         public string Anamnesis { get; set; }
         public string Description { get; set; }
     }

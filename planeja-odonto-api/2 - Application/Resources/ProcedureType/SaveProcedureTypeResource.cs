@@ -10,5 +10,7 @@ namespace PlanejaOdonto.Api.Application.Resources.ProcedureType
         public string Name { get; set; }
 
         public double Cost { get; set; }
+
+        public int TreatmentType { get; set; }
     }
 }

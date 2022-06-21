@@ -19,6 +19,8 @@ namespace PlanejaOdonto.Api.Services
         private readonly IProthesisRepository _prothesisRepository;
         private readonly IUnitOfWork _unitOfWork;
 
+
+
         public TreatmentService(
               ITreatmentRepository treatmentRespository
             , IProcedureTypeRepository procedureTypeRepository
@@ -189,7 +191,25 @@ namespace PlanejaOdonto.Api.Services
 
         }
 
+        public Task<IEnumerable<Treatment>> ListOrthodonticsByPacientIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<IEnumerable<Treatment>> ListGeneralClinicByPacientIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Treatment>> ListImplantologyByPacientIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Treatment>> ListFacilHarmonizationByPacientIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

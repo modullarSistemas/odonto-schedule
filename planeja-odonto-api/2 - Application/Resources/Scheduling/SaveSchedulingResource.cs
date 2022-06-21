@@ -4,9 +4,9 @@ namespace PlanejaOdonto.Api.Application.Resources
 {
     public class SaveSchedulingResource
     {
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public string EndDate { get; set; }
 
         public int PacientId { get; set; }
 
