@@ -206,7 +206,7 @@ namespace PlanejaOdonto.Api.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Treatment>> ListFacilHarmonizationByPacientIdAsync(int id)
+        public Task<IEnumerable<Treatment>> ListFacialHarmonizationByPacientIdAsync(int id)
         {
             throw new NotImplementedException();
         }

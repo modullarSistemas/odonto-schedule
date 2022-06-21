@@ -112,7 +112,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Treatment>> ListFacilHarmonizationByPacientIdAsync(int id)
+        public Task<IEnumerable<Treatment>> ListFacialHarmonizationByPacientIdAsync(int id)
         {
             throw new NotImplementedException();
         }

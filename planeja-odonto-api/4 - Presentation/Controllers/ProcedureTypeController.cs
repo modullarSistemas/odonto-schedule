@@ -26,11 +26,44 @@ namespace PlanejaOdonto.Api.Application.Controllers
         /// Lists all procedureTypes.
         /// </summary>
         /// <returns>List os procedureTypes.</returns>
-        [HttpGet]
+        [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<ProcedureTypeResource>), 200)]
-        public async Task<IEnumerable<ProcedureTypeResource>> ListAsync()
+        public async Task<IEnumerable<ProcedureTypeResource>> ListGeneralClincAsync()
         {
-            var procedureTypes = await _procedureTypeService.ListAsync();
+            var procedureTypes = await _procedureTypeService.ListGeneralClinictAsync();
+            procedureTypes = procedureTypes.OrderBy(procedure => procedure.Name);
+            var resources = _mapper.Map<IEnumerable<ProcedureType>, IEnumerable<ProcedureTypeResource>>(procedureTypes);
+
+            return resources;
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<ProcedureTypeResource>), 200)]
+        public async Task<IEnumerable<ProcedureTypeResource>> ListOrthodonticsAsync()
+        {
+            var procedureTypes = await _procedureTypeService.ListOrthodonticsAsync();
+            procedureTypes = procedureTypes.OrderBy(procedure => procedure.Name);
+            var resources = _mapper.Map<IEnumerable<ProcedureType>, IEnumerable<ProcedureTypeResource>>(procedureTypes);
+
+            return resources;
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<ProcedureTypeResource>), 200)]
+        public async Task<IEnumerable<ProcedureTypeResource>> ListImplantologyAsync()
+        {
+            var procedureTypes = await _procedureTypeService.ListImplantologyAsync();
+            procedureTypes = procedureTypes.OrderBy(procedure => procedure.Name);
+            var resources = _mapper.Map<IEnumerable<ProcedureType>, IEnumerable<ProcedureTypeResource>>(procedureTypes);
+
+            return resources;
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<ProcedureTypeResource>), 200)]
+        public async Task<IEnumerable<ProcedureTypeResource>> ListFacialHarmonizationAsync()
+        {
+            var procedureTypes = await _procedureTypeService.ListFacialHarmonizationAsync();
             procedureTypes = procedureTypes.OrderBy(procedure => procedure.Name);
             var resources = _mapper.Map<IEnumerable<ProcedureType>, IEnumerable<ProcedureTypeResource>>(procedureTypes);
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -43,6 +44,40 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
         public void Remove(ProcedureType franchisee)
         {
             _context.ProcedureTypes.Remove(franchisee);
+        }
+
+        public async Task<IEnumerable<ProcedureType>> ListOrthodonticsAsync()
+        {
+            return await _context.ProcedureTypes
+                     .Where(x=>x.TreatmentType == TreatmentTypeEnum.Ortondia)
+                     .AsNoTracking()
+                     .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProcedureType>> ListGeneralClinictAsync()
+        {
+            return await _context.ProcedureTypes
+                     .Where(x => x.TreatmentType == TreatmentTypeEnum.ClinicoGeral)
+                     .AsNoTracking()
+                     .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProcedureType>> ListImplantologyAsync()
+        {
+
+            return await _context.ProcedureTypes
+                     .Where(x => x.TreatmentType == TreatmentTypeEnum.Implantodontia)
+                     .AsNoTracking()
+                     .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProcedureType>> ListFacialHarmonizationAsync()
+        {
+
+            return await _context.ProcedureTypes
+                     .Where(x => x.TreatmentType == TreatmentTypeEnum.HarmonizacaoFacial)
+                     .AsNoTracking()
+                     .ToListAsync();
         }
     }
 }

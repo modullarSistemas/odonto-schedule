@@ -16,7 +16,7 @@ namespace PlanejaOdonto.Api.Application.Services
         Task<IEnumerable<Treatment>> ListOrthodonticsByPacientIdAsync(int id);
         Task<IEnumerable<Treatment>> ListGeneralClinicByPacientIdAsync(int id);
         Task<IEnumerable<Treatment>> ListImplantologyByPacientIdAsync(int id);
-        Task<IEnumerable<Treatment>> ListFacilHarmonizationByPacientIdAsync(int id);
+        Task<IEnumerable<Treatment>> ListFacialHarmonizationByPacientIdAsync(int id);
 
         Task<TreatmentResponse> UpdateStatusAsync(int id, TreatmentStatusEnum status);
         Task<TreatmentResponse> SaveAsync(Treatment treatment);

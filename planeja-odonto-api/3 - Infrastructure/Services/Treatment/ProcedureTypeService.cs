@@ -92,5 +92,33 @@ namespace PlanejaOdonto.Api.Services
                 return new ProcedureTypeResponse($"Ocorreu um erro ao deletar o procedimento: {ex.Message}");
             }
         }
+
+        public async Task<IEnumerable<ProcedureType>> ListOrthodonticsAsync()
+        {
+            var procedureTypes = await _procedureTypeRepository.ListOrthodonticsAsync();
+
+            return procedureTypes;
+        }
+
+        public async Task<IEnumerable<ProcedureType>> ListGeneralClinictAsync()
+        {
+            var procedureTypes = await _procedureTypeRepository.ListGeneralClinictAsync();
+
+            return procedureTypes;
+        }
+
+        public async Task<IEnumerable<ProcedureType>> ListImplantologyAsync()
+        {
+            var procedureTypes = await _procedureTypeRepository.ListImplantologyAsync();
+
+            return procedureTypes;
+        }
+
+        public async Task<IEnumerable<ProcedureType>> ListFacialHarmonizationAsync()
+        {
+            var procedureTypes = await _procedureTypeRepository.ListFacialHarmonizationAsync();
+
+            return procedureTypes;
+        }
     }
 }
