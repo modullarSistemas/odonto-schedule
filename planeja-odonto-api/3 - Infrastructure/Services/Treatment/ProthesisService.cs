@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using PlanejaOdonto.Api.Application.Services;
 using PlanejaOdonto.Api.Application.Services.Communication;
 
-namespace PlanejaOdonto.Api.Services
+namespace PlanejaOdonto.Api.Infrastructure.Services
 {
     public class ProthesisService : IProthesisService
     {

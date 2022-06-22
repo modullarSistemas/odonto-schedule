@@ -34,7 +34,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(Installment franchisee)
         {
-            var result = await _context.Installment.AddAsync(franchisee);
+            await _context.Installment.AddAsync(franchisee);
         }
 
         public async Task<Installment> FindByIdAsync(int id)

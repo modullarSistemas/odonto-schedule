@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PlanejaOdonto.Api.Application.Resources;
+using PlanejaOdonto.Api.Application.Resources.Contract;
 using PlanejaOdonto.Api.Application.Resources.Treatment;
 using PlanejaOdonto.Api.Application.Services;
 using PlanejaOdonto.Api.Domain.Enums;
@@ -14,16 +15,19 @@ namespace PlanejaOdonto.Api.Application.Controllers
     public class TreatmentController : ControllerBase
     {
         private readonly ITreatmentService _treatmentService;
+        private readonly IContractService _contractService;
         private readonly IMapper _mapper;
 
-        public TreatmentController(ITreatmentService treatmentService, IMapper mapper)
+
+        public TreatmentController(ITreatmentService treatmentService, IContractService contractService, IMapper mapper)
         {
             _treatmentService = treatmentService;
+            _contractService = contractService;
             _mapper = mapper;
         }
 
         #region Gets
- 
+
         [HttpGet("[action]/{pacientId}")]
         [ProducesResponseType(typeof(IEnumerable<TreatmentResource>), 200)]
         public async Task<IEnumerable<TreatmentResource>> ListOrthodonticsByPacientIdAsync(int pacientId)
@@ -86,6 +90,17 @@ namespace PlanejaOdonto.Api.Application.Controllers
             return resource;
         }
 
+        //[HttpGet("[action]/{treatmentId}")]
+        //[ProducesResponseType(typeof(TreatmentResource), 200)]
+        //public async Task<TreatmentResource> GetContractByTreatmentId(int treatmentId)
+        //{
+        //    var contract = await _contractService.GetById(treatmentId);
+        //    var resource = _mapper.Map<Contract, ContractResource>(contract);
+
+        //    return resource;
+        //}
+
+
         [HttpGet("[action]/{treatmentId}")]
         [ProducesResponseType(typeof(IEnumerable<ProcedureResource>), 200)]
         public async Task<IEnumerable<ProcedureResource>> ListProcedureByTreatmentIdAsync(int treatmentId)
@@ -115,6 +130,25 @@ namespace PlanejaOdonto.Api.Application.Controllers
             return Ok(proceduresResource);
         }
 
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<ProcedureResource>), 201)]
+        [ProducesResponseType(typeof(ErrorResource), 400)]
+        public async Task<IActionResult> GenerateContract([FromBody] SaveContractResource resources)
+        {
+            var contract = _mapper.Map<SaveContractResource, Contract>(resources);
+
+            var result = await _contractService.SaveAsync(contract);
+
+            if (!result.Success)
+            {
+                return BadRequest(new ErrorResource(result.Message));
+            }
+
+            var contractResource = _mapper.Map<Contract, ContractResource>(result.Resource);
+
+            return Ok(contractResource);
+        }
+
 
         [HttpPost("[action]")]
         [ProducesResponseType(typeof(TreatmentResource), 201)]
@@ -132,6 +166,8 @@ namespace PlanejaOdonto.Api.Application.Controllers
             var categoryResource = _mapper.Map<Treatment, TreatmentResource>(result.Resource);
             return Ok(categoryResource);
         }
+
+        //TODO CONECTAR COM API DE CONTRATOS, PASSAR CONTRATO PRA API E TRATAR O ARQUIVO
 
         #endregion
 

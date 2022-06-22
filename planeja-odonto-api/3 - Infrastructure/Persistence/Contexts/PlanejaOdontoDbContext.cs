@@ -48,6 +48,8 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         public DbSet<Prothesis> Prothesis { get; set; }
 
+        public DbSet<Contract> Contracts { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -72,6 +74,19 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
             ConfigureProcedure(modelBuilder);
 
+            ConfigureContract(modelBuilder);
+
+        }
+
+        private static void ConfigureContract(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Contract>().ToTable("Contracts")
+                      .Property(f => f.Id)
+                      .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Contract>().ToTable("Contracts")
+                      .Property(f => f.CreatedAt)
+                      .HasDefaultValueSql("NOW()");
         }
 
         private static void ConfigureProthesis(ModelBuilder modelBuilder)

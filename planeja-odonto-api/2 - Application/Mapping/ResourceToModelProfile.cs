@@ -16,6 +16,7 @@ using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 using PlanejaOdonto.Api.Application.Resources.Treatment;
 using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Application.Resources.Prothesis;
+using PlanejaOdonto.Api.Application.Resources.Contract;
 
 namespace PlanejaOdonto.Api.Application.Mapping
 {
@@ -25,18 +26,13 @@ namespace PlanejaOdonto.Api.Application.Mapping
         public ResourceToModelProfile()
         {
             MapScheduling();
-
             MapFranchisee();
-
             MapPacient();
-
             MapDentist();
-
             MapTreatment();
-
             MapLogin();
-
             MapFinancial();
+            MapContract();
 
         }
 
@@ -119,6 +115,13 @@ namespace PlanejaOdonto.Api.Application.Mapping
             CreateMap<SaveDependentResource, Pacient>();
             CreateMap<SaveAddressResource, Address>();
             CreateMap<SaveDependentResource, Dependent>();
+        }
+
+        private void MapContract()
+        {
+
+            CreateMap<ContractResource,Contract>();
+            CreateMap<SaveContractResource, Contract>();
         }
     }
 }

@@ -6,7 +6,7 @@ using PlanejaOdonto.Api.Domain.Repositories;
 using System;
 using System.Threading.Tasks;
 
-namespace PlanejaOdonto.Api.Services
+namespace PlanejaOdonto.Api.Infrastructure.Services
 {
     public class LoginService : ILoginService
     {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Repositories;
 using PlanejaOdonto.Api.Authentication;
-using PlanejaOdonto.Api.Services;
+using PlanejaOdonto.Api.Infrastructure.Services;
 using PlanejaOdonto.Api.Domain.Repositories;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 using PlanejaOdonto.Api.Application.Services;
@@ -65,6 +65,8 @@ namespace PlanejaOdonto.Api
             services.AddScoped<IProthesisRepository, ProthesisRepository>();
             services.AddScoped<IProcedureRepository, ProcedureRepository>();
             services.AddScoped<IInstallmentRepository, InstallmentRepository>();
+            services.AddScoped<IContractRepository, ContractRepository>();
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
@@ -81,6 +83,8 @@ namespace PlanejaOdonto.Api
             services.AddScoped<ITreatmentService, TreatmentService>();
             services.AddScoped<IFinancialService, FinancialService>(); 
             services.AddScoped<IProthesisService, ProthesisService>();
+            services.AddScoped<IContractService, ContractService>();
+
 
 
         }

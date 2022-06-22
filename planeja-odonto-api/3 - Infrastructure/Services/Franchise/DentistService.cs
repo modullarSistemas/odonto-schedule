@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PlanejaOdonto.Api.Services
+namespace PlanejaOdonto.Api.Infrastructure.Services
 {
     public class DentistService : IDentistService
     {

@@ -16,6 +16,7 @@ using PlanejaOdonto.Api.Application.Resources.Pacient;
 using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 using PlanejaOdonto.Api.Application.Resources.Treatment;
 using PlanejaOdonto.Api.Application.Resources.Prothesis;
+using PlanejaOdonto.Api.Application.Resources.Contract;
 
 namespace PlanejaOdonto.Api.Application.Mapping
 {
@@ -102,6 +103,8 @@ namespace PlanejaOdonto.Api.Application.Mapping
             CreateMap<Income, IncomeResource>();
             CreateMap<Income, SaveIncomeResource>();
 
+            CreateMap<Contract, ContractResource>();
+            CreateMap<Contract, SaveContractResource>();
 
 
         }
