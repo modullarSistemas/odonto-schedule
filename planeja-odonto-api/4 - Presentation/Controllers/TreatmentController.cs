@@ -6,7 +6,9 @@ using PlanejaOdonto.Api.Application.Resources.Treatment;
 using PlanejaOdonto.Api.Application.Services;
 using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
+using RestSharp;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Application.Controllers
@@ -241,11 +243,28 @@ namespace PlanejaOdonto.Api.Application.Controllers
 
 
 
+        [HttpPut("[action]")]
+        [Produces("application/pdf")]
+        public async Task<IActionResult> CreateContract()
+        {
+            var uri = "http://localhost:3000/api/";
+            var client = new RestClient(uri);
+            var request = new RestRequest("GenerateGeneralPracticionerContract", Method.Get);
+
+            byte[] byteArray = client.DownloadData(request);
+
+            var stream = new MemoryStream(byteArray);
+
+            return new FileStreamResult(stream, "application/pdf");
+
+        }
 
 
 
 
-  
+
+
+
 
 
 
