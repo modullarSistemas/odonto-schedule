@@ -22,6 +22,19 @@ namespace PlanejaOdonto.Api.Application.Controllers
             _mapper = mapper;
         }
 
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<ProcedureTypeResource>), 200)]
+        public async Task<IEnumerable<ProcedureTypeResource>> ListAsync()
+        {
+            var procedureTypes = await _procedureTypeService.ListAsync();
+            procedureTypes = procedureTypes.OrderBy(procedure => procedure.Name);
+            var resources = _mapper.Map<IEnumerable<ProcedureType>, IEnumerable<ProcedureTypeResource>>(procedureTypes);
+
+            return resources;
+        }
+
+
         /// <summary>
         /// Lists all procedureTypes.
         /// </summary>

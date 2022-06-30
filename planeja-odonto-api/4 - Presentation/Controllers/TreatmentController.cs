@@ -30,6 +30,20 @@ namespace PlanejaOdonto.Api.Application.Controllers
 
         #region Gets
 
+
+        [HttpGet("[action]/{pacientId}")]
+        [ProducesResponseType(typeof(IEnumerable<TreatmentResource>), 200)]
+        public async Task<IEnumerable<TreatmentResource>> ListByPacientIdAsync(int pacientId)
+        {
+            var treatments = await _treatmentService.ListByPacientIdAsync(pacientId);
+            var resources = _mapper.Map<IEnumerable<Treatment>, IEnumerable<TreatmentResource>>(treatments);
+
+            return resources;
+        }
+
+
+
+
         [HttpGet("[action]/{pacientId}")]
         [ProducesResponseType(typeof(IEnumerable<TreatmentResource>), 200)]
         public async Task<IEnumerable<TreatmentResource>> ListOrthodonticsByPacientIdAsync(int pacientId)
