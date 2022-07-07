@@ -10,5 +10,7 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
         public Treatment Treatment { get; set; }
 
         public int TreatmentId { get; set; }
+
+        public byte[] DocumentFile { get; set; }
     }
 }

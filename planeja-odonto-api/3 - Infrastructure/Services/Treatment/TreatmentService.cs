@@ -1,11 +1,14 @@
-﻿using PlanejaOdonto.Api.Application.Resources.Treatment;
+﻿using Microsoft.AspNetCore.Mvc;
+using PlanejaOdonto.Api.Application.Resources.Treatment;
 using PlanejaOdonto.Api.Application.Services;
 using PlanejaOdonto.Api.Application.Services.Communication;
 using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
+using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Infrastructure.Services
@@ -27,6 +30,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             , IProcedureRepository procedureRepository
             , IPacientRepository pacientRespository
             , IProthesisRepository prothesisRepository
+            , IContractRepository contractRepository
             , IUnitOfWork unitOfWork)
         {
             _treatmentRespository = treatmentRespository;
@@ -48,7 +52,6 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             var treatments = await _treatmentRespository.ListByFranchiseIdAsync(id);
             return treatments;
         }
-
 
         public async Task<IEnumerable<Procedure>> ListProcedureByTreatmentIdAsync(int id)
         {
@@ -97,7 +100,6 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             }
         }
 
-
         public async Task<TreatmentResponse> UpdateStatusAsync(int id, TreatmentStatusEnum status)
         {
             var existingTreatment = await _treatmentRespository.FindByIdTrackingAsync(id);
@@ -116,8 +118,6 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
                 return new TreatmentResponse($"Ocorreu um erro ao atualizar o Tratamento: {ex.Message}");
             }
         }
-
-
 
         public async Task<TreatmentResponse> DeleteAsync(int id)
         {
@@ -216,6 +216,21 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             var treatments = await _treatmentRespository.ListFacialHarmonizationByPacientIdAsync(id);
             return treatments;
         }
+
+        //public Task<ContractResponse> CreateContract(int treatmentId)
+        //{
+        //    //var uri = "http://localhost:3000/api/";
+        //    //var client = new RestClient(uri);
+        //    //var request = new RestRequest("GenerateGeneralPracticionerContract", Method.Get);
+
+        //    //byte[] byteArray = client.DownloadData(request);
+
+        //    //var stream = new MemoryStream(byteArray);
+
+        //    //return new FileStreamResult(stream, "application/pdf");
+
+        //    return 
+        //}
     }
 }
 

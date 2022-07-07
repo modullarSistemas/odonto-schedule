@@ -1,5 +1,5 @@
-﻿using PlanejaOdonto.Api.Application.Resources.Pacient;
-using PlanejaOdonto.Api.Application.Resources.ProcedureType;
+﻿using PlanejaOdonto.Api.Application.Resources.Dentist;
+using PlanejaOdonto.Api.Application.Resources.Pacient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +11,16 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
     {
         public int Id { get; set; }
 
+        public DentistResource Dentist { get; set; }
+
         public PacientResource Pacient { get; set; }
 
         public List<ProcedureResource> Procedures { get; set; }
 
         public List<InstallmentResource> Installments { get; set; }
 
-
         public string TreatmentType { get; set; }
+
         public string Description { get; set; }
 
         public double TotalCost { get; set; }

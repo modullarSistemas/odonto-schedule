@@ -4,6 +4,9 @@ using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using System;
 using System.Threading.Tasks;
+using System.IO;
+using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 
 namespace PlanejaOdonto.Api.Infrastructure.Services
 {
@@ -11,24 +14,41 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
     {
         private readonly IContractRepository _contractRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ITreatmentRepository _treatmentRepository;
 
-        public ContractService(IContractRepository contractRepository, IUnitOfWork unitOfWork)
+        public ContractService(IContractRepository contractRepository, IUnitOfWork unitOfWork, ITreatmentRepository treatmentRepository)
         {
             _contractRepository = contractRepository;
             _unitOfWork = unitOfWork;
+            _treatmentRepository = treatmentRepository;
         }
 
-        public async Task<Contract> GetById(int id)
+        public async Task<ContractResponse> GetByTreatmentId(int id)
         {
-            var contract = await _contractRepository.FindByIdAsync(id);
+            var contract = await _contractRepository.FindByTreatmentIdAsync(id);
 
-            return contract;
+            if (contract==null)
+                return new ContractResponse("Contrato não encontrado.");
+
+            return new ContractResponse(contract);
         }
 
         public async Task<ContractResponse> SaveAsync(Contract contract)
         {
             try
             {
+                var existingTreatment = _treatmentRepository.FindByIdAsync(contract.TreatmentId);
+
+                if (existingTreatment == null)
+                    return new ContractResponse("Tratamento não existe");
+
+                var existingContract = _contractRepository.FindByTreatmentIdAsync(contract.TreatmentId);
+
+                if (existingContract != null)
+                    return new ContractResponse("Contrato ja foi gerado para o tratamento.");
+
+                GenerateContractPdf(contract);
+
                 await _contractRepository.AddAsync(contract);
                 await _unitOfWork.CompleteAsync();
 
@@ -38,6 +58,17 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             {
                 return new ContractResponse($"Ocorreu um erro ao salvar o Contrato: {ex.Message}");
             }
+        }
+
+        private static void GenerateContractPdf(Contract contract)
+        {
+            var uri = "http://localhost:3000/api/";
+            var client = new RestClient(uri);
+            var request = new RestRequest("GenerateGeneralPracticionerContract", Method.Get);
+
+            byte[] byteArray = client.DownloadData(request);
+
+            contract.DocumentFile = byteArray;
         }
 
         public async Task<ContractResponse> UpdateAsync(int id, Contract updatedContract)

@@ -3,6 +3,8 @@ using PlanejaOdonto.Api.Application.Services.Communication;
 using System.Threading.Tasks;
 using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Application.Resources.Treatment;
+using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
+using System.Collections.Generic;
 
 namespace PlanejaOdonto.Api.Application.Services
 {
@@ -12,7 +14,7 @@ namespace PlanejaOdonto.Api.Application.Services
 
         Task<TreatmentResponse> GenerateInstallments(int treatmentId, GenerateInstallmentsResource resource);
 
-
+        Task<IEnumerable<Installment>> GetLateInstallmentsByFranchiseId(int id);
         //Task<IEnumerable<Expense>> ListExpensesAsync();
 
         //Task<IEnumerable<ExpenseGroup>> ListExpenseGroupsAsync();

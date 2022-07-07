@@ -17,14 +17,12 @@ namespace PlanejaOdonto.Api.Application.Controllers
     public class TreatmentController : ControllerBase
     {
         private readonly ITreatmentService _treatmentService;
-        private readonly IContractService _contractService;
         private readonly IMapper _mapper;
 
 
-        public TreatmentController(ITreatmentService treatmentService, IContractService contractService, IMapper mapper)
+        public TreatmentController(ITreatmentService treatmentService,IMapper mapper)
         {
             _treatmentService = treatmentService;
-            _contractService = contractService;
             _mapper = mapper;
         }
 
@@ -127,8 +125,6 @@ namespace PlanejaOdonto.Api.Application.Controllers
         }
         #endregion
 
-
-
         #region Posts
 
 
@@ -144,25 +140,6 @@ namespace PlanejaOdonto.Api.Application.Controllers
             var proceduresResource = _mapper.Map<List<Procedure>, List<ProcedureResource>>(result);
 
             return Ok(proceduresResource);
-        }
-
-        [HttpPost("[action]")]
-        [ProducesResponseType(typeof(IEnumerable<ProcedureResource>), 201)]
-        [ProducesResponseType(typeof(ErrorResource), 400)]
-        public async Task<IActionResult> GenerateContract([FromBody] SaveContractResource resources)
-        {
-            var contract = _mapper.Map<SaveContractResource, Contract>(resources);
-
-            var result = await _contractService.SaveAsync(contract);
-
-            if (!result.Success)
-            {
-                return BadRequest(new ErrorResource(result.Message));
-            }
-
-            var contractResource = _mapper.Map<Contract, ContractResource>(result.Resource);
-
-            return Ok(contractResource);
         }
 
 
@@ -236,9 +213,6 @@ namespace PlanejaOdonto.Api.Application.Controllers
 
         #endregion
 
-
-
-
         [HttpDelete("[action]/{id}")]
         [ProducesResponseType(typeof(TreatmentResource), 200)]
         [ProducesResponseType(typeof(ErrorResource), 400)]
@@ -254,31 +228,6 @@ namespace PlanejaOdonto.Api.Application.Controllers
             var categoryResource = _mapper.Map<Treatment, TreatmentResource>(result.Resource);
             return Ok(categoryResource);
         }
-
-
-
-        [HttpPut("[action]")]
-        [Produces("application/pdf")]
-        public async Task<IActionResult> CreateContract()
-        {
-            var uri = "http://localhost:3000/api/";
-            var client = new RestClient(uri);
-            var request = new RestRequest("GenerateGeneralPracticionerContract", Method.Get);
-
-            byte[] byteArray = client.DownloadData(request);
-
-            var stream = new MemoryStream(byteArray);
-
-            return new FileStreamResult(stream, "application/pdf");
-
-        }
-
-
-
-
-
-
-
 
 
 

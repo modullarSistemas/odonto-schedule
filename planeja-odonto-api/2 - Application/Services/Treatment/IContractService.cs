@@ -9,7 +9,7 @@ namespace PlanejaOdonto.Api.Application.Services
 {
     public interface IContractService
     {
-        Task<Contract> GetById(int id);
+        Task<ContractResponse> GetByTreatmentId(int id);
         Task<ContractResponse> SaveAsync(Contract contract);
         Task<ContractResponse> UpdateAsync(int id, Contract contract);
         Task<ContractResponse> DeleteAsync(int id);

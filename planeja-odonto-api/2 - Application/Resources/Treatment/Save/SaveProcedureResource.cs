@@ -8,7 +8,6 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 {
     public class SaveProcedureResource
     {        
-        public int DentistId { get; set; }
         public int ProcedureTypeId { get; set; }
         public int? ProthesisId { get; set; }
         public int Tooth { get; set; }

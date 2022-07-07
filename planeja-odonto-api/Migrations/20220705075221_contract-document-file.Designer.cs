@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
@@ -9,9 +10,10 @@ using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 namespace PlanejaOdonto.Api.Migrations
 {
     [DbContext(typeof(PlanejaOdontoDbContext))]
-    partial class PlanejaOdontoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220705075221_contract-document-file")]
+    partial class contractdocumentfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -514,6 +516,9 @@ namespace PlanejaOdonto.Api.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("NOW()");
 
+                    b.Property<int>("DentistId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("NeedProthesis")
                         .HasColumnType("boolean");
 
@@ -536,6 +541,8 @@ namespace PlanejaOdonto.Api.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DentistId");
 
                     b.HasIndex("ProcedureTypeId");
 
@@ -614,9 +621,6 @@ namespace PlanejaOdonto.Api.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("NOW()");
 
-                    b.Property<int>("DentistId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -641,8 +645,6 @@ namespace PlanejaOdonto.Api.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DentistId");
 
                     b.HasIndex("PacientId");
 
@@ -794,6 +796,12 @@ namespace PlanejaOdonto.Api.Migrations
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Procedure", b =>
                 {
+                    b.HasOne("PlanejaOdonto.Api.Domain.Models.DentistAggregate.Dentist", "Dentist")
+                        .WithMany()
+                        .HasForeignKey("DentistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.ProcedureType", "ProcedureType")
                         .WithMany()
                         .HasForeignKey("ProcedureTypeId")
@@ -810,6 +818,8 @@ namespace PlanejaOdonto.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Dentist");
+
                     b.Navigation("ProcedureType");
 
                     b.Navigation("Prothesis");
@@ -819,19 +829,11 @@ namespace PlanejaOdonto.Api.Migrations
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.TreatmentAggregate.Treatment", b =>
                 {
-                    b.HasOne("PlanejaOdonto.Api.Domain.Models.DentistAggregate.Dentist", "Dentist")
-                        .WithMany()
-                        .HasForeignKey("DentistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.PacientAggregate.Pacient", "Pacient")
                         .WithMany()
                         .HasForeignKey("PacientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Dentist");
 
                     b.Navigation("Pacient");
                 });

@@ -23,6 +23,16 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
             // tracking makes the code a little faster
         }
 
+        public async Task<IEnumerable<Installment>> ListLateInstallment(int franchiseId)
+        {
+            return await _context.Installment
+                                 .AsNoTracking()
+                                 .ToListAsync();
+
+            // AsNoTracking tells EF Core it doesn't need to track changes on listed entities. Disabling entity
+            // tracking makes the code a little faster
+        }
+
         public async Task<IEnumerable<Installment>> ListByTreatmentIdAsync(int treatmentId)
         {
             return await _context.Installment

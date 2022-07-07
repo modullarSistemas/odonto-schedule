@@ -3,7 +3,6 @@ using PlanejaOdonto.Api.Application.Resources.Treatment;
 using PlanejaOdonto.Api.Application.Services;
 using PlanejaOdonto.Api.Application.Services.Communication;
 using PlanejaOdonto.Api.Domain.Enums;
-using PlanejaOdonto.Api.Domain.Models.FinancialAggregate;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using System;
@@ -14,8 +13,6 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
 {
     public class FinancialService : IFinancialService
     {
-        private readonly IExpenseRepository _expenseRepository;
-        private readonly IIncomeRepository _incomeRepository;
         private readonly IInstallmentRepository _installmentRepository;
         private readonly ITreatmentRepository _treatmentRespository;
         private readonly IUnitOfWork _unitOfWork;
@@ -23,8 +20,6 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
 
         public FinancialService(IExpenseRepository expenseRepository, IIncomeRepository incomeRepository, IInstallmentRepository installmentRepository, ITreatmentRepository treatmentRespository, IUnitOfWork unitOfWork)
         {
-            _expenseRepository = expenseRepository;
-            _incomeRepository = incomeRepository;
             _installmentRepository = installmentRepository;
             _treatmentRespository = treatmentRespository;
             _unitOfWork = unitOfWork;
@@ -94,6 +89,11 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             {
                 return new TreatmentResponse($"Ocorreu um erro ao gerar o parcelas: {ex.Message}");
             }
+        }
+
+        public Task<IEnumerable<Installment>> GetLateInstallmentsByFranchiseId(int id)
+        {
+            throw new NotImplementedException();
         }
 
         #region Expenses

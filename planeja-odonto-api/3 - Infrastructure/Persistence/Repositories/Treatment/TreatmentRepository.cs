@@ -70,7 +70,6 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
                                   .Include(y => y.Procedures)
                                     .ThenInclude(x => x.Prothesis)
                                  .Include(y => y.Procedures)
-                                   .ThenInclude(x => x.Dentist)
                                  .Include(x => x.Installments)
                                  .AsNoTracking()
                                  .FirstOrDefaultAsync(x => x.Id == id);

@@ -22,8 +22,6 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public ProcedureTypeResource ProcedureType { get; set; }
 
-        public DentistResource Dentist { get; set; }
-
 
 
     }

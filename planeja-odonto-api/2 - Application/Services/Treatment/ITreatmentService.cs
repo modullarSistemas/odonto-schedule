@@ -27,6 +27,5 @@ namespace PlanejaOdonto.Api.Application.Services
         Task<ProcedureResponse> UpdateProcedureStatus(int procedureId,ProcedureStatusEnum status);
 
 
-
     }
 }
