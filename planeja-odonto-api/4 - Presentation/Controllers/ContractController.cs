@@ -44,15 +44,19 @@ namespace PlanejaOdonto.Api.Presentation.Controllers
             return Ok(contractResource);
         }
 
-        [HttpPut("[action]")]
-        [Produces("application/pdf")]
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetContractPdfByTreatmentId(int treatmentId)
         {
             var result = await _contractService.GetByTreatmentId(treatmentId);
 
-            var stream = new MemoryStream(result.Resource.DocumentFile);
+            if (result.Success)
+            {
+                var stream = new MemoryStream(result.Resource.DocumentFile);
 
-            return  new FileStreamResult(stream, "application/pdf");
+                return new FileStreamResult(stream, "application/pdf");
+            }
+
+            return BadRequest(result.Message);
         }
 
     }

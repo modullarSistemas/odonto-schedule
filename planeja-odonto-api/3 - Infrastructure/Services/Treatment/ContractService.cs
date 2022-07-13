@@ -27,7 +27,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
         {
             var contract = await _contractRepository.FindByTreatmentIdAsync(id);
 
-            if (contract==null)
+            if (contract == null)
                 return new ContractResponse("Contrato não encontrado.");
 
             return new ContractResponse(contract);
@@ -47,7 +47,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
                 if (existingContract != null)
                     return new ContractResponse("Contrato ja foi gerado para o tratamento.");
 
-                GenerateContractPdf(contract);
+                GenerateContractPdf(contract, existingTreatment);
 
                 await _contractRepository.AddAsync(contract);
                 await _unitOfWork.CompleteAsync();
@@ -60,14 +60,17 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             }
         }
 
-        private static void GenerateContractPdf(Contract contract)
+        private static void GenerateContractPdf(Contract contract, Treatment treatment)
         {
             var uri = "http://localhost:3000/api/";
             var client = new RestClient(uri);
-            var request = new RestRequest("GenerateGeneralPracticionerContract", Method.Get);
+            var request = new RestRequest("GenerateGeneralPracticionerContract", Method.Put);
+            request.AddBody(treatment);
 
             byte[] byteArray = client.DownloadData(request);
 
+            if (byteArray == null)
+                throw (new Exception("Erro ao gerar PDF"));
             contract.DocumentFile = byteArray;
         }
 
