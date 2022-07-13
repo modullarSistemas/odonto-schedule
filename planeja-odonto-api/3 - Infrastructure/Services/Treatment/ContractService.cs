@@ -37,12 +37,12 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
         {
             try
             {
-                var existingTreatment = _treatmentRepository.FindByIdAsync(contract.TreatmentId);
+                var existingTreatment = await _treatmentRepository.FindByIdAsync(contract.TreatmentId);
 
                 if (existingTreatment == null)
                     return new ContractResponse("Tratamento não existe");
 
-                var existingContract = _contractRepository.FindByTreatmentIdAsync(contract.TreatmentId);
+                var existingContract = await _contractRepository.FindByTreatmentIdAsync(contract.TreatmentId);
 
                 if (existingContract != null)
                     return new ContractResponse("Contrato ja foi gerado para o tratamento.");

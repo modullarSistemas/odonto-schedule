@@ -10,10 +10,6 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
     {
         public int PacientId { get; set; }
 
-        [JsonIgnore]
-        public Dentist Dentist { get; set; }
-
-        public int DentistId { get; set; }
 
         [JsonIgnore]
         public Pacient Pacient { get; set; }
