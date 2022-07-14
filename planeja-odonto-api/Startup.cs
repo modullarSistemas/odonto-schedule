@@ -13,6 +13,10 @@ using PlanejaOdonto.Api.Infrastructure.Persistence.Contexts;
 using PlanejaOdonto.Api.Application.Services;
 using System;
 using System.Globalization;
+using PlanejaOdonto.Api.Domain.Repositories.SchedulingAggregate;
+using PlanejaOdonto.Api.Infrastructure.Persistence.Repositories.Scheduling;
+using PlanejaOdonto.Api.Infrastructure.Services.Scheduling;
+using PlanejaOdonto.Api.Application.Services.Scheduling;
 
 namespace PlanejaOdonto.Api
 {
@@ -54,7 +58,8 @@ namespace PlanejaOdonto.Api
             services.AddScoped<IFranchiseeRepository, FranchiseeRepository>();
             services.AddScoped<IFranchiseRepository, FranchiseRepository>();
             services.AddScoped<IPacientRepository, PacientRepository>();
-            services.AddScoped<ISchedulingRepository, SchedulingRepository>();
+            services.AddScoped<IProcedureSchedulingRepository, ProcedureSchedulingRepository>();
+            services.AddScoped<IEvaluationSchedulingRepository, EvaluationSchedulingRepository>();
             services.AddScoped<IDentistRepository, DentistRepository>();
             services.AddScoped<IProcedureTypeRepository, ProcedureTypeRepository>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
@@ -75,7 +80,8 @@ namespace PlanejaOdonto.Api
         {
             services.AddScoped<IFranchiseService, FranchiseService>();
             services.AddScoped<IPacientService, PacientService>();
-            services.AddScoped<ISchedulingService, SchedulingService>();
+            services.AddScoped<IEvaluationSchedulingService, EvaluationSchedulingService>();
+            services.AddScoped<IProcedureSchedulingService, ProcedureSchedulingService>();
             services.AddScoped<IDentistService, DentistService>();
             services.AddScoped<IProcedureTypeService, ProcedureTypeService>();
             services.AddScoped<IFranchiseeService, FranchiseeService>();
@@ -84,9 +90,6 @@ namespace PlanejaOdonto.Api
             services.AddScoped<IFinancialService, FinancialService>(); 
             services.AddScoped<IProthesisService, ProthesisService>();
             services.AddScoped<IContractService, ContractService>();
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

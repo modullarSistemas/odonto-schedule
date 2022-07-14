@@ -5,17 +5,17 @@ using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using System;
 using System.Text.Json.Serialization;
 
-namespace PlanejaOdonto.Api.Domain.Models.SchedulingAggregate
+namespace PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Procedure
 {
-    public class Scheduling : BaseModel
+    public class ProcedureScheduling : BaseModel
     {
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
 
-        public int? ProcedureTypeId { get; set; }
+        public int ProcedureTypeId { get; set; }
 
-        public ProcedureType? ProcedureType { get; set; }
+        public ProcedureType ProcedureType { get; set; }
 
         public int PacientId { get; set; }
 
@@ -28,8 +28,6 @@ namespace PlanejaOdonto.Api.Domain.Models.SchedulingAggregate
         public Dentist Dentist { get; set; }
 
         public int ScheduledBy { get; set; }
-
-        public SchedulingType SchedulingType { get; set; }
 
         public SchedulingStatus Status { get; set; }
 

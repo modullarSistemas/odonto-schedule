@@ -1,15 +1,16 @@
 ﻿using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate;
+using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Evaluation;
 
 namespace PlanejaOdonto.Api.Application.Services.Communication
 {
-    public class SchedulingResponse : BaseResponse<Scheduling>
+    public class EvaluationSchedulingResponse : BaseResponse<EvaluationScheduling>
     {
         /// <summary>
         /// Creates a success response.
         /// </summary>
         /// <param name="scheduling">Saved scheduling.</param>
         /// <returns>Response.</returns>
-        public SchedulingResponse(Scheduling scheduling) : base(scheduling)
+        public EvaluationSchedulingResponse(EvaluationScheduling scheduling) : base(scheduling)
         { }
 
         /// <summary>
@@ -17,7 +18,7 @@ namespace PlanejaOdonto.Api.Application.Services.Communication
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public SchedulingResponse(string message) : base(message)
+        public EvaluationSchedulingResponse(string message) : base(message)
         { }
     }
 }

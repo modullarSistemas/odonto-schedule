@@ -2,7 +2,7 @@
 
 namespace PlanejaOdonto.Api.Application.Resources
 {
-    public class SaveSchedulingResource
+    public class SaveProcedureSchedulingResource
     {
         public string StartDate { get; set; }
 

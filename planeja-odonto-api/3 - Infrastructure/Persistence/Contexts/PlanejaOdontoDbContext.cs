@@ -6,6 +6,8 @@ using PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate;
 using PlanejaOdonto.Api.Domain.Models.LoginAggregate;
 using PlanejaOdonto.Api.Domain.Models.PacientAggregate;
 using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate;
+using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Evaluation;
+using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Procedure;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using System;
 using System.Threading.Tasks;
@@ -28,7 +30,9 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         public DbSet<Dependent> Dependants { get; set; }
 
-        public DbSet<Scheduling> Schedulings { get; set; }
+        public DbSet<ProcedureScheduling> ProcedureSchedulings { get; set; }
+
+        public DbSet<EvaluationScheduling> EvaluationSchedulings { get; set; }
 
         public DbSet<Dentist> Dentists { get; set; }
 
@@ -169,15 +173,28 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         private static void ConfigureScheduling(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
+            modelBuilder.Entity<ProcedureScheduling>().ToTable("ProcedureSchedulings")
                       .Property(f => f.Id)
                       .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
+            modelBuilder.Entity<ProcedureScheduling>().ToTable("ProcedureSchedulings")
                       .Property(f => f.Status)
                       .HasDefaultValue(SchedulingStatus.New);
 
-            modelBuilder.Entity<Scheduling>().ToTable("Schedulings")
+            modelBuilder.Entity<ProcedureScheduling>().ToTable("ProcedureSchedulings")
+                      .Property(f => f.CreatedAt)
+                      .HasDefaultValueSql("NOW()");
+
+
+            modelBuilder.Entity<EvaluationScheduling>().ToTable("EvaluationSchedulings")
+                       .Property(f => f.Id)
+                       .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<EvaluationScheduling>().ToTable("EvaluationSchedulings")
+                      .Property(f => f.Status)
+                      .HasDefaultValue(SchedulingStatus.New);
+
+            modelBuilder.Entity<EvaluationScheduling>().ToTable("EvaluationSchedulings")
                       .Property(f => f.CreatedAt)
                       .HasDefaultValueSql("NOW()");
         }

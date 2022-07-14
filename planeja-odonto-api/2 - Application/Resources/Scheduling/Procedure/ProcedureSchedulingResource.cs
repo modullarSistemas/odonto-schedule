@@ -5,7 +5,7 @@ using System;
 
 namespace PlanejaOdonto.Api.Application.Resources
 {
-    public class SchedulingResource
+    public class ProcedureSchedulingResource
     {
         public int Id { get; set; }
 

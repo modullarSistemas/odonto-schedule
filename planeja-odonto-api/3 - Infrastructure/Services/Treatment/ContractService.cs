@@ -65,7 +65,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             var uri = "http://localhost:3000/api/";
             var client = new RestClient(uri);
             var request = new RestRequest("GenerateGeneralPracticionerContract", Method.Put);
-            request.AddBody(treatment);
+            request.AddJsonBody(treatment);
 
             byte[] byteArray = client.DownloadData(request);
 

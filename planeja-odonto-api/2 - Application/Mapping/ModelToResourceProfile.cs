@@ -17,6 +17,8 @@ using PlanejaOdonto.Api.Application.Resources.ProcedureType;
 using PlanejaOdonto.Api.Application.Resources.Treatment;
 using PlanejaOdonto.Api.Application.Resources.Prothesis;
 using PlanejaOdonto.Api.Application.Resources.Contract;
+using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Procedure;
+using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Evaluation;
 
 namespace PlanejaOdonto.Api.Application.Mapping
 {
@@ -25,13 +27,17 @@ namespace PlanejaOdonto.Api.Application.Mapping
     {
         public ModelToResourceProfile()
         {
-            CreateMap<Scheduling, SchedulingResource>()
-                .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => src.SchedulingType.ToDescriptionString()))
+            CreateMap<ProcedureScheduling, ProcedureSchedulingResource>()
                 .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status.ToDescriptionString()));
 
 
-            CreateMap<Scheduling, SaveSchedulingResource>()
-                 .ForMember(src => src.SchedulingType, opt => opt.MapFrom(src => src.SchedulingType.ToDescriptionString()));
+            CreateMap<ProcedureScheduling, SaveProcedureSchedulingResource>();
+
+
+            CreateMap<EvaluationScheduling, EvaluationSchedulingResource>()
+                .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status.ToDescriptionString()));
+
+            CreateMap<EvaluationScheduling, SaveEvaluationSchedulingResource>();
 
             CreateMap<Franchisee, FranchiseeResource>();
             CreateMap<Franchisee, SaveFranchiseeResource>();
