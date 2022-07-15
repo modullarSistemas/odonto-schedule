@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="3 - Infrastructure\Persistence\Repositories\Finance\" />
   </ItemGroup>
 
 

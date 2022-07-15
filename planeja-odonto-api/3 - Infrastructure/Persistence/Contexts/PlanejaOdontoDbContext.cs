@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Domain.Models.DentistAggregate;
-using PlanejaOdonto.Api.Domain.Models.FinancialAggregate;
 using PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate;
 using PlanejaOdonto.Api.Domain.Models.LoginAggregate;
 using PlanejaOdonto.Api.Domain.Models.PacientAggregate;
-using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate;
 using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Evaluation;
 using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Procedure;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
@@ -44,11 +42,6 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         public DbSet<Treatment> Treatments { get; set; }
 
-        public DbSet<Income> Income { get; set; }
-
-        public DbSet<Expense> Expense { get; set; }
-
-        public DbSet<ExpenseGroup> ExpenseGroups { get; set; }
 
         public DbSet<Prothesis> Prothesis { get; set; }
 
@@ -58,6 +51,9 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.HasDefaultSchema("PlanejaOdontoCore");
+
             ConfigureUser(modelBuilder);
 
             ConfigureFranchisee(modelBuilder);
@@ -71,8 +67,6 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
             ConfigureDentist(modelBuilder);
 
             ConfigureTreatment(modelBuilder);
-
-            ConfigureFinancial(modelBuilder);
 
             ConfigureProthesis(modelBuilder);
 
@@ -100,20 +94,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Contexts
                       .ValueGeneratedOnAdd();
         }
 
-        private static void ConfigureFinancial(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Income>().ToTable("Income")
-                      .Property(f => f.Id)
-                      .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Expense>().ToTable("Expenses")
-                      .Property(f => f.Id)
-                      .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<ExpenseGroup>().ToTable("ExpenseGroups")
-                      .Property(f => f.Id)
-                      .ValueGeneratedOnAdd();
-        }
 
         private static void ConfigureProcedure(ModelBuilder modelBuilder)
         {

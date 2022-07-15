@@ -8,9 +8,8 @@ namespace PlanejaOdonto.Api.Domain.Repositories
 {
     public interface IPacientRepository
     {
-        Task<IEnumerable<Pacient>> ListAsync();
-
         Task<IEnumerable<Pacient>> ListPacientByFranchiseIdAsync(int id);
+
         Task AddAsync(Pacient product);
         Task<Pacient> FindByIdAsync(int id);
         void Update(Pacient product);

@@ -68,10 +68,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             request.AddJsonBody(treatment);
 
             byte[] byteArray = client.DownloadData(request);
-
-            if (byteArray == null)
-                throw (new Exception("Erro ao gerar PDF"));
-            contract.DocumentFile = byteArray;
+            contract.DocumentFile = byteArray ?? throw new Exception("Erro ao gerar PDF");
         }
 
         public async Task<ContractResponse> UpdateAsync(int id, Contract updatedContract)

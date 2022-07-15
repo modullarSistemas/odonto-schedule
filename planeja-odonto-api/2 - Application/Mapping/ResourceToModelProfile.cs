@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using PlanejaOdonto.Api.Domain.Models.DentistAggregate;
-using PlanejaOdonto.Api.Domain.Models.FinancialAggregate;
 using PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate;
 using PlanejaOdonto.Api.Domain.Models.LoginAggregate;
 using PlanejaOdonto.Api.Domain.Models.PacientAggregate;
-using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate;
 using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Application.Resources;
 using PlanejaOdonto.Api.Application.Resources.Dentist;
-using PlanejaOdonto.Api.Application.Resources.Finance;
 using PlanejaOdonto.Api.Application.Resources.Franchisee;
 using PlanejaOdonto.Api.Application.Resources.Login;
 using PlanejaOdonto.Api.Application.Resources.Pacient;
@@ -33,7 +30,6 @@ namespace PlanejaOdonto.Api.Application.Mapping
             MapDentist();
             MapTreatment();
             MapLogin();
-            MapFinancial();
             MapContract();
 
         }
@@ -45,17 +41,6 @@ namespace PlanejaOdonto.Api.Application.Mapping
             CreateMap<LoginResource, User>();
         }
 
-        private void MapFinancial()
-        {
-            CreateMap<ExpenseResource, Expense>();
-            CreateMap<ExpenseGroupResource, ExpenseGroup>();
-            CreateMap<IncomeResource, Income>();
-
-            CreateMap<SaveIncomeResource, Income>();
-            CreateMap<SaveExpenseGroupResource, ExpenseGroup>();
-            CreateMap<SaveExpenseResource, Expense>();
-
-        }
 
         private void MapFranchisee()
         {

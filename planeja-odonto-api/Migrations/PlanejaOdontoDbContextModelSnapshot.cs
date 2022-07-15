@@ -15,6 +15,7 @@ namespace PlanejaOdonto.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("PlanejaOdontoCore")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -54,96 +55,6 @@ namespace PlanejaOdonto.Api.Migrations
                     b.HasIndex("FranchiseId");
 
                     b.ToTable("Dentists");
-                });
-
-            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.FinancialAggregate.Expense", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<int>("ExpenseGroupId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("FranchiseId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExpenseGroupId");
-
-                    b.HasIndex("FranchiseId");
-
-                    b.ToTable("Expenses");
-                });
-
-            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.FinancialAggregate.ExpenseGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExpenseGroups");
-                });
-
-            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.FinancialAggregate.Income", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<int>("FranchiseId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FranchiseId");
-
-                    b.ToTable("Income");
                 });
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate.Franchise", b =>
@@ -686,36 +597,6 @@ namespace PlanejaOdonto.Api.Migrations
                 });
 
             modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.DentistAggregate.Dentist", b =>
-                {
-                    b.HasOne("PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate.Franchise", "Franchise")
-                        .WithMany()
-                        .HasForeignKey("FranchiseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Franchise");
-                });
-
-            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.FinancialAggregate.Expense", b =>
-                {
-                    b.HasOne("PlanejaOdonto.Api.Domain.Models.FinancialAggregate.ExpenseGroup", "ExpenseGroup")
-                        .WithMany()
-                        .HasForeignKey("ExpenseGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate.Franchise", "Franchise")
-                        .WithMany()
-                        .HasForeignKey("FranchiseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ExpenseGroup");
-
-                    b.Navigation("Franchise");
-                });
-
-            modelBuilder.Entity("PlanejaOdonto.Api.Domain.Models.FinancialAggregate.Income", b =>
                 {
                     b.HasOne("PlanejaOdonto.Api.Domain.Models.FranchiseeAggregate.Franchise", "Franchise")
                         .WithMany()

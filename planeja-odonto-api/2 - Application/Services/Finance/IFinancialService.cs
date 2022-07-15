@@ -1,5 +1,4 @@
-﻿using PlanejaOdonto.Api.Domain.Models.FinancialAggregate;
-using PlanejaOdonto.Api.Application.Services.Communication;
+﻿using PlanejaOdonto.Api.Application.Services.Communication;
 using System.Threading.Tasks;
 using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Application.Resources.Treatment;
