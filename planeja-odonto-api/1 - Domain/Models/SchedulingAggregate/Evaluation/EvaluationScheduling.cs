@@ -10,6 +10,8 @@ namespace PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Evaluation
 
         public int FranchiseId { get; set; }
 
+        public string Description { get; set; }
+
         public Franchise Franchise { get; set; }
 
         public DateTime StartDate { get; set; }
