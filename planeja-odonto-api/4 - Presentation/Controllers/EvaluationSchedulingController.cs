@@ -6,6 +6,8 @@ using PlanejaOdonto.Api.Application.Resources;
 using PlanejaOdonto.Api.Domain.Enums;
 using PlanejaOdonto.Api.Domain.Models.SchedulingAggregate.Evaluation;
 using PlanejaOdonto.Api.Application.Services.Scheduling;
+using System.Threading;
+using System.Globalization;
 
 namespace PlanejaOdonto.Api.Application.Controllers
 {
@@ -19,6 +21,8 @@ namespace PlanejaOdonto.Api.Application.Controllers
         {
             _schedulingService = schedulingService;
             _mapper = mapper;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
         }
 
 

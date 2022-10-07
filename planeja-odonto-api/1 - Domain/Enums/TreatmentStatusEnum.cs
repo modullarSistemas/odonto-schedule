@@ -10,13 +10,17 @@ namespace PlanejaOdonto.Api.Domain.Enums
         [Description("Avaliação Completa")]
         AvaliacaoCompleta = 2,
 
+        [Description("Em Negociação")]
+        EmNegociação = 3,
+
+
         [Description("Em Progresso")]
-        EmProgresso = 3,
+        EmProgresso = 4,
 
         [Description("Finalizado")]
-        Finalizado = 4,
+        Finalizado = 5,
 
         [Description("Cancelado")]
-        Cancelado = 5,
+        Cancelado = 6,
     }
 }

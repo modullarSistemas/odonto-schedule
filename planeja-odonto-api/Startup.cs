@@ -121,8 +121,6 @@ namespace PlanejaOdonto.Api
             });
 
             
-            CultureInfo.CurrentCulture = new CultureInfo("pt-BR");
-
             //app.UseCustomSwagger();
 
             using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
