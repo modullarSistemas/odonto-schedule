@@ -32,6 +32,8 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             if (installment == null)
                 return new InstallmentResponse("Parcela não encontrada");
 
+            AddDiscount(DateTime.Now,installment);
+
             installment.PaymentMethod = paymentMethod;
             installment.Payday = DateTime.Now;
             installment.UpdatedAt = DateTime.Now;
@@ -43,7 +45,13 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
 
         }
 
-
+        private void AddDiscount(DateTime now, Installment installment)
+        {
+            if(now <= installment.Payday)
+            {
+                installment.Cost = installment.Cost * 0.95;
+            }
+        }
 
         public async Task<TreatmentResponse> GenerateInstallments(int treatmentId, GenerateInstallmentsResource resource)
         {
@@ -58,28 +66,14 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             if (existingTreatment == null)
                 return new TreatmentResponse("Tratamento não encontrado.");
 
-            if(existingTreatment.Status != TreatmentStatusEnum.AvaliacaoCompleta)
+            if(existingTreatment.Status == TreatmentStatusEnum.EmProgresso)
                 return new TreatmentResponse("Parcelas ja foram geradas.");
 
 
             var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, resource.InstallmentDueDay);
             try
             {
-
-                double installmentCost = Math.Truncate(100 * ((existingTreatment.TotalCost + existingTreatment.ProthesisCost) / resource.InstallmentQuantity)) / 100;
-                for (int i = 1; i <= resource.InstallmentQuantity; i++)
-                {
-
-                    existingTreatment.Installments.Add(
-                        new Installment
-                        {
-                            Cost = installmentCost,
-                            Due = date.AddMonths(i),
-
-                        });
-
-                }
-                _treatmentRespository.Update(existingTreatment);
+                IncludeInstallments(resource, existingTreatment, date);
 
                 await _unitOfWork.CompleteAsync();
 
@@ -89,6 +83,24 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             {
                 return new TreatmentResponse($"Ocorreu um erro ao gerar o parcelas: {ex.Message}");
             }
+        }
+
+        private void IncludeInstallments(GenerateInstallmentsResource resource, Treatment existingTreatment, DateTime date)
+        {
+            double installmentCost = Math.Truncate(100 * ((existingTreatment.TotalCost + existingTreatment.ProthesisCost) / resource.InstallmentQuantity)) / 100;
+            for (int i = 1; i <= resource.InstallmentQuantity; i++)
+            {
+
+                existingTreatment.Installments.Add(
+                    new Installment
+                    {
+                        Cost = installmentCost,
+                        Due = date.AddMonths(i),
+
+                    });
+
+            }
+            _treatmentRespository.Update(existingTreatment);
         }
 
         public Task<IEnumerable<Installment>> GetLateInstallmentsByFranchiseId(int id)

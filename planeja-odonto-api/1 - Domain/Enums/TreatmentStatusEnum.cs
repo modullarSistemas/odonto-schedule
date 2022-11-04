@@ -2,7 +2,7 @@
 
 namespace PlanejaOdonto.Api.Domain.Enums
 {
-    public enum TreatmentStatusEnum : byte
+    public enum TreatmentStatusEnum 
     {
         [Description("Pendente")]
         Pendente = 1,

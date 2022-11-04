@@ -27,6 +27,8 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public string Anamnesis { get; set; }
 
-        public string Status { get; set; }
+        public int Status { get; set; }
+        public string StatusDescription { get; set; }
+
     }
 }

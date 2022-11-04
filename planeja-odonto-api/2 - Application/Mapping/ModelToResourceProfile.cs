@@ -74,7 +74,8 @@ namespace PlanejaOdonto.Api.Application.Mapping
 
 
             CreateMap<Treatment, TreatmentResource>()
-                .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status.ToDescriptionString()))
+                .ForMember(src => src.Status, opt => opt.MapFrom(src => src.Status))
+                    .ForMember(src => src.StatusDescription, opt => opt.MapFrom(src => src.Status.ToDescriptionString()))
                 .ForMember(src => src.TreatmentType, opt => opt.MapFrom(src => src.TreatmentType.ToDescriptionString()));
 
 

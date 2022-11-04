@@ -49,7 +49,7 @@ namespace PlanejaOdonto.Api.Authentication
                          new Claim(ClaimTypes.Name,usuario.Username.ToString())
                         ,new Claim(ClaimTypes.Role,usuario.Role.ToString())
                     })
-                ,Expires = DateTime.UtcNow.AddHours(2)
+                ,Expires = DateTime.UtcNow.AddHours(0.5)
                 , SigningCredentials = 
                     new SigningCredentials(
                             new SymmetricSecurityKey (key),
