@@ -18,6 +18,8 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public bool NeedProthesis { get; set; }
 
+        public string Description { get; set; }
+
         public ProcedureStatusEnum Status { get; set; }
 
         public ProthesisResource Prothesis { get; set; }

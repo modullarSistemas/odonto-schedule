@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using AutoMapper;
+using PlanejaOdonto.Api.Application.Resources.Treatment;
 
 namespace PlanejaOdonto.Api.Infrastructure.Services
 {
@@ -15,12 +19,13 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
         private readonly IContractRepository _contractRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITreatmentRepository _treatmentRepository;
-
-        public ContractService(IContractRepository contractRepository, IUnitOfWork unitOfWork, ITreatmentRepository treatmentRepository)
+        private readonly IMapper _mapper;
+        public ContractService(IContractRepository contractRepository, IUnitOfWork unitOfWork, ITreatmentRepository treatmentRepository, IMapper autoMapper)
         {
             _contractRepository = contractRepository;
             _unitOfWork = unitOfWork;
             _treatmentRepository = treatmentRepository;
+            _mapper = autoMapper;
         }
 
         public async Task<ContractResponse> GetByTreatmentId(int id)
@@ -60,12 +65,15 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             }
         }
 
-        private static void GenerateContractPdf(Contract contract, Treatment treatment)
+        private void GenerateContractPdf(Contract contract, Treatment treatment)
         {
             var uri = "http://localhost:3000/api/";
             var client = new RestClient(uri);
             var request = new RestRequest("GenerateGeneralPracticionerContract", Method.Put);
-            request.AddJsonBody(treatment);
+
+            var treatmentRequest = _mapper.Map<Treatment,TreatmentResource>(treatment);
+
+            request.AddJsonBody(treatmentRequest);
 
             byte[] byteArray = client.DownloadData(request);
             contract.DocumentFile = byteArray ?? throw new Exception("Erro ao gerar PDF");
