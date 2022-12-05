@@ -30,6 +30,8 @@ namespace PlanejaOdonto.Api.Domain.Models.PacientAggregate
 
         public string CivilState { get; set; }
 
+        public string HowArrived { get; set; }
+
         public IList<Dependent> Dependants { get; set; } = new List<Dependent>();
 
     }

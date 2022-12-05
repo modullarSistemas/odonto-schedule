@@ -49,7 +49,11 @@ namespace PlanejaOdonto.Api.Infrastructure.Persistence.Repositories
 
         public async Task<Installment> FindByIdAsync(int id)
         {
-            return await _context.Installment.FindAsync(id);
+            return await _context.Installment
+                .Include(x=>x.Treatment)
+                    .ThenInclude(x=>x.Procedures)
+                        .ThenInclude(x=>x.ProcedureType)
+                .FirstOrDefaultAsync(x=>x.Id == id);
         }
 
         public void Update(Installment franchisee)

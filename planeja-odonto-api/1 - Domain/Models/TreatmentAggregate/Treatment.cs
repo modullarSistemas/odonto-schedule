@@ -20,6 +20,9 @@ namespace PlanejaOdonto.Api.Domain.Models.TreatmentAggregate
         [JsonIgnore]
         public List<Installment> Installments { get; set; }
 
+        [JsonIgnore]
+        public List<ProthesisInstallment> ProthesisInstallments { get; set; }
+
         public string Description { get; set; }
 
         public double TotalCost { get; set; }

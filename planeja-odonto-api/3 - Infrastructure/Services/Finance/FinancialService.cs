@@ -7,6 +7,7 @@ using PlanejaOdonto.Api.Domain.Models.TreatmentAggregate;
 using PlanejaOdonto.Api.Domain.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PlanejaOdonto.Api.Infrastructure.Services
@@ -32,6 +33,12 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             if (installment == null)
                 return new InstallmentResponse("Parcela não encontrada");
 
+            var dentistDictonary = installment.Treatment.Procedures                            
+                .GroupBy(x => x.DentistId)                      
+                .ToDictionary(g => g.Key, g => g.Sum(v => v.ProcedureType.Cost));
+
+
+            // fazer a porcentagem de cada chave do dicionario em relacao ao custo total do tratamento
             AddDiscount(DateTime.Now,installment);
 
             installment.PaymentMethod = paymentMethod;
@@ -85,14 +92,68 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             }
         }
 
+
+
+        public async Task<TreatmentResponse> GenerateProthesisInstallments(int treatmentId, GenerateInstallmentsResource resource)
+        {
+            if (resource.InstallmentDueDay > 25)
+                return new TreatmentResponse("Dia de vencimento não pode passar do dia 25");
+
+            if (resource.InstallmentQuantity > 10)
+                return new TreatmentResponse("Numero máximo de parcelas não pode ser maior que 10");
+
+            var existingTreatment = await _treatmentRespository.FindByIdTrackingAsync(treatmentId);
+
+            if (existingTreatment == null)
+                return new TreatmentResponse("Tratamento não encontrado.");
+
+            if (existingTreatment.Status == TreatmentStatusEnum.EmProgresso)
+                return new TreatmentResponse("Parcelas ja foram geradas.");
+
+
+            var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, resource.InstallmentDueDay);
+            try
+            {
+                IncludeProthesisInstallments(resource, existingTreatment, date);
+
+                await _unitOfWork.CompleteAsync();
+
+                return new TreatmentResponse(existingTreatment);
+            }
+            catch (Exception ex)
+            {
+                return new TreatmentResponse($"Ocorreu um erro ao gerar o parcelas: {ex.Message}");
+            }
+        }
+
         private void IncludeInstallments(GenerateInstallmentsResource resource, Treatment existingTreatment, DateTime date)
         {
-            double installmentCost = Math.Truncate(100 * ((existingTreatment.TotalCost + existingTreatment.ProthesisCost) / resource.InstallmentQuantity)) / 100;
+            double installmentCost = Math.Truncate(100 * ((existingTreatment.TotalCost) / resource.InstallmentQuantity)) / 100;
             for (int i = 1; i <= resource.InstallmentQuantity; i++)
             {
 
                 existingTreatment.Installments.Add(
                     new Installment
+                    {
+                        Cost = installmentCost,
+                        Due = date.AddMonths(i),
+
+                    });
+
+            }
+            _treatmentRespository.Update(existingTreatment);
+        }
+
+
+
+        private void IncludeProthesisInstallments(GenerateInstallmentsResource resource, Treatment existingTreatment, DateTime date)
+        {
+            double installmentCost = Math.Truncate(100 * ((existingTreatment.ProthesisCost) / resource.InstallmentQuantity)) / 100;
+            for (int i = 1; i <= resource.InstallmentQuantity; i++)
+            {
+
+                existingTreatment.ProthesisInstallments.Add(
+                    new ProthesisInstallment
                     {
                         Cost = installmentCost,
                         Due = date.AddMonths(i),

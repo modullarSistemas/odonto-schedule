@@ -17,6 +17,8 @@ namespace PlanejaOdonto.Api.Application.Resources.Treatment
 
         public List<InstallmentResource> Installments { get; set; }
 
+        public List<ProthesisInstallmentResource> ProthesisInstallments { get; set; }
+
         public string TreatmentType { get; set; }
 
         public string Description { get; set; }
