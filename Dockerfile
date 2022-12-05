@@ -5,6 +5,7 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
+ENV ASPNETCORE_URLS=http://+:5000
 COPY ["planeja-odonto-api/planeja-odonto-api.csproj", "planeja-odonto-api/"]
 RUN dotnet restore "planeja-odonto-api/planeja-odonto-api.csproj"
 COPY . .
