@@ -29,7 +29,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
-    <PackageReference Include="RestSharp" Version="108.0.1" />
+    <PackageReference Include="RestSharp" Version="108.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
   </ItemGroup>
 
@@ -39,6 +39,10 @@
 
   <ItemGroup>
     <Folder Include="3 - Infrastructure\Persistence\Repositories\Finance\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlanejaOdonto.Finance.ApiClient\PlanejaOdonto.Finance.ApiClient.csproj" />
   </ItemGroup>
 
 
