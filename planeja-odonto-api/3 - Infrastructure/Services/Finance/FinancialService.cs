@@ -20,6 +20,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
         private readonly ITreatmentRepository _treatmentRespository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDentistService _dentistService;
+        private IncomeService _incomeService;
         private ComissionService _commissionService;
         public FinancialService(IInstallmentRepository installmentRepository, ITreatmentRepository treatmentRespository, IUnitOfWork unitOfWork, IDentistService dentistService)
         {
@@ -28,6 +29,7 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             _unitOfWork = unitOfWork;
             _dentistService = dentistService;
             _commissionService = new ComissionService("https://localhost:7138/api");
+            _incomeService = new IncomeService("https://localhost:7138/api");
         }
 
         public async Task<InstallmentResponse> PayInstallment(int installmentId, PaymentMethod paymentMethod)
@@ -43,6 +45,14 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             installment.PaymentMethod = paymentMethod;
             installment.Payday = DateTime.Now;
             installment.UpdatedAt = DateTime.Now;
+
+            var responseIncomeApi = await _incomeService.AddIncome(new Finance.ApiClient.Resource.Income.AddIncomeResource
+            {
+                PaymentDate = DateTime.Now,
+                FranchiseId = installment.Treatment.Pacient.FranchiseId,
+                PaymentMethod = Convert.ToInt32(installment.PaymentMethod),
+                Value = installment.Cost
+            });
 
             bool result = await CalculateComission(installment);
 
