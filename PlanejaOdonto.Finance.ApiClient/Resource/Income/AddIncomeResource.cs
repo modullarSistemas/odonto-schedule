@@ -10,7 +10,7 @@ namespace PlanejaOdonto.Finance.ApiClient.Resource.Income
 
         public double Value { get; set; }
 
-        public PaymentMethod PaymentMethod { get; set; }
+        public int PaymentMethod { get; set; }
 
         public int FranchiseId { get; set; }
 
