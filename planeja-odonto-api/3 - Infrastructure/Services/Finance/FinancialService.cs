@@ -46,13 +46,19 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
             installment.Payday = DateTime.Now;
             installment.UpdatedAt = DateTime.Now;
 
-            var responseIncomeApi = await _incomeService.AddIncome(new Finance.ApiClient.Resource.Income.AddIncomeResource
+
+
+
+            var treatment = await _treatmentRespository.FindByIdAsync(installment.TreatmentId);
+            var income = new Finance.ApiClient.Resource.Income.AddIncomeResource
             {
-                PaymentDate = DateTime.Now,
-                FranchiseId = installment.Treatment.Pacient.FranchiseId,
+                PaymentDate = DateTime.UtcNow.AddHours(-3),
+                FranchiseId = treatment.Pacient.FranchiseId,
                 PaymentMethod = Convert.ToInt32(installment.PaymentMethod),
                 Value = installment.Cost
-            });
+            };
+
+            var responseIncomeApi = await _incomeService.AddIncome(income);
 
             bool result = await CalculateComission(installment);
 
