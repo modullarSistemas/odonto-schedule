@@ -18,6 +18,8 @@ using PlanejaOdonto.Api.Infrastructure.Persistence.Repositories.Scheduling;
 using PlanejaOdonto.Api.Infrastructure.Services.Scheduling;
 using PlanejaOdonto.Api.Application.Services.Scheduling;
 using PlanejaOdonto.Finance.ApiClient.Service;
+using Microsoft.AspNetCore.Localization;
+using System.Collections.Generic;
 
 namespace PlanejaOdonto.Api
 {
@@ -80,7 +82,17 @@ namespace PlanejaOdonto.Api
             var cString = Configuration.GetConnectionString("PlanejaOdontoDbConnectionString");
             var financeURI = Configuration.GetSection("Apis:Finance").Value;
 
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var defaultCulture = new RequestCulture("pt-BR");
 
+                var supportedCultures = new List<CultureInfo>() { new CultureInfo("pt-BR") };
+
+                options.DefaultRequestCulture = defaultCulture;
+                options.SupportedCultures= supportedCultures;
+
+
+            });
             services.AddScoped<IFranchiseService, FranchiseService>();
             services.AddScoped<IPacientService, PacientService>();
             services.AddScoped<IEvaluationSchedulingService, EvaluationSchedulingService>();
