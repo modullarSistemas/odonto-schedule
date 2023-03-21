@@ -22,14 +22,14 @@ namespace PlanejaOdonto.Api.Infrastructure.Services
         private readonly IDentistService _dentistService;
         private IncomeService _incomeService;
         private ComissionService _commissionService;
-        public FinancialService(IInstallmentRepository installmentRepository, ITreatmentRepository treatmentRespository, IUnitOfWork unitOfWork, IDentistService dentistService)
+        public FinancialService(IInstallmentRepository installmentRepository, ITreatmentRepository treatmentRespository, IUnitOfWork unitOfWork, IDentistService dentistService,IncomeService incomeService,ComissionService comissionService)
         {
             _installmentRepository = installmentRepository;
             _treatmentRespository = treatmentRespository;
             _unitOfWork = unitOfWork;
             _dentistService = dentistService;
-            _commissionService = new ComissionService("https://localhost:7138/api");
-            _incomeService = new IncomeService("https://localhost:7138/api");
+            _commissionService = comissionService;
+            _incomeService = incomeService;
         }
 
         public async Task<InstallmentResponse> PayInstallment(int installmentId, PaymentMethod paymentMethod)

@@ -17,6 +17,7 @@ using PlanejaOdonto.Api.Domain.Repositories.SchedulingAggregate;
 using PlanejaOdonto.Api.Infrastructure.Persistence.Repositories.Scheduling;
 using PlanejaOdonto.Api.Infrastructure.Services.Scheduling;
 using PlanejaOdonto.Api.Application.Services.Scheduling;
+using PlanejaOdonto.Finance.ApiClient.Service;
 
 namespace PlanejaOdonto.Api
 {
@@ -75,6 +76,11 @@ namespace PlanejaOdonto.Api
 
         private static void AddServices(IServiceCollection services)
         {
+
+            var cString = Configuration.GetConnectionString("PlanejaOdontoDbConnectionString");
+            var financeURI = Configuration.GetSection("Apis:Finance").Value;
+
+
             services.AddScoped<IFranchiseService, FranchiseService>();
             services.AddScoped<IPacientService, PacientService>();
             services.AddScoped<IEvaluationSchedulingService, EvaluationSchedulingService>();
@@ -87,6 +93,9 @@ namespace PlanejaOdonto.Api
             services.AddScoped<IFinancialService, FinancialService>(); 
             services.AddScoped<IProthesisService, ProthesisService>();
             services.AddScoped<IContractService, ContractService>();
+            services.AddScoped(x => new IncomeService(financeURI)) ;
+            services.AddScoped(x => new ComissionService(financeURI));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
